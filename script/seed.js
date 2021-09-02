@@ -1,22 +1,56 @@
-'use strict'
+const { db, models: { User, Trip, TripAttendee, Event, EventAttendee } } = require('../server/db')
 
-const {db, models: {User} } = require('../server/db')
-
-/**
- * seed - this function clears the database, updates tables to
- *      match the models, and populates the database.
- */
+//  * seed - this function clears the database and populates it with test data.
 async function seed() {
-  await db.sync({ force: true }) // clears db and matches models to tables
+  await db.sync({ force: true }) // clears database
   console.log('db synced!')
 
-  // Creating Users
+  // Create users
   const users = await Promise.all([
-    User.create({ username: 'cody', password: '123' }),
-    User.create({ username: 'murphy', password: '123' }),
+    User.create({ username: 'cody', name: 'cody', password: '123' }),
+    User.create({ username: 'murphy', name: 'murphy', password: '123' }),
+    User.create({ username: 'lucy', name: 'lucy', password: '123' }),
+    User.create({ username: 'konstantin', name: 'konstantin', password: '123' }),
+    User.create({ username: 'ayan', name: 'ayan', password: '123' }),
+    User.create({ username: 'john', name: 'john', password: '123' }),
   ])
 
   console.log(`seeded ${users.length} users`)
+
+  // create a trip
+  const trips = await Promise.all([
+    Trip.create({ destination: 'Disney World, Orlando, FL', 
+                  startDate: '2021-10-06', endDate: '2021-10-31', 
+                  purpose: 'RELAX', status: 'IN PROGRESS', ownerId: users[0].id }),
+  ])
+
+  console.log(`seeded ${trips.length} trips`)
+
+  // create trip attendees
+  const tripAttendees = await Promise.all([
+    TripAttendee.create({ tripId: trips[0].id, userId: users[3].id }),
+    TripAttendee.create({ tripId: trips[0].id, userId: users[4].id }),
+  ])
+
+  console.log(`seeded ${tripAttendees.length} trip attendees`)
+
+  // create events
+  const events = await Promise.all([
+    Event.create({ purpose: 'MEAL', description: 'Final evening get-together!', 
+                  startDate: '2021-10-30', endDate: '2021-10-30', 
+                  status: 'PROPOSED', tripId: trips[0].id }),
+  ])
+
+  console.log(`seeded ${events.length} trip events`)
+
+  // create event attendees
+  const eventAttendees = await Promise.all([
+    EventAttendee.create({ eventId: events[0].id, userId: users[3].id }),
+    EventAttendee.create({ eventId: events[0].id, userId: users[4].id }),
+  ])
+
+  console.log(`seeded ${eventAttendees.length} event attendees`)
+
   console.log(`seeded successfully`)
   return {
     users: {
@@ -26,11 +60,6 @@ async function seed() {
   }
 }
 
-/*
- We've separated the `seed` function from the `runSeed` function.
- This way we can isolate the error handling and exit trapping.
- The `seed` function is concerned only with modifying the database.
-*/
 async function runSeed() {
   console.log('seeding...')
   try {
@@ -45,14 +74,8 @@ async function runSeed() {
   }
 }
 
-/*
-  Execute the `seed` function, IF we ran this module directly (`node seed`).
-  `Async` functions always return a promise, so we can use `catch` to handle
-  any errors that might occur inside of `seed`.
-*/
 if (module === require.main) {
   runSeed()
 }
 
-// we export the seed function for testing purposes (see `./seed.spec.js`)
 module.exports = seed
