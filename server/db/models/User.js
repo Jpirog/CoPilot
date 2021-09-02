@@ -1,19 +1,38 @@
-const Sequelize = require('sequelize')
-const db = require('../db')
-const jwt = require('jsonwebtoken')
+const Sequelize = require('sequelize');
+const {
+  STRING,
+  BOOLEAN
+} = require('sequelize');
+const db = require('../db');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const axios = require('axios');
 
 const SALT_ROUNDS = 5;
 
-const User = db.define('user', {
+const User = db.define('user',{
   username: {
-    type: Sequelize.STRING,
+    type: STRING,
+//    primaryKey: true,
+    required: true,
+    allowNull: false,
     unique: true,
-    allowNull: false
+    validate: { notEmpty: true },
+  },
+  name: {
+    type: STRING,
+    required: true,
+    allowNull: false,
+    unique: false, 
+    validate: { notEmpty: true },
   },
   password: {
-    type: Sequelize.STRING,
+    type: STRING,
+  },
+  isAdmin: {
+    type: BOOLEAN,
+    required: true,
+    defaultValue: false,
   }
 })
 
