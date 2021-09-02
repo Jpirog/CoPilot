@@ -21,7 +21,9 @@ async function seed() {
   const trips = await Promise.all([
     Trip.create({ destination: 'Disney World, Orlando, FL', 
                   startDate: '2021-10-06', endDate: '2021-10-31', 
-                  purpose: 'RELAX', status: 'IN PROGRESS', ownerId: users[0].id }),
+                  purpose: 'RELAX', status: 'IN PROGRESS', ownerId: users[0].id,
+                  lunch: true, dinner: true
+                }),
   ])
 
   console.log(`seeded ${trips.length} trips`)
