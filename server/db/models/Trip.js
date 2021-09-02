@@ -33,6 +33,21 @@ const Trip = db.define('trip',{
     defaultValue: 'IN PROGRESS',
     allowNull: false,
   },
+  breakfast: {
+    type: BOOLEAN,
+    defaultValue: true,
+    allowNull: false,
+  },
+  lunch: {
+    type: BOOLEAN,
+    defaultValue: true,
+    allowNull: false,
+  },
+  dinner: {
+    type: BOOLEAN,
+    defaultValue: true,
+    allowNull: false,
+  },
 })
 
 module.exports = Trip;
