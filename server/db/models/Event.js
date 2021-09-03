@@ -4,7 +4,7 @@ const {
 } = require('sequelize');
 const db = require('../db');
 
-const Event = db.define('event',{
+const TripEvent = db.define('tripevent',{
   purpose: {
     type: ENUM('MEAL', 'SIGHTSEE','FREETIME','OTHER'),
     defaultValue: 'OTHER',
@@ -35,4 +35,4 @@ const Event = db.define('event',{
   },
 })
 
-module.exports = Event;
+module.exports = TripEvent;

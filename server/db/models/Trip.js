@@ -1,5 +1,5 @@
 const {
-  STRING, BOOLEAN, DATE, ENUM,
+  STRING, BOOLEAN, DATE, ENUM,INTEGER,
 } = require('sequelize');
 const db = require('../db');
 
@@ -29,24 +29,15 @@ const Trip = db.define('trip',{
     allowNull: false,
   },
   status: {
-    type: ENUM('IN PROGRESS', 'COMPLETED'),
+    type: ENUM('IN PROGRESS', 'COMPLETED', 'CANCELED'),
     defaultValue: 'IN PROGRESS',
     allowNull: false,
   },
-  breakfast: {
-    type: BOOLEAN,
-    defaultValue: true,
+  numberMeals: {
+    type: INTEGER,
+    defaultValue: 3,
     allowNull: false,
-  },
-  lunch: {
-    type: BOOLEAN,
-    defaultValue: true,
-    allowNull: false,
-  },
-  dinner: {
-    type: BOOLEAN,
-    defaultValue: true,
-    allowNull: false,
+    unique: false,
   },
 })
 
