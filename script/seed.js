@@ -1,4 +1,4 @@
-const { db, models: { User, Trip, TripAttendee, Event, EventAttendee } } = require('../server/db')
+const { db, models: { User, Trip, TripAttendee, TripEvent, EventAttendee } } = require('../server/db')
 
 //  * seed - this function clears the database and populates it with test data.
 async function seed() {
@@ -22,7 +22,7 @@ async function seed() {
     Trip.create({ destination: 'Disney World, Orlando, FL', 
                   startDate: '2021-10-06', endDate: '2021-10-31', 
                   purpose: 'RELAX', status: 'IN PROGRESS', ownerId: users[0].id,
-                  lunch: true, dinner: true
+                  numberMeals: 5
                 }),
   ])
 
@@ -30,15 +30,15 @@ async function seed() {
 
   // create trip attendees
   const tripAttendees = await Promise.all([
-    TripAttendee.create({ tripId: trips[0].id, userId: users[3].id }),
-    TripAttendee.create({ tripId: trips[0].id, userId: users[4].id }),
+    TripAttendee.create({ tripId: trips[0].id, userId: users[3].id, email: 'email1@something.com' }),
+    TripAttendee.create({ tripId: trips[0].id, userId: users[4].id, email: 'email2@something.com' }),
   ])
 
   console.log(`seeded ${tripAttendees.length} trip attendees`)
 
   // create events
   const events = await Promise.all([
-    Event.create({ purpose: 'MEAL', description: 'Final evening get-together!', 
+    TripEvent.create({ purpose: 'MEAL', description: 'Final evening get-together!', 
                   startDate: '2021-10-30', endDate: '2021-10-30', 
                   status: 'PROPOSED', tripId: trips[0].id }),
   ])
@@ -47,8 +47,8 @@ async function seed() {
 
   // create event attendees
   const eventAttendees = await Promise.all([
-    EventAttendee.create({ eventId: events[0].id, userId: users[3].id }),
-    EventAttendee.create({ eventId: events[0].id, userId: users[4].id }),
+    EventAttendee.create({ tripeventId: events[0].id, userId: users[3].id }),
+    EventAttendee.create({ tripeventId: events[0].id, userId: users[4].id }),
   ])
 
   console.log(`seeded ${eventAttendees.length} event attendees`)

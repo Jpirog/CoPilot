@@ -84,7 +84,7 @@ export const addUpdateTrip = (trip) => {
   return async (dispatch) => { 
     try{
       const { data: newTrip } = await axios.post('/api/trips', trip);
-      dispatch(_addUpdateTrip(newTrip)); // *** MAY WANT TO DISPATCH GETTRIPDETAILS INSTEAD
+      dispatch(_addUpdateTrip(newTrip)); // *** MAY WANT TO DISPATCH GETTRIPDETAILS INSTEAD WITH THE ID
     }
     catch(ex){
       console.log('ERROR adding/updating trip', ex);

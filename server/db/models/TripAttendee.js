@@ -1,9 +1,15 @@
 const {
-  STRING, BOOLEAN, DATE, ENUM,
+  STRING, BOOLEAN, DATE, ENUM, 
 } = require('sequelize');
 const db = require('../db');
 
 const TripAttendee = db.define('tripattendee',{
+  email: {
+    type: STRING,
+    required: true,
+    allowNull: false,
+    validate: { isEmail: true },
+  },
   accepted: {
     type: BOOLEAN,
     required: true,
@@ -16,6 +22,6 @@ const TripAttendee = db.define('tripattendee',{
     allowNull: true,
     unique: false, 
   },
-})
+}, {indexes: [{ unique: true, fields: ['tripId', 'email']}]})
 
 module.exports = TripAttendee;
