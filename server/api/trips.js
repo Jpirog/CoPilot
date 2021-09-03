@@ -39,9 +39,19 @@ router.get('/userinvited/:userId', async (req, res, next) => {
 //      where: { ownerId: req.params.userId },
 //      include: { all: true, nested: true }
     })
-    console.log('***', trips)
     res.send(trips);
   } catch (err) {
     next(err)
   }
 })
+
+// add/update trip
+router.post('/', async (req, res, next) => {
+    try {
+      const data = await Trip.upsert(req.body, { returning: true } );
+      res.status(200).send(data[0]);
+    } catch (ex) {
+      console.log('ERROR adding/updating trip', ex);
+      next(ex);
+    }
+  })

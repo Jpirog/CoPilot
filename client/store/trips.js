@@ -6,6 +6,7 @@ import store from './index';
 const GET_TRIP_DETAILS = 'GET_TRIP_DETAILS';
 const GET_USER_CREATED_TRIPS = 'GET_USER_CREATED_TRIPS';
 const GET_USER_INVITED_TRIPS = 'GET_USER_INVITED_TRIPS';
+const ADD_UPDATE_TRIP = 'ADD_UPDATE_TRIP';
 
 // * ACTION CREATORS
 
@@ -27,6 +28,13 @@ const _getUserInvitedTrips = userInvitedTrips => {
   return {
     type: GET_USER_INVITED_TRIPS, 
     userInvitedTrips,
+  }
+};
+
+const _addUpdateTrip = trip => {
+  return {
+    type: ADD_UPDATE_TRIP, 
+    trip,
   }
 };
 
@@ -71,6 +79,19 @@ export const getUserInvitedTrips = (userId) => {
   }
 }
 
+// addUpdateTrip adds a new trip or updates an existing one and returns the row
+export const addUpdateTrip = (trip) => {
+  return async (dispatch) => { 
+    try{
+      const { data: newTrip } = await axios.post('/api/trips', trip);
+      dispatch(_addUpdateTrip(newTrip)); // *** MAY WANT TO DISPATCH GETTRIPDETAILS INSTEAD
+    }
+    catch(ex){
+      console.log('ERROR adding/updating trip', ex);
+    }
+  }
+}
+
 // * REDUCER
 
 export default function(state = {trip: {}, userCreatedTrips: [], userInvitedTrips: []}, action) {
@@ -82,6 +103,8 @@ export default function(state = {trip: {}, userCreatedTrips: [], userInvitedTrip
       return {...state, userCreatedTrips: action.userCreatedTrips}
     case GET_USER_INVITED_TRIPS:
       return {...state, userInvitedTrips: action.userInvitedTrips}
+    case ADD_UPDATE_TRIP:
+      return {...state, trip: action.trip}
     default:
       return state
   }
