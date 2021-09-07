@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { models: {User }} = require('../db')
+const { models: { User }} = require('../db')
 module.exports = router
 
 router.post('/login', async (req, res, next) => {
@@ -17,7 +17,7 @@ router.post('/signup', async (req, res, next) => {
     res.send({token: await user.generateToken()})
   } catch (err) {
     if (err.name === 'SequelizeUniqueConstraintError') {
-      res.status(401).send('User already exists')
+      res.status(401).send('This email is already registered. Please use a different email address or reset your password.')
     } else {
       next(err)
     }

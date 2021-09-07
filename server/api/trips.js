@@ -22,7 +22,6 @@ router.get('/usercreated/:userId', async (req, res, next) => {
       where: { ownerId: req.params.userId },
       include: { all: true, nested: true }
     })
-    console.log('***', req.params.userId, trips)
     res.send(trips);
   } catch (err) {
     next(err)
@@ -33,7 +32,6 @@ router.get('/usercreated/:userId', async (req, res, next) => {
 
 router.post('/create/trip', async (req, res, next) => {
   try {
-    console.log(req.body)
     const newTrip = await Trip.create(req.body)
     res.send(newTrip)
   } catch (error) {

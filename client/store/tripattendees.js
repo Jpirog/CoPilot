@@ -35,7 +35,6 @@ const _updateTripAttendee = attendee => {
 
 // addTripAttendee adds an attendee to a trip
 export const addTripAttendee = (attendee) => {
-  console.log('1111', attendee)
   return async (dispatch) => { 
     try{
       const { data: newAttendee } = await axios.post('/api/tripattendees', attendee);
