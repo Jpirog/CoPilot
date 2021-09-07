@@ -1,21 +1,6 @@
 const router = require('express').Router()
-//const { models: { Trip, Event }} = require('../db')
 const TripAttendee = require('../db/models/TripAttendee')
 module.exports = router
-
-// // returns all attendees for a trip
-// router.get('/:tripId', async (req, res, next) => {
-//   try {
-//     const tripAttendees = await TripAttendee.findAll({
-//       where: { tripId: req.params.tripId },
-// //      include: { all: true, nested: true }
-//     })
-// //    console.log('***', req.params.tripId, tripAttendees)
-//     res.send(tripAttendees);
-//   } catch (err) {
-//     next(err)
-//   }
-// })
 
 // add a trip attendee
 router.post('/', async (req, res, next) => {

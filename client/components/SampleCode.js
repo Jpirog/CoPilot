@@ -1,6 +1,7 @@
 import React, { useEffect , useState } from 'react';
 import { getTripDetails, getUserCreatedTrips, getUserInvitedTrips, addUpdateTrip} from '../store/trips';
 import { addTripAttendee, removeTripAttendee } from '../store/tripattendees';
+import { addTripEvent, removeTripEvent } from '../store/tripevents';
 import { useDispatch, useSelector } from "react-redux";
 
 export const SampleCode = props => {
@@ -44,12 +45,25 @@ export const SampleCode = props => {
     fetchData();
   },[] )
 
+  useEffect( () => {
+    const fetchData = async () => {
+      const data = await dispatch(addTripEvent({purpose: 'OTHER', description: 'dinner the last evening',
+        startDate: '2021-09-07', endDate: '2021-09-08', status: 'PROPOSED', tripId: 1,
+        }));
+    }
+    fetchData();
+  },[] )
+
   const addTrip = async (id) => {
     const newTrip = await dispatch(addUpdateTrip({destination: 'Hollywood', purpose: 'RELAX', status: 'IN PROGRESS', ownerId: id}))
   }
 
   const removeAttendee = async (tripId,email) => {
     await dispatch(removeTripAttendee(1, 'abc220430@abc.com')); // change these for the parms
+  }
+
+  const removeTripEventHere = async (id) => {
+    await dispatch(removeTripEvent(2)); // change these for the parms
   }
 
   const tripDetails = useSelector((state) => state.trips.trip);
@@ -88,6 +102,8 @@ export const SampleCode = props => {
       <p>{ tripDetails.destination  } </p>
       <hr />
       <button onClick={() => removeAttendee()}>Remove the trip attendee</button>
+      <hr />
+      <button onClick={() => removeTripEventHere()}>Remove the trip event</button>
 
       </div>
   )
