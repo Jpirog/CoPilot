@@ -1,5 +1,6 @@
 import React, { useEffect , useState } from 'react';
-import { getTripDetails, getUserCreatedTrips, getUserInvitedTrips, addUpdateTrip } from '../store/trips';
+import { getTripDetails, getUserCreatedTrips, getUserInvitedTrips, addUpdateTrip} from '../store/trips';
+import { addTripAttendee, removeTripAttendee } from '../store/tripattendees';
 import { useDispatch, useSelector } from "react-redux";
 
 export const SampleCode = props => {
@@ -9,6 +10,7 @@ export const SampleCode = props => {
   const [trip, setTrip] = useState({});
   const [userCreatedTrips, setUserCreatedTrips] = useState([]);
   const [userInvitedTrips, setUserInvitedTrips] = useState([]);
+
 
   useEffect( () => {
     const fetchData = async () => {
@@ -28,8 +30,16 @@ export const SampleCode = props => {
 
   useEffect( () => {
     const fetchData = async () => {
-      const data = await dispatch(getUserInvitedTrips(5));
+      const data = await dispatch(getUserInvitedTrips(3));
       setUserInvitedTrips(data);
+    }
+    fetchData();
+  },[] )
+
+  const id = `abc${Math.ceil(Math.random() * 1000000)}@abc.com`
+  useEffect( () => {
+    const fetchData = async () => {
+      const data = await dispatch(addTripAttendee({email: id,tripId: 1}));
     }
     fetchData();
   },[] )
@@ -38,9 +48,14 @@ export const SampleCode = props => {
     const newTrip = await dispatch(addUpdateTrip({destination: 'Hollywood', purpose: 'RELAX', status: 'IN PROGRESS', ownerId: id}))
   }
 
+  const removeAttendee = async (tripId,email) => {
+    await dispatch(removeTripAttendee(1, 'abc220430@abc.com')); // change these for the parms
+  }
+
   const tripDetails = useSelector((state) => state.trips.trip);
   const userCreatedTripDetails = useSelector((state) => state.trips.userCreatedTrips);
   const userInvitedTripDetails = useSelector((state) => state.trips.userInvitedTrips);
+  const tripAttendeeList = useSelector((state) => state.tripattendees.data);
 
   if (!Array.isArray(userCreatedTripDetails)) return '';
   if (!Array.isArray(userInvitedTripDetails)) return '';
@@ -72,7 +87,9 @@ export const SampleCode = props => {
       <p>addUpdateTrip returns the updated/new trip in state</p>
       <p>{ tripDetails.destination  } </p>
       <hr />
-    </div>
+      <button onClick={() => removeAttendee()}>Remove the trip attendee</button>
+
+      </div>
   )
 };
 
