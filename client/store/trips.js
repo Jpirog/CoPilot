@@ -7,6 +7,7 @@ const GET_TRIP_DETAILS = 'GET_TRIP_DETAILS';
 const GET_USER_CREATED_TRIPS = 'GET_USER_CREATED_TRIPS';
 const GET_USER_INVITED_TRIPS = 'GET_USER_INVITED_TRIPS';
 const ADD_UPDATE_TRIP = 'ADD_UPDATE_TRIP';
+const CREATE_TRIP = 'CREATE_TRIP'
 
 // * ACTION CREATORS
 
@@ -37,6 +38,13 @@ const _addUpdateTrip = trip => {
     trip,
   }
 };
+
+const _createTrip = trip => {
+  return {
+    type: CREATE_TRIP,
+    trip
+  }
+}
 
 // * THUNK CREATORS
 
@@ -91,6 +99,14 @@ export const addUpdateTrip = (trip) => {
     }
   }
 }
+
+//create trip
+
+export const createTrip = (createTrip) => async (dispatch) => {
+  const {trip} = await axios.post(`/create/trip`, createTrip)
+  dispatch(createCampusAction(trip))
+}
+
 
 // * REDUCER
 
