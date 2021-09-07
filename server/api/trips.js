@@ -22,10 +22,20 @@ router.get('/usercreated/:userId', async (req, res, next) => {
       where: { ownerId: req.params.userId },
       include: { all: true, nested: true }
     })
-    console.log('***', req.params.userId, trips)
     res.send(trips);
   } catch (err) {
     next(err)
+  }
+})
+
+//add a trip route
+
+router.post('/create/trip', async (req, res, next) => {
+  try {
+    const newTrip = await Trip.create(req.body)
+    res.send(newTrip)
+  } catch (error) {
+    next(error)
   }
 })
 
@@ -45,13 +55,13 @@ router.get('/userinvited/:userId', async (req, res, next) => {
   }
 })
 
-// add/update trip
-router.post('/', async (req, res, next) => {
-    try {
-      const data = await Trip.upsert(req.body, { returning: true } );
-      res.status(200).send(data[0]);
-    } catch (ex) {
-      console.log('ERROR adding/updating trip', ex);
-      next(ex);
-    }
-  })
+// // add/update trip
+// router.post('/', async (req, res, next) => {
+//     try {
+//       const data = await Trip.upsert(req.body, { returning: true } );
+//       res.status(200).send(data[0]);
+//     } catch (ex) {
+//       console.log('ERROR adding/updating trip', ex);
+//       next(ex);
+//     }
+//   })

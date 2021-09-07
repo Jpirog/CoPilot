@@ -7,6 +7,7 @@ router.use(require('method-override')('_method')); // needed for DELETE method
 router.use('/users', require('./users'));
 router.use('/trips', require('./trips'));
 router.use('/tripattendees', require('./tripattendees'));
+router.use('/tripevents', require('./tripevents'));
 
 //for yelp api routes
 router.use('/yelp',require("./yelp"));
