@@ -1,13 +1,10 @@
 import axios from 'axios';
-//import store from './index';
 
 //* ACTION TYPES
 
 const GET_TRIP_DETAILS = 'GET_TRIP_DETAILS';
 const GET_USER_CREATED_TRIPS = 'GET_USER_CREATED_TRIPS';
 const GET_USER_INVITED_TRIPS = 'GET_USER_INVITED_TRIPS';
-//const ADD_UPDATE_TRIP = 'ADD_UPDATE_TRIP';
-//const CREATE_TRIP = 'CREATE_TRIP'
 
 // * ACTION CREATORS
 
@@ -31,20 +28,6 @@ const _getUserInvitedTrips = userInvitedTrips => {
     userInvitedTrips,
   }
 };
-
-// const _addUpdateTrip = trip => {
-//   return {
-//     type: ADD_UPDATE_TRIP, 
-//     trip,
-//   }
-// };
-
-// const _createTrip = trip => {
-//   return {
-//     type: CREATE_TRIP,
-//     trip
-//   }
-// }
 
 // * THUNK CREATORS
 
@@ -92,8 +75,7 @@ export const addUpdateTrip = (trip) => {
   return async (dispatch) => { 
     try{
       const { data: newTrip } = await axios.post('/api/trips', trip);
-//      dispatch(_addUpdateTrip(newTrip)); // *** MAY WANT TO DISPATCH GETTRIPDETAILS INSTEAD WITH THE ID
-      dispatch(_getTripDetails(newTrip)); // *** MAY WANT TO DISPATCH GETTRIPDETAILS INSTEAD WITH THE ID
+      dispatch(_getTripDetails(newTrip)); 
     }
     catch(ex){
       console.log('ERROR adding/updating trip', ex);
@@ -101,13 +83,86 @@ export const addUpdateTrip = (trip) => {
   }
 }
 
-// //create trip
+// addTripEvent adds an event to a trip
+export const addTripEvent = (event) => {
+  return async (dispatch) => { 
+    try{
+      const { data: newEvent } = await axios.post('/api/tripevents', event);
+      dispatch(getTripDetails(newEvent.tripId));
+    }
+    catch(ex){
+      console.log('ERROR adding trip event', ex);
+    }
+  }
+}
 
-// export const createTrip = (createTrip) => async (dispatch) => {
-//   const {trip} = await axios.post(`/create/trip`, createTrip)
-//   dispatch(createCampusAction(trip))
-// }
+// removeTripEvent removes an event from a trip
+export const removeTripEvent = (tripId, eventId) => {
+  return async (dispatch) => { 
+    try{
+      await axios.delete('/api/tripevents', {data: { eventId: eventId}});
+      dispatch(getTripDetails(tripId));
+    }
+    catch(ex){
+      console.log('ERROR deleting trip event', ex);
+    }
+  }
+}
 
+// changeTripEvent changes an existing event on a trip
+export const updateTripEvent = (event) => {
+  return async (dispatch) => { 
+    try{
+      const { data: updatedEvent } = await axios.put('/api/tripevents', event);
+      dispatch(getTripDetails(updatedEvent.tripId));
+    }
+    catch(ex){
+      console.log('ERROR updating trip event', ex);
+    }
+  }
+}
+
+// addTripAttendee adds an attendee to a trip
+export const addTripAttendee = (attendee) => {
+  return async (dispatch) => { 
+    try{
+      const { data: newAttendee } = await axios.post('/api/tripattendees', attendee);
+//      dispatch(_addTripAttendee(newAttendee));
+      dispatch(getTripDetails(newAttendee.tripId));
+
+    }
+    catch(ex){
+      console.log('ERROR adding trip attendee', ex);
+    }
+  }
+}
+
+// removeTripAttendee removes an attendee from a trip
+export const removeTripAttendee = (tripId, email) => {
+  return async (dispatch) => { 
+    try{
+      await axios.delete('/api/tripattendees', {data: { tripId: tripId, email: email}});
+      dispatch(getTripDetails(tripId));
+
+    }
+    catch(ex){
+      console.log('ERROR deleting trip attendee', ex);
+    }
+  }
+}
+
+// updateTripAttendee changes an existing attendee on a trip
+export const updateTripAttendee = (attendee) => {
+  return async (dispatch) => { 
+    try{
+      const { data: updatedAttendee } = await axios.put('/api/tripattendees', attendee);
+        dispatch(getTripDetails(attendee.tripId));
+    }
+    catch(ex){
+      console.log('ERROR updating trip attendee', ex);
+    }
+  }
+}
 
 // * REDUCER
 
@@ -120,8 +175,6 @@ export default function(state = {trip: {}, userCreatedTrips: [], userInvitedTrip
       return {...state, userCreatedTrips: action.userCreatedTrips}
     case GET_USER_INVITED_TRIPS:
       return {...state, userInvitedTrips: action.userInvitedTrips}
-    // case ADD_UPDATE_TRIP:
-    //   return {...state, trip: action.trip}
     default:
       return state
   }

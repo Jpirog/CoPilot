@@ -1,7 +1,7 @@
 import React, { useEffect , useState } from 'react';
-import { getTripDetails, getUserCreatedTrips, getUserInvitedTrips, addUpdateTrip} from '../store/trips';
-import { addTripAttendee, removeTripAttendee } from '../store/tripattendees';
-import { addTripEvent, removeTripEvent } from '../store/tripevents';
+import { getTripDetails, getUserCreatedTrips, getUserInvitedTrips, 
+         addUpdateTrip, addTripEvent, removeTripEvent, 
+         addTripAttendee, removeTripAttendee } from '../store/trips';
 import { useDispatch, useSelector } from "react-redux";
 
 export const SampleCode = props => {
@@ -59,21 +59,21 @@ export const SampleCode = props => {
   }
 
   const updateTrip = async (id) => {
-    const newTrip = await dispatch(addUpdateTrip({destination: 'Bollywood', purpose: 'RELAX', status: 'IN PROGRESS', ownerId: id, id: 2}))
+    const updatedTrip = await dispatch(addUpdateTrip({destination: 'Bollywood', purpose: 'RELAX', status: 'IN PROGRESS', ownerId: id, id: 2}))
   }
 
   const removeAttendee = async (tripId,email) => {
-    await dispatch(removeTripAttendee(1, 'abc220430@abc.com')); // change these for the parms
+    await dispatch(removeTripAttendee(1, 'abc957113@abc.com')); // change these for the parms
   }
 
   const removeTripEventHere = async (id) => {
-    await dispatch(removeTripEvent(2)); // change these for the parms
+    await dispatch(removeTripEvent(1,9)); // change these for the parms (trip id, event id)
   }
 
   const tripDetails = useSelector((state) => state.trips.trip);
   const userCreatedTripDetails = useSelector((state) => state.trips.userCreatedTrips);
   const userInvitedTripDetails = useSelector((state) => state.trips.userInvitedTrips);
-  const tripAttendeeList = useSelector((state) => state.tripattendees.data);
+  //const tripAttendeeList = useSelector((state) => state.tripattendees.data);
 
   if (!Array.isArray(userCreatedTripDetails)) return '';
   if (!Array.isArray(userInvitedTripDetails)) return '';

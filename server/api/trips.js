@@ -28,17 +28,6 @@ router.get('/usercreated/:userId', async (req, res, next) => {
   }
 })
 
-// //add a trip route
-
-// router.post('/create/trip', async (req, res, next) => {
-//   try {
-//     const newTrip = await Trip.create(req.body)
-//     res.send(newTrip)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
-
 // returns all trips that a user was invited to
 router.get('/userinvited/:userId', async (req, res, next) => {
   try {

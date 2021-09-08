@@ -20,7 +20,7 @@ router.delete('/', async (req, res, next) => {
     const data = await TripEvent.destroy({
       where: { id: eventId }
     });
-    res.status(200);
+    res.status(200).send({});
   } catch (ex) {
     console.log('ERROR deleting a trip event', ex);
     next(ex);
