@@ -101,12 +101,12 @@ export const addUpdateTrip = (trip) => {
   }
 }
 
-// //create trip
+//create trip
 
-// export const createTrip = (createTrip) => async (dispatch) => {
-//   const {trip} = await axios.post(`/create/trip`, createTrip)
-//   dispatch(createCampusAction(trip))
-// }
+export const createTrip = (createTrip) => async (dispatch) => {
+  const {trip} = await axios.post(`/create/trip`, createTrip)
+  dispatch(createCampusAction(trip))
+}
 
 
 // * REDUCER
