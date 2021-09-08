@@ -15,6 +15,7 @@ module.exports = router
 //get all hotels
 router.get("/hotel",async (req, res, next) =>{
     try{
+        
         const {data} = await axios.get(URL,{headers:HEADERS,params:PARAMETERS,
         })
         console.log(data.businesses)

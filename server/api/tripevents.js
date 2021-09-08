@@ -1,28 +1,22 @@
-const router = require('express').Router();
-const TripEvent = require('../db/models/Event');
-module.exports = router;
+const router = require('express').Router()
+const TripEvent = require('../db/models/Event')
+module.exports = router
 
-// add or change a trip event
-router.post('/', async (req, res, next) => {
-  try {
-    const data = await TripEvent.upsert(req.body, { returning: true } );
-    res.status(200).send(data[0]);
-  } catch (ex) {
-    console.log('ERROR adding a trip event', ex);
-    next(ex);
-  }
-})
+// //GET route
+// router.get();
 
-// remove a trip event
-router.delete('/', async (req, res, next) => {
-  try {
-    const eventId = req.body.eventId;
-    const data = await TripEvent.destroy({
-      where: { id: eventId }
-    });
-    res.status(200);
-  } catch (ex) {
-    console.log('ERROR deleting a trip event', ex);
-    next(ex);
-  }
-})
+
+// //POST route
+// router.post();
+
+
+// //PUT route
+// router.put();
+
+
+
+
+// //DELETE route
+// router.delete();
+
+
