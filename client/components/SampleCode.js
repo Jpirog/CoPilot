@@ -58,6 +58,10 @@ export const SampleCode = props => {
     const newTrip = await dispatch(addUpdateTrip({destination: 'Hollywood', purpose: 'RELAX', status: 'IN PROGRESS', ownerId: id}))
   }
 
+  const updateTrip = async (id) => {
+    const newTrip = await dispatch(addUpdateTrip({destination: 'Bollywood', purpose: 'RELAX', status: 'IN PROGRESS', ownerId: id, id: 2}))
+  }
+
   const removeAttendee = async (tripId,email) => {
     await dispatch(removeTripAttendee(1, 'abc220430@abc.com')); // change these for the parms
   }
@@ -104,6 +108,8 @@ export const SampleCode = props => {
       <button onClick={() => removeAttendee()}>Remove the trip attendee</button>
       <hr />
       <button onClick={() => removeTripEventHere()}>Remove the trip event</button>
+      <hr />
+      <button onClick={() => updateTrip()}>Update trip #2</button>
 
       </div>
   )

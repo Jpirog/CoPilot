@@ -1,13 +1,13 @@
 import axios from 'axios';
-import store from './index';
+//import store from './index';
 
 //* ACTION TYPES
 
 const GET_TRIP_DETAILS = 'GET_TRIP_DETAILS';
 const GET_USER_CREATED_TRIPS = 'GET_USER_CREATED_TRIPS';
 const GET_USER_INVITED_TRIPS = 'GET_USER_INVITED_TRIPS';
-const ADD_UPDATE_TRIP = 'ADD_UPDATE_TRIP';
-const CREATE_TRIP = 'CREATE_TRIP'
+//const ADD_UPDATE_TRIP = 'ADD_UPDATE_TRIP';
+//const CREATE_TRIP = 'CREATE_TRIP'
 
 // * ACTION CREATORS
 
@@ -32,19 +32,19 @@ const _getUserInvitedTrips = userInvitedTrips => {
   }
 };
 
-const _addUpdateTrip = trip => {
-  return {
-    type: ADD_UPDATE_TRIP, 
-    trip,
-  }
-};
+// const _addUpdateTrip = trip => {
+//   return {
+//     type: ADD_UPDATE_TRIP, 
+//     trip,
+//   }
+// };
 
-const _createTrip = trip => {
-  return {
-    type: CREATE_TRIP,
-    trip
-  }
-}
+// const _createTrip = trip => {
+//   return {
+//     type: CREATE_TRIP,
+//     trip
+//   }
+// }
 
 // * THUNK CREATORS
 
@@ -92,7 +92,8 @@ export const addUpdateTrip = (trip) => {
   return async (dispatch) => { 
     try{
       const { data: newTrip } = await axios.post('/api/trips', trip);
-      dispatch(_addUpdateTrip(newTrip)); // *** MAY WANT TO DISPATCH GETTRIPDETAILS INSTEAD WITH THE ID
+//      dispatch(_addUpdateTrip(newTrip)); // *** MAY WANT TO DISPATCH GETTRIPDETAILS INSTEAD WITH THE ID
+      dispatch(_getTripDetails(newTrip)); // *** MAY WANT TO DISPATCH GETTRIPDETAILS INSTEAD WITH THE ID
     }
     catch(ex){
       console.log('ERROR adding/updating trip', ex);
@@ -100,12 +101,12 @@ export const addUpdateTrip = (trip) => {
   }
 }
 
-//create trip
+// //create trip
 
-export const createTrip = (createTrip) => async (dispatch) => {
-  const {trip} = await axios.post(`/create/trip`, createTrip)
-  dispatch(createCampusAction(trip))
-}
+// export const createTrip = (createTrip) => async (dispatch) => {
+//   const {trip} = await axios.post(`/create/trip`, createTrip)
+//   dispatch(createCampusAction(trip))
+// }
 
 
 // * REDUCER
@@ -119,8 +120,8 @@ export default function(state = {trip: {}, userCreatedTrips: [], userInvitedTrip
       return {...state, userCreatedTrips: action.userCreatedTrips}
     case GET_USER_INVITED_TRIPS:
       return {...state, userInvitedTrips: action.userInvitedTrips}
-    case ADD_UPDATE_TRIP:
-      return {...state, trip: action.trip}
+    // case ADD_UPDATE_TRIP:
+    //   return {...state, trip: action.trip}
     default:
       return state
   }

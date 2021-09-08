@@ -28,16 +28,16 @@ router.get('/usercreated/:userId', async (req, res, next) => {
   }
 })
 
-//add a trip route
+// //add a trip route
 
-router.post('/create/trip', async (req, res, next) => {
-  try {
-    const newTrip = await Trip.create(req.body)
-    res.send(newTrip)
-  } catch (error) {
-    next(error)
-  }
-})
+// router.post('/create/trip', async (req, res, next) => {
+//   try {
+//     const newTrip = await Trip.create(req.body)
+//     res.send(newTrip)
+//   } catch (error) {
+//     next(error)
+//   }
+// })
 
 // returns all trips that a user was invited to
 router.get('/userinvited/:userId', async (req, res, next) => {
@@ -55,13 +55,13 @@ router.get('/userinvited/:userId', async (req, res, next) => {
   }
 })
 
-// // add/update trip
-// router.post('/', async (req, res, next) => {
-//     try {
-//       const data = await Trip.upsert(req.body, { returning: true } );
-//       res.status(200).send(data[0]);
-//     } catch (ex) {
-//       console.log('ERROR adding/updating trip', ex);
-//       next(ex);
-//     }
-//   })
+// add/update trip
+router.post('/', async (req, res, next) => {
+    try {
+      const data = await Trip.upsert(req.body, { returning: true } );
+      res.status(200).send(data[0]);
+    } catch (ex) {
+      console.log('ERROR adding/updating trip', ex);
+      next(ex);
+    }
+  })
