@@ -23,11 +23,12 @@ class Routes extends Component {
       <div>
       {isLoggedIn ? (
           <Switch>
-
   
           <Route path="/hotel" component={AddHotel} />
           <Route path="/activity" component={AddActivity} />
-          {/* <Route path="/samplecode" component={SampleCode} /> */}
+
+          <Route path="/samplecode" component={SampleCode} />
+
           <Route path="/home" component={Home} />
           <Route exact path="/create/trip"><CreateTrip/></Route>
           {/* <Route exact path="/usercreated/:userId"><Trips/></Route> */}
