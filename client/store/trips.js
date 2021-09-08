@@ -127,7 +127,6 @@ export const addTripAttendee = (attendee) => {
   return async (dispatch) => { 
     try{
       const { data: newAttendee } = await axios.post('/api/tripattendees', attendee);
-//      dispatch(_addTripAttendee(newAttendee));
       dispatch(getTripDetails(newAttendee.tripId));
 
     }

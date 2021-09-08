@@ -9,6 +9,9 @@ router.use('/trips', require('./trips'));
 router.use('/tripattendees', require('./tripattendees'));
 router.use('/tripevents', require('./tripevents'));
 
+//for yelp api routes
+router.use('/yelp',require("./yelp"));
+
 router.use((req, res, next) => {
   const error = new Error('Not Found')
   error.status = 404
