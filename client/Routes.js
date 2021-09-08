@@ -4,7 +4,7 @@ import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import { Signup } from './components/Signup';
 import { Login } from './components/Login';
 import Home from './components/Home';
-// import SampleCode from './components/SampleCode';
+import SampleCode from './components/SampleCode';
 import CreateTrip from './components/CreateTrip'
 import {me} from './store'
 
@@ -20,7 +20,7 @@ class Routes extends Component {
       <div>
       {isLoggedIn ? (
           <Switch>
-          {/* <Route path="/samplecode" component={SampleCode} /> */}
+          <Route path="/samplecode" component={SampleCode} />
           <Route path="/home" component={Home} />
           <Route exact path="/create/trip"><CreateTrip/></Route>
           {/* <Route exact path="/usercreated/:userId"><Trips/></Route> */}
