@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const TripEvent = require('../db/models/Event')
+const { models: {TripAttendee}} = require('../db')
 module.exports = router
 
 //GET route
@@ -12,7 +12,6 @@ router.post();
 
 //PUT route
 router.put();
-
 
 
 
