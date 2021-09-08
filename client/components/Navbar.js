@@ -78,7 +78,7 @@ const Navbar = ({handleClick, isLoggedIn}) => {
           </div>
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
           <li className='nav-item'>
-          <Link to="/" className="nav-links" onClick={closeMobileMenu}>About Us</Link>
+          <Link to="/aboutus" className="nav-links" onClick={closeMobileMenu}>About Us</Link>
           </li>
           <li className='nav-item'>
           <Link to="/login" className="nav-links" onClick={closeMobileMenu}>Login</Link>

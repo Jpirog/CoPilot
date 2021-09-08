@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
-import { connect } from 'react-redux'
-import { withRouter, Route, Switch, Redirect } from 'react-router-dom'
+import React, {Component} from 'react';
+import { connect } from 'react-redux';
+import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { Signup } from './components/SignUp';
 import { Login } from './components/Login';
 import Home from './components/Home';
@@ -22,16 +22,20 @@ class Routes extends Component {
 
     return (
       <div>
+        <Switch>
+          <Route path="/samplecode" component={ SampleCode } />
+        </Switch>
+
         {isLoggedIn ? (
           <Switch>
             <Route path="/hotel" component={AddHotel} />
             <Route path="/activity" component={AddActivity} />
             <Route path="/restaurant" component={AddRestaurant} />
-            <Route path="/samplecode" component={SampleCode} />
             <Route path="/home" component={Home} />
+            <Route path="/" component={Home} />
             <Route exact path="/create/trip"><CreateTrip/></Route>
             {/* <Route exact path="/usercreated/:userId"><Trips/></Route> */}
-            <Redirect to="/home" />
+            {/*<Redirect to="/home" /> */}
           </Switch>
         ) : (
           <Switch>
@@ -39,7 +43,8 @@ class Routes extends Component {
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             <Route path="/aboutus" component={ AboutUs }><AboutUs /></Route>
-            <Redirect to="/aboutus" />
+            <Route path="/" component={ AboutUs }><AboutUs /></Route>
+            {/*<Redirect to="/aboutus" /> */}
           </Switch>
         )}
       </div>
