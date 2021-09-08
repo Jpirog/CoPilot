@@ -13,6 +13,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+
 // remove a trip event
 router.delete('/', async (req, res, next) => {
   try {
