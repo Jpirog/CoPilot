@@ -7,8 +7,8 @@ import Home from './components/Home';
 import SampleCode from './components/SampleCode';
 import AddHotel from "./components/AddHotel"
 import AddActivity from './components/AddActivity';
-// import SampleCode from './components/SampleCode';
-import CreateTrip from './components/CreateTrip'
+import CreateTrip from './components/CreateTrip';
+import { AboutUs } from './components/AboutUs';
 import {me} from './store'
 
 class Routes extends Component {
@@ -40,6 +40,8 @@ class Routes extends Component {
             <Route path="/home" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
+            <Route path="/aboutus" component={ AboutUs }><AboutUs /></Route>
+            <Redirect to="/aboutus" />
           </Switch>
         )}
       </div>
