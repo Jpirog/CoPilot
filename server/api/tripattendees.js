@@ -21,7 +21,7 @@ router.delete('/', async (req, res, next) => {
     const data = await TripAttendee.destroy({
       where: { tripId: trip, email: email }
     });
-    res.status(200);
+    res.status(200).send({});
   } catch (ex) {
     console.log('ERROR deleting a trip attendee', ex);
     next(ex);
