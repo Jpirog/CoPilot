@@ -8,8 +8,9 @@ import SampleCode from './components/SampleCode';
 import AddHotel from "./components/AddHotel"
 import AddRestaurant from './components/AddRestaurant';
 import AddActivity from './components/AddActivity';
-import CreateTrip from './components/CreateTrip'
-import { me } from './store'
+import CreateTrip from './components/CreateTrip';
+import { AboutUs } from './components/AboutUs';
+import {me} from './store'
 
 class Routes extends Component {
   componentDidMount() {
@@ -37,6 +38,8 @@ class Routes extends Component {
             <Route path="/home" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
+            <Route path="/aboutus" component={ AboutUs }><AboutUs /></Route>
+            <Redirect to="/aboutus" />
           </Switch>
         )}
       </div>

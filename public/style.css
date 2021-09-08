@@ -433,6 +433,30 @@ video {
 .container {
   padding: 2em;
 }
+.hero-text {
+  padding-left:10%;
+}
+.hero-text h1, .hero-text p{
+  padding-bottom:20px;
+  width:50%;
+}
+.hero {
+  height: calc(100vh - 80px);
+  background-image: url('./images/window-AdobeStock_122400850.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center right;
+  margin-bottom: 2em;
+  display: flex;
+  align-items: flex-start;
+}
+.brandblock {
+  width:120px;
+  height: 5px;
+  margin: 20px 5px;
+  background-color:#b7926a;
+}
 .cta {
   background-color: #222;
   color: #fff;
@@ -440,4 +464,103 @@ video {
   font-size: 0.8em;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+}
+.cta:hover {
+  background-color: #fff;
+  color:#222;
+  box-shadow: 0 0 0 2px #222;
+}
+.ctadisabled {
+  background-color: #ddd;
+  color: #fff;
+  padding: 1em 2em;
+  font-size: 0.8em;
+  letter-spacing: 0.05em;
+  cursor: default;
+}
+.hpcontent {
+  padding-bottom: 10em;
+}
+.hpsection-1 {
+  display: flex;
+  align-items: center;
+}
+.hpsection-1 > div{
+  width: 50%;
+  height: 80vh;
+}
+.hpsection-1 .hpsection-1-imgA{
+  background-image: url('./images/hiking-AdobeStock_390659726.jpeg');
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+}
+.hpsection-1 .hpsection-1-imgB{
+  background-image: url('./images/train-AdobeStock_275484699.jpeg.crdownload.jpeg');
+  background-position: top center;
+  background-repeat: none;
+  background-size: cover;
+}
+.hpsection-1 .hpsection-1-imgC{
+  background-image: url('./images/sample-itinerary.png');
+  background-position: top center;
+  background-repeat: none;
+  background-size: cover;
+}
+.hpsection-1 .hpsection-1-txt {
+  width: calc(50% - 8em);
+  padding: 0 4em;
+  background-color: #fff;
+}
+.hpsection-1 p {
+  padding: 1em 0;
+}
+.itemList{
+  padding-bottom: 5em;
+}
+.itemList h3{
+  width: 90%;
+  margin: 0 auto;
+}
+.itemList img{
+  display: block;
+  width: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.itemList p {
+  display: inline-block;
+  width: fit-content;
+  padding: 5%;
+}
+.itemList ul {
+  padding: 5%;
+  margin: 0;
+  display: inline-block;
+}
+.itemList li {
+  display: inline-block;
+  list-style: none;
+  width: 1.5em;
+  text-align: center;
+}
+.itemList li:last-child {
+  background-color: #ededed;
+}
+.itemList ul button {
+  padding: 0;
+  border: 1px solid #dbdbdb;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+}
+.itemList > div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  text-align: center;
+}
+.col3 .itemcard {
+  width: 32%;
 }
