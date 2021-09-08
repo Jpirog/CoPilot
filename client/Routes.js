@@ -1,11 +1,12 @@
-import React, {Component, Fragment} from 'react'
-import {connect} from 'react-redux'
-import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
-import { Signup } from './components/Signup';
+import React, {Component} from 'react'
+import { connect } from 'react-redux'
+import { withRouter, Route, Switch, Redirect } from 'react-router-dom'
+import { Signup } from './components/SignUp';
 import { Login } from './components/Login';
 import Home from './components/Home';
 import SampleCode from './components/SampleCode';
 import AddHotel from "./components/AddHotel"
+import AddRestaurant from './components/AddRestaurant';
 import AddActivity from './components/AddActivity';
 import CreateTrip from './components/CreateTrip';
 import { AboutUs } from './components/AboutUs';
@@ -21,22 +22,19 @@ class Routes extends Component {
 
     return (
       <div>
-      {isLoggedIn ? (
+        {isLoggedIn ? (
           <Switch>
-  
-          <Route path="/hotel" component={AddHotel} />
-          <Route path="/activity" component={AddActivity} />
-
-          <Route path="/samplecode" component={SampleCode} />
-
-          <Route path="/home" component={Home} />
-          <Route exact path="/create/trip"><CreateTrip/></Route>
-          {/* <Route exact path="/usercreated/:userId"><Trips/></Route> */}
+            <Route path="/hotel" component={AddHotel} />
+            <Route path="/activity" component={AddActivity} />
+            <Route path="/restaurant" component={AddRestaurant} />
+            <Route path="/samplecode" component={SampleCode} />
+            <Route path="/home" component={Home} />
+            <Route exact path="/create/trip"><CreateTrip/></Route>
+            {/* <Route exact path="/usercreated/:userId"><Trips/></Route> */}
             <Redirect to="/home" />
           </Switch>
         ) : (
           <Switch>
-            {/* <Route path='/' exact component={ Login } /> */}
             <Route path="/home" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
@@ -65,6 +63,5 @@ const mapDispatch = dispatch => {
   }
 }
 
-// The `withRouter` wrapper makes sure that updates are not blocked
-// when the url changes
+// The `withRouter` wrapper makes sure that updates are not blocked when the url changes
 export default withRouter(connect(mapState, mapDispatch)(Routes))
