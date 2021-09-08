@@ -10,6 +10,7 @@ export const AboutUs = props => {
         <div className="brandblock"></div>
         <h1>Copilot, your partner for group traveling</h1>
         <h2>Let CoPilot make your group trip planning a breeze!</h2>
+        <h2>&nbsp;</h2>
         <Link to="/login"><button className="cta">Login</button></Link>
         <h2>or</h2>
         <Link to="/signup"><button className="cta">Register</button></Link>
@@ -23,14 +24,16 @@ export const AboutUs = props => {
         <div className="brandblock"></div>
         <h1>About CoPilot</h1>
         <h3>We’re a group of friends who want to make travel planning easier!</h3>
+        <p>&nbsp;</p>
         <h4>Have you ever tried to plan a trip with friends and/or family and encountered:</h4>
+        <p>&nbsp;</p>
         <ul>
           <li>Arriving at your destination with no plans for anything?</li>
           <li>Spending hours researching only to find that some  don’t want to do that?</li>
           <li>Coordinating multiple group conference calls to plan what to do and where to go?</li>
         </ul>
 
-It’s time to let CoPilot make your pre-trip planning a breeze!
+<p>It’s time to let CoPilot make your pre-trip planning a breeze!</p>
 
 <p><strong>Register and start planning a trip today.</strong></p>
 
