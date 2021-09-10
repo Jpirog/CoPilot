@@ -3,6 +3,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from '../store';
+import toast from 'react-hot-toast';
+
+const notify = () => toast.success('Registration successful! Welcome to CoPilot!', { duration: 3000, position: 'top-center' })
 
 export const Signup = props => {
   const dispatch = useDispatch();
@@ -16,6 +19,7 @@ export const Signup = props => {
       const name = evt.target.username.value || 'NONAME';
       const password = evt.target.password.value;
       dispatch(authenticate(username, password, formName, name)); 
+      notify();
     } else {
       alert ('Passwords do not match - please correct and submit again')
       evt.target.password.value = '';
