@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
- const sendMail = (recipientEmail, subject, msgData) => {
+ export const sendMail = (recipientEmail, subject, msgData) => {
   // msgData: { type: 'invited', host: ownername, fromDate: date, toDate: date, dest: destination }
 
     // Create a SMTP transporter object
