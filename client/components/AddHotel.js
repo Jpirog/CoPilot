@@ -8,37 +8,36 @@ import "react-datepicker/dist/react-datepicker.css";
 
 
 const AddHotel= (props)=> {
-    const tripId = props.match.params.tripId;
-   const {trip,tripevents} = useSelector((state)=>({trip:state.trips.trip,tripevents:state.trips.trip.tripevents}))
+  const tripId = props.match.params.tripId;
+  const {trip,tripevents} = useSelector((state)=>({trip:state.trips.trip,tripevents:state.trips.trip.tripevents}))
 
    
-   const [hotelList,setHotelList] = useState([]);
-   const [searchValue,setSearchValue] = useState("");
-   const [date, setDate] = useState(null);
-   const dispatch = useDispatch();
+  const [hotelList,setHotelList] = useState([]);
+  const [searchValue,setSearchValue] = useState("");
+  const [date, setDate] = useState(null);
+  const dispatch = useDispatch();
 
 
-   const handleSubmit = async(event)=>{
+  const handleSubmit = async(event)=>{
     event.preventDefault();
     const {data} =  await axios.get("/api/yelp/hotel",{params:{term:searchValue}});
     setHotelList(data);
-}
-    useEffect(()=> {
-      
-       dispatch(getTripDetails(tripId))
-   },[]) 
+  }
 
-    useEffect(
-        ()=>{
-          const func = async()=>{
-          const {data} =  await axios.get("/api/yelp/hotel");
-          setHotelList(data);
-            };
-            func()
-    },[])
+  useEffect(()=> {
+    dispatch(getTripDetails(tripId))
+  },[]) 
+
+  useEffect( ()=>{
+    const func = async()=>{
+      const {data} =  await axios.get("/api/yelp/hotel");
+      setHotelList(data);
+    };
+    func()
+  },[])
 
 return (
-    <div style={{padding:"20px"}}>
+  <div style={{padding:"20px"}}>
         
 {/* <button type="button" onClick={()=>{
 
