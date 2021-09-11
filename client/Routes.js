@@ -29,13 +29,13 @@ class Routes extends Component {
 
         {isLoggedIn ? (
           <Switch>
-            <Route path="/:tripId/hotel" component={AddHotel} />
+            <Route exact path="/:tripId/hotel" component={AddHotel} />
             <Route path="/:tripId/activity" component={AddActivity} />
             <Route path="/restaurant" component={AddRestaurant} />
             <Route path="/home" component={Home} />
             <Route path="/editprofile" component={ EditProfile } />
             <Route path="/" component={Home} />
-            <Route exact path="/create/trip" component={ CreateTrip } />
+            <Route path="/create/trip" component={ CreateTrip } />
             {/* <Route exact path="/usercreated/:userId"><Trips/></Route> */}
             {/*<Redirect to="/home" /> */}
           </Switch>
