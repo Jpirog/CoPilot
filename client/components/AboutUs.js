@@ -29,7 +29,7 @@ export const AboutUs = props => {
         <p>&nbsp;</p>
         <ul>
           <li>Arriving at your destination with no plans for anything?</li>
-          <li>Spending hours researching only to find that some  don’t want to do that?</li>
+          <li>Spending hours researching only to find that some don’t want to do that?</li>
           <li>Coordinating multiple group conference calls to plan what to do and where to go?</li>
         </ul>
 
@@ -96,7 +96,7 @@ export const AboutUs = props => {
         <br /><br />
         <div className="brandblock"></div>
         <h1>Detailed Itinerary</h1>
-        <p>Easily plan out activities and dining for each day of your trip. A detailed itinerary will be created for each member of the group. Items can be added to personal calendars to have all events easily available on your phone. </p>
+        <p>Easily plan out activities and dining for each day of your trip. A detailed itinerary will be created with all of your choices. Items can be added to personal calendars to have all events easily available on your phone. </p>
         <form action="https://youmatter.world/en/definition/ecosystem-definition-example/">
         <Link to="/signup"><button className="cta">Register</button></Link>
         </form>
