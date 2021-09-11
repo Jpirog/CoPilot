@@ -2,12 +2,6 @@ import axios from "axios";
 import React,{useEffect,useDispach,useState} from "react";
 import { Link } from "react-router-dom";
 
-
-
-
-
-
-
 const AddHotel= (props)=> {
   
 
@@ -17,7 +11,6 @@ const AddHotel= (props)=> {
         ()=>{
           const func = async()=>{
           const {data} =  await axios.get("/api/yelp/hotel");
-          console.log(data)
           setHotelList(data);
             };
             func()
