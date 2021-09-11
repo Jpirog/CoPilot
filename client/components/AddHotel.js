@@ -14,7 +14,12 @@ const AddHotel= (props)=> {
    
    const [hotelList,setHotelList] = useState([]);
    const [searchValue,setSearchValue] = useState("");
-   const [date, setDate] = useState(null);
+
+
+   const [dateRange, setDateRange] = useState([null, null]);
+   const [startDate, endDate] = dateRange;
+
+
    const dispatch = useDispatch();
 
 
@@ -44,38 +49,26 @@ return (
 
 }}>Add A Hotel</button> */}
 
-{
-
-tripevents&&tripevents.map(event=>
-event.purpose==="SLEEP"?
 <table border="2px">
+<tbody>
   <tr>
     <th>Start Date</th>
+    <th>End Date</th>
     <th>Description</th> 
     <th>delete</th>
-    
   </tr>
-  <tr>
-    <td>{event.startDate}</td>
+{tripevents&&tripevents.map(event=>
+event.purpose==="SLEEP"?
+  <tr key = {event.id}>
+    <td>{(event.startDate)}</td>
+    <td>{event.endDate}</td>
     <td>{event.description}</td> 
     <td><button type="button" onClick={()=>{
 dispatch(removeTripEvent(tripId,event.id))
-}}>Delete </button></td>
+}}>Delete</button></td>
   </tr>
-
-</table>:null
-
-
-
-
-//         <ul key ={event.id} style={{flex:1,flexDirection:"row",padding:"20px"}}>
-// <li>{event.description}</li>
-// <li>{event.startDate}</li>
-// <button type="button" onClick={()=>{
-//     dispatch(removeTripEvent(tripId,event.id))
-// }}>Delete </button>
-//         </ul>:null)
-)}
+:""
+)} </tbody></table>
 
 
 
@@ -96,18 +89,25 @@ dispatch(removeTripEvent(tripId,event.id))
         <li >{hotel.price}</li>
 
        { trip.id&&<DatePicker 
-       selected={date} 
-       selectsStart
-       onChange={(date) => setDate(date)} 
+       selected={startDate} 
+       selectsRange={true}
+       startDate={startDate}
+       endDate={endDate}
+       onChange={(update) => {
+        setDateRange(update);
+      }} 
        placeholderText='select a day'
        openToDate={new Date(trip.startDate)}
        dayClassName={(date) =>{
        return (date>=new Date(trip.startDate) && date <=new Date(trip.endDate))?"highlighted" : undefined
-       
         }
-    }/>}     
+    }
+    withPortal/>}     
         <button onClick={()=>{
-            dispatch(addTripEvent({purpose:"SLEEP",startDate:date,endDate:date,tripId,description:`hotel: ${hotel.name}, website:${hotel.url}`}))
+            console.log(dateRange)
+            if(dateRange[0]){
+            dispatch(addTripEvent({purpose:"SLEEP",startDate,endDate,tripId,description:`{hotel: ${hotel.name}, website:${hotel.url}}`}))
+            }else {alert("please select your dateRange")}
         }}>Add to trip</button>
         </ul>)}
 
