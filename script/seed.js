@@ -38,7 +38,13 @@ async function seed() {
 
   // create events
   const events = await Promise.all([
-    TripEvent.create({ purpose: 'MEAL', description: 'Final evening get-together!', 
+    TripEvent.create({ purpose: 'DINNER', description: 'Final evening get-together!', 
+                  startDate: '2021-10-30', endDate: '2021-10-30', 
+                  status: 'PROPOSED', tripId: trips[0].id }),
+    TripEvent.create({ purpose: 'LUNCH', description: 'Olive Garden', 
+                  startDate: '2021-10-30', endDate: '2021-10-30', 
+                  status: 'PROPOSED', tripId: trips[0].id }),
+    TripEvent.create({ purpose: 'BREAKFAST', description: 'McDonalds for the kids', 
                   startDate: '2021-10-30', endDate: '2021-10-30', 
                   status: 'PROPOSED', tripId: trips[0].id }),
   ])
