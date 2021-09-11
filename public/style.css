@@ -574,7 +574,6 @@ video {
 }
 .col3 .itemcard {
   width: 32%;
-<<<<<<< HEAD
 }
 
 #itineraryBox {
@@ -606,7 +605,7 @@ video {
 }
 
 .eventCategory {
-  border: black solid 1px;
+  /* border: black solid 1px; */
   border-radius: 10px;
   padding: 15px;
   margin: 15px;
@@ -623,6 +622,6 @@ video {
 
 .individualItem {
   border:blue solid 1px;
-=======
->>>>>>> a73cbc466fd3b2825a6063ab70ed853b31edbac9
+  padding: 10px;
+  margin: 5px;
 }

@@ -11,6 +11,7 @@ const Itinerary = ()  => {
             </div>
             <div id='tripDuration'>
                 <h2>Trip Duration: # Days</h2>
+                <h4>Proposed Dates: # - #</h4>
             </div>
             <div id='eventBox'>
 
