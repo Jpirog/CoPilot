@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import  createTrip   from '../store/trips'
+import  { addUpdateTrip }  from '../store/trips'
 
 const initialState = {
     destination: '',
@@ -24,7 +24,7 @@ class CreateTrip extends Component{
     ev.preventDefault();
     const {state} = this
     try {
-        await this.props.createTrip({
+        await this.props.addUpdateTrip({
              destination: state.destination,
             startDate: state.startDate,
             endDate: state.endDate,
@@ -68,8 +68,13 @@ render() {
                 </div>
                 <div className='input-field col s6'>
                     <div>Purpose:</div>
-                    <input type="enum" name='purpose' value= {purpose} onChange={ handleChange }
-                    required={true}/>
+                    <select name='purpose' value= {purpose} onChange={ handleChange }>
+                       <option value="VACATION">Vacation</option>
+                     <option value="BUSINESS">Business</option>
+                    <option value="REUNION">Reunion</option>
+                     <option value="RELAX">Relax</option>
+                     <option value="OTHER">Other</option>
+                    </select>
                 </div>
                 <button type="submit" className="">Create</button>
                 <Link to="/"><button>Back to Homepage</button></Link>
@@ -85,7 +90,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    createTrip
+    addUpdateTrip
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateTrip);
