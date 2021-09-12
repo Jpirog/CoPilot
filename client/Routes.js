@@ -34,8 +34,10 @@ class Routes extends Component {
             <Route path="/restaurant" component={AddRestaurant} />
             <Route path="/home" component={Home} />
             <Route path="/editprofile" component={ EditProfile } />
+
+            <Route exact path="/create/trip" component={ CreateTrip } />
             <Route path="/" component={Home} />
-            <Route path="/create/trip" component={ CreateTrip } />
+
             {/* <Route exact path="/usercreated/:userId"><Trips/></Route> */}
             {/*<Redirect to="/home" /> */}
           </Switch>
