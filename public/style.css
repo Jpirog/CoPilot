@@ -211,8 +211,8 @@ a {
   outline: none;
   cursor: pointer;
   border: 1px solid;
-  color: red
 }
+
 
 .btn--primary {
   background-color: var(--primary);
@@ -221,11 +221,16 @@ a {
 }
 
 .btn--outline{
-  background-color: transparent;
-  color: #fff;
+  background-color: white;
   padding: 8px 20px;
   border: all 0.3s ease-out;
+font-size: 1.5rem;
 }
+
+.btn--outline a{
+  color: black
+}
+
 
 .btn-medium {
   padding: 8px 20px;
@@ -256,7 +261,7 @@ video {
 }
 
 .home-container {
-  /* background: url('/images/img-home.jpg') center center/cover no-repeat; */
+  background: url('/images/treeimage.jpeg') center center/cover no-repeat;
   height: 100vh;
   width: 100%;
   display: flex;
@@ -565,6 +570,49 @@ video {
   width: 32%;
 }
 
+/* dropdown start */
+
+.dropdown-menu {
+  background: red;
+  width: 200px;
+  position: absolute;
+  top: 80px;
+  list-style: none;
+  text-align: start;
+}
+
+.dropdown-menu li {
+  background: #050505;
+  cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+  background: #a8a6a6;
+}
+
+.dropdown-menu.clicked {
+  display: none;
+}
+
+.dropdown-link {
+  display: block;
+  height: 100%;
+  width: 100%;
+  text-decoration: none;
+  color: #fff;
+  padding: 16px;
+}
+
+@media screen and (max-width: 960px) {
+  .fa-caret-down {
+    display: block;
+  }
+}
+
+/* dropdown end */
+
+=======
 .highlighted {
   background-color: green;
 }
+
