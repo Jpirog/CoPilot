@@ -1,8 +1,18 @@
+/* eslint-disable react/prop-types */
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-const AddRestaurant = () => {
+const AddRestaurant = (props) => {
+  const tripId = props.match.params.tripId;
+  const { state } = useSelector(state => ( { state } ))
+
+  const { trip, tripevents } = useSelector((state) => ({
+    trip: state.trips.trip,
+    tripevents: state.trips.trip.tripevents,
+  }));
+  
   const [restaurantList, setrestaurantList] = useState([]);
   const [searchValue, setSearchValue] = useState("");
 
