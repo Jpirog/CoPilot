@@ -568,3 +568,17 @@ video {
 .highlighted {
   background-color: green;
 }
+
+.flexBox {
+flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  align-content:space-between;
+
+
+}
+
+.item {
+  align-items: center;
+  text-align: center;
+}
