@@ -1,27 +1,53 @@
 /* eslint-disable react/prop-types */
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getTripDetails, addTripEvent, removeTripEvent } from "../store/trips";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const AddRestaurant = (props) => {
   const tripId = props.match.params.tripId;
-  const { state } = useSelector(state => ( { state } ))
 
   const { trip, tripevents } = useSelector((state) => ({
     trip: state.trips.trip,
     tripevents: state.trips.trip.tripevents,
   }));
-  
-  const [restaurantList, setrestaurantList] = useState([]);
+
+  const [restaurantList, setRestaurantList] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+
+  const [startDate, setStartDate] = useState(new Date());
+
+  const dispatch = useDispatch();
+
+  function availableDates() {
+    let activeDays = [];
+    let amountActDays =
+      new Date(trip.endDate).getDate() - new Date(trip.startDate).getDate();
+    for (let i = 0; i <= amountActDays; i++) {
+      activeDays.push(
+        new Date(
+          new Date(trip.startDate).setDate(
+            new Date(trip.startDate).getDate() + i
+          )
+        )
+      );
+    }
+    return activeDays;
+  }
 
   useEffect(() => {
     const func = async () => {
       const { data } = await axios.get("/api/yelp/restaurants");
-      setrestaurantList(data);
+      setRestaurantList(data);
     };
     func();
+  }, []);
+
+  useEffect(() => {
+    dispatch(getTripDetails(tripId));
   }, []);
 
   function handleChange(e) {
@@ -36,7 +62,7 @@ const AddRestaurant = (props) => {
       const { data } = await axios.get("/api/yelp/restaurants", {
         params: { term: searchValue },
       });
-      setrestaurantList(data);
+      setRestaurantList(data);
     };
 
     func();
@@ -44,9 +70,37 @@ const AddRestaurant = (props) => {
 
   return (
     <div style={{ padding: "20px" }}>
-      <button type="button" onClick={() => {}}>
-        Add a restaurant
-      </button>
+      <table border="2px">
+        <tbody>
+          <tr>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Description</th>
+            <th>delete</th>
+          </tr>
+          {tripevents &&
+            tripevents.map((event) =>
+              event.purpose === "MEAL" ? (
+                <tr key={event.id}>
+                  <td>{event.startDate}</td>
+                  <td>{event.endDate}</td>
+                  <td>{event.description}</td>
+                  <td>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        dispatch(removeTripEvent(tripId, event.id));
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ) : ("")
+            )}
+          {""}
+        </tbody>
+      </table>
 
       <form onSubmit={handleSubmit}>
         <input
@@ -72,6 +126,50 @@ const AddRestaurant = (props) => {
           <li>{restaurant.name}</li>
           <li>{restaurant.rating}</li>
           <li>{restaurant.price}</li>
+
+          {trip.id && (
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => {
+                setStartDate(date);
+              }}
+              isClearable
+              showTimeSelect
+              timeFormat="HH:mm"
+              dateFormat="MMMM d, h:mm aa yyyy"
+              timeIntervals={30}
+              placeholderText="Select a date"
+              timeCaption="Time"
+              openToDate={new Date(trip.startDate)}
+              includeDates={availableDates()}
+              dayClassName={(date) => {
+                return date >= new Date(trip.startDate) &&
+                  date <= new Date(trip.endDate)
+                  ? "highlighted"
+                  : undefined;
+              }}
+              withPortal
+            />
+          )}
+          <button
+            onClick={() => {
+              console.log(startDate)
+              if (startDate) {
+                dispatch(
+                  addTripEvent({
+                    purpose: "LUNCH",
+                    startDate,
+                    tripId,
+                    description: `${restaurant.name}, website: ${restaurant.url}`,
+                  })
+                );
+              } else {
+                alert("please select your startDate");
+              }
+            }}
+          >
+            Add to trip
+          </button>
         </ul>
       ))}
     </div>
