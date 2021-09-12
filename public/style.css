@@ -611,3 +611,8 @@ video {
 
 /* dropdown end */
 
+=======
+.highlighted {
+  background-color: green;
+}
+
