@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,9 +17,8 @@ const AddHotel = (props) => {
 
   const [hotelList, setHotelList] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-
-  const [dateRange, setDateRange] = useState([null, null]);
-  const [startDate, endDate] = dateRange;
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -29,7 +29,7 @@ const AddHotel = (props) => {
     });
     setHotelList(data);
   };
-
+  
   useEffect(() => {
     dispatch(getTripDetails(tripId));
   }, []);
@@ -44,15 +44,14 @@ const AddHotel = (props) => {
 
   return (
     <div style={{ padding: "20px" }}>
-      
-      {/* <button type="button" onClick={()=>{}}>Add A Hotel</button> */}
-
       <table border="2px">
         <tbody>
           <tr>
             <th>Start Date</th>
             <th>End Date</th>
-            <th>Description</th>
+            <th>Hotel Name</th>
+            <th>Hotel Website</th>
+            <th>Hotel Location </th>
             <th>delete</th>
           </tr>
           {tripevents &&
@@ -61,7 +60,13 @@ const AddHotel = (props) => {
                 <tr key={event.id}>
                   <td>{event.startDate}</td>
                   <td>{event.endDate}</td>
-                  <td>{event.description}</td>
+                  <td>{JSON.parse(event.description).name}</td>
+                  <td>
+                    <a href={JSON.parse(event.description).website}>
+                      Link of Website
+                    </a>
+                  </td>
+                  <td>{JSON.parse(event.description).location}</td>
                   <td>
                     <button
                       type="button"
@@ -73,13 +78,16 @@ const AddHotel = (props) => {
                     </button>
                   </td>
                 </tr>
-              ) : (
-                ""
-              )
-            )}{" "}
+              ) : null
+            )}
         </tbody>
       </table>
 
+      <br />
+
+      <Link to={`/${tripId}/activity`}>
+        <button>Go to Activity:</button>
+      </Link>
       <form onSubmit={handleSubmit}>
         <input
           placeholder="search for your hotel"
@@ -99,65 +107,78 @@ const AddHotel = (props) => {
         </button>
       </form>
 
-      <Link to="/activity">Go to Next:</Link>
-
-      {hotelList.map((hotel) => (
-        <ul
-          key={hotel.id}
-          style={{ flex: 1, flexDirection: "row", padding: "20px" }}
-        >
-          <a href={hotel.url}>
-            <img
-              style={{ width: "20%", height: "20%" }}
-              src={hotel.image_url}
-            ></img>
-          </a>
-          <li>{hotel.name}</li>
-          <li>{hotel.rating}</li>
-          <li>{hotel.price}</li>
-
-          {trip.id && (
-            <DatePicker
-              selected={startDate}
-              selectsRange={true}
-              startDate={startDate}
-              endDate={endDate}
-              onChange={(update) => {
-                setDateRange(update);
-              }}
-              placeholderText="select a day"
-              openToDate={new Date(trip.startDate)}
-              dayClassName={(date) => {
-                return date >= new Date(trip.startDate) &&
-                  date <= new Date(trip.endDate)
-                  ? "highlighted"
-                  : undefined;
-              }}
-              withPortal
-            />
-          )}
-          <button
-            onClick={() => {
-              console.log(dateRange);
-              if (dateRange[0]) {
-                dispatch(
-                  addTripEvent({
-                    purpose: "SLEEP",
-                    startDate,
-                    endDate,
-                    tripId,
-                    description: `{hotel: ${hotel.name}, website:${hotel.url}}`,
-                  })
-                );
-              } else {
-                alert("please select your dateRange");
-              }
-            }}
+      <div className="flexBox">
+        {hotelList.map((hotel) => (
+          <ul
+            className="item"
+            key={hotel.id}
+            style={{ padding: "2%", width: "33%", listStyleType: "none" }}
           >
-            Add to trip
-          </button>
-        </ul>
-      ))}
+            <a href={hotel.url}>
+              <img
+                style={{ width: "60%", height: "60%" }}
+                src={hotel.image_url}
+              ></img>
+            </a>
+            <li>{hotel.name}</li>
+            <li>{hotel.rating}</li>
+            <li>{hotel.price}</li>
+
+            <>
+              <DatePicker
+                placeholderText="select a CheckIn DateTime"
+                timeInputLabel="Pick a Time:"
+                dateFormat="MM/dd/yyyy h:mm aa"
+                showTimeInput
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+                selectsStart
+                startDate={startDate}
+                endDate={endDate}
+                withPortal
+              />
+              <DatePicker
+                placeholderText="select a CheckOut DateTime"
+                timeInputLabel="Pick a Time:"
+                dateFormat="MM/dd/yyyy h:mm aa"
+                showTimeInput
+                selected={endDate}
+                onChange={(date) => setEndDate(date)}
+                selectsEnd
+                startDate={startDate}
+                endDate={endDate}
+                minDate={startDate}
+                withPortal
+              />
+            </>
+            <button
+              onClick={() => {
+                if (startDate) {
+                  dispatch(
+                    addTripEvent({
+                      purpose: "SLEEP",
+                      startDate,
+                      endDate,
+                      tripId,
+                      description: JSON.stringify({
+                        name: hotel.name,
+                        website: hotel.url,
+                        location: JSON.stringify(
+                          hotel.location.display_address
+                        ),
+                      }),
+                    })
+                  );
+                } else {
+                  alert("please select your dateRange");
+                }
+              }}
+            >
+              Add to trip
+            </button>
+          </ul>
+        ))}{" "}
+      </div>
     </div>
   );
 };

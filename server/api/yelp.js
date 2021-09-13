@@ -42,4 +42,23 @@ router.get("/restaurants", async (req, res, next) => {
     }
 })
 
+
+router.get("/activity",async (req, res, next) =>{
+    try{
+        
+        const {data} = await axios.get(URL,{
+            headers:HEADERS,
+            params:{
+                'term':req.query.term,
+                'location':"NYC",
+                "sort_by":"rating",
+                "limit":20,
+                "categories":req.query.category?req.query.category:"All"
+            }
+    
+        })
+        res.send(data.businesses)
+    }catch(er){next(er)}
+})
+
 module.exports = router
