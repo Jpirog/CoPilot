@@ -80,7 +80,7 @@ const AddRestaurant = (props) => {
           </tr>
           {tripevents &&
             tripevents.map((event) =>
-              event.purpose === "MEAL" ? (
+              event.purpose === "LUNCH" ? (
                 <tr key={event.id}>
                   <td>{event.startDate}</td>
                   <td>{event.endDate}</td>
@@ -158,7 +158,7 @@ const AddRestaurant = (props) => {
                 dispatch(
                   addTripEvent({
                     purpose: "LUNCH",
-                    startDate,
+                    startDate: startDate.toDateString(),
                     tripId,
                     description: `${restaurant.name}, website: ${restaurant.url}`,
                   })
