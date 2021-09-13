@@ -74,8 +74,9 @@ const AddRestaurant = (props) => {
         <tbody>
           <tr>
             <th>Start Date</th>
-            <th>End Date</th>
-            <th>Description</th>
+            <th>Restaurant Name</th>
+            <th>Restaurant Website</th>
+            <th>Restaurant Location </th>
             <th>delete</th>
           </tr>
           {tripevents &&
@@ -83,8 +84,13 @@ const AddRestaurant = (props) => {
               event.purpose === "LUNCH" ? (
                 <tr key={event.id}>
                   <td>{event.startDate}</td>
-                  <td>{event.endDate}</td>
-                  <td>{event.description}</td>
+                  <td>{JSON.parse(event.description).place}</td>
+                  <td>
+                    <a href={JSON.parse(event.description).website}>
+                      Link of Website
+                    </a>
+                  </td>
+                  <td>{JSON.parse(event.description).address}</td>
                   <td>
                     <button
                       type="button"
@@ -96,9 +102,8 @@ const AddRestaurant = (props) => {
                     </button>
                   </td>
                 </tr>
-              ) : ("")
+              ) : null
             )}
-          {""}
         </tbody>
       </table>
 
@@ -112,17 +117,19 @@ const AddRestaurant = (props) => {
         <input type="submit" value="Search a restaurant" />
       </form>
 
-      <Link to="/hotel">Go to Next:</Link>
+      <Link to={`/${tripId}/hotel`}>Go next to hotels:</Link>
 
       {restaurantList.map((restaurant) => (
         <ul
           key={restaurant.id}
           style={{ flex: 1, flexDirection: "row", padding: "20px" }}
         >
-          <img
-            style={{ width: "20%", height: "20%" }}
-            src={restaurant.image_url}
-          ></img>
+           <a href={restaurant.url}>
+            <img
+              style={{ width: "20%", height: "20%" }}
+              src={restaurant.image_url}
+            ></img>
+          </a>
           <li>{restaurant.name}</li>
           <li>{restaurant.rating}</li>
           <li>{restaurant.price}</li>
@@ -153,14 +160,19 @@ const AddRestaurant = (props) => {
           )}
           <button
             onClick={() => {
-              console.log(startDate)
               if (startDate) {
                 dispatch(
                   addTripEvent({
                     purpose: "LUNCH",
-                    startDate: startDate.toDateString(),
+                    startDate,
                     tripId,
-                    description: `${restaurant.name}, website: ${restaurant.url}`,
+                    description: JSON.stringify({
+                      place: restaurant.name,
+                      website: restaurant.url,
+                      address: JSON.stringify(
+                        restaurant.location.display_address
+                      ),
+                    }),
                   })
                 );
               } else {
