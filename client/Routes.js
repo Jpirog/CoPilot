@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
@@ -31,7 +32,7 @@ class Routes extends Component {
           <Switch>
             <Route exact path="/:tripId/hotel" component={AddHotel} />
             <Route path="/:tripId/activity" component={AddActivity} />
-            <Route path="/restaurant" component={AddRestaurant} />
+            <Route path="/:tripId/restaurant" component={AddRestaurant} />
             <Route path="/home" component={Home} />
             <Route path="/editprofile" component={ EditProfile } />
 

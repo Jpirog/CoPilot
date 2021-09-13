@@ -87,7 +87,6 @@ export const addUpdateTrip = (trip) => {
 export const addTripEvent = (event) => {
   return async (dispatch) => { 
     try{
-      console.log("this is event",event)
       const { data: newEvent } = await axios.post('/api/tripevents', event);
       dispatch(getTripDetails(newEvent.tripId));
     }
