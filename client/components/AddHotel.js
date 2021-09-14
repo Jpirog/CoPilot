@@ -5,12 +5,27 @@ import { Link } from "react-router-dom";
 import {getTripDetails,addTripEvent,removeTripEvent} from "../store/trips"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Loader } from "@googlemaps/js-api-loader";
+
+
+const loader = new Loader({
+  apiKey: "AIzaSyAStFOdHfunpjDJckRnvA8zZNCLnOmuTLU",
+  version: "weekly",
+  // ...additionalOptions,
+});
+
+loader.load().then(() => {
+  let map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: -34.397, lng: 150.644 },
+    zoom: 8,
+  });
+});
 
 
 
 const AddHotel= (props)=> {
-    const tripId = props.match.params.tripId;
-   const {trip,tripevents} = useSelector((state)=>({trip:state.trips.trip,tripevents:state.trips.trip.tripevents}))
+    // const tripId = props.match.params.tripId;
+   const {tripId,tripevents} = useSelector((state)=>({tripId:state.trips.trip.id,tripevents:state.trips.trip.tripevents}))
    const [hotelList,setHotelList] = useState([]);
    const [searchValue,setSearchValue] = useState("");
 
@@ -29,7 +44,7 @@ const AddHotel= (props)=> {
 }
     useEffect(()=> {
       
-       dispatch(getTripDetails(tripId))
+       dispatch(getTripDetails(1))
    },[]) 
 
     useEffect(
@@ -43,6 +58,8 @@ const AddHotel= (props)=> {
 
 return (
     <div style={{padding:"20px"}}>
+
+     
 
 <table border="2px">
 <tbody>
@@ -114,7 +131,7 @@ dispatch(removeTripEvent(tripId,event.id))
     </>   
         <button onClick={()=>{
 
-            if(startDate) {
+            if(startDate&&endDate) {
 
             dispatch(addTripEvent({
                 purpose:"SLEEP",

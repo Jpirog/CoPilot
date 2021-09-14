@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/FSA-Team-1-Capstone/CoPilot#readme",
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.12.2",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
     "compression": "^1.7.3",
