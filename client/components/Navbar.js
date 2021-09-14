@@ -3,11 +3,15 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {logout} from '../store';
 import { Button } from './Button';
+import Dropdown from './Dropdown';
+
 
 
 const Navbar = ({handleClick, isLoggedIn}) => {
   const[click, setClick] = useState(false);
   const[button, setButton] = useState(true)
+  const [dropdown, setDropdown] = useState(false);
+
 
   const fastClick = () =>  setClick(!click);
   const closeMobileMenu = () => setClick(false);
@@ -17,6 +21,23 @@ const Navbar = ({handleClick, isLoggedIn}) => {
       setButton(false)
     } else {
       setButton(true)
+    }
+  };
+
+
+  const onMouseEnter = () => {
+    if (window.innerWidth < 960) {
+      setDropdown(false);
+    } else {
+      setDropdown(true);
+    }
+  };
+
+  const onMouseLeave = () => {
+    if (window.innerWidth < 960) {
+      setDropdown(false);
+    } else {
+      setDropdown(false);
     }
   };
 
@@ -63,14 +84,23 @@ const Navbar = ({handleClick, isLoggedIn}) => {
               Tourist Activities
               </Link>
             </li>
-            <li className='nav-item'>
+            {/* <li className='nav-item'>
               <Link to="/editprofile" className="nav-links" onClick={closeMobileMenu}>
               My Profile
               </Link>
+            </li> */}
+            <li 
+            className='nav-item'
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}>
+              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
+              More <i className='fas fa-caret-down' />
+              </Link>
+              {dropdown && <Dropdown />}
             </li>
           </ul>
-          {button && <Button onClick={handleClick} buttonStyle='btn--outline'><i className={'fa fa-sign-out-alt' } />
-</Button>}
+          {/* {button && <Button onClick={handleClick} buttonStyle='btn--outline'><i className={'fa fa-sign-out-alt' } />
+</Button>} */}
         </div>
       ) : (
         <div className='navbar-container'>
