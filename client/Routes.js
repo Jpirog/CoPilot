@@ -37,7 +37,6 @@ class Routes extends Component {
             <Route path="/home" component={Home} />
             <Route path="/editprofile" component={ EditProfile } />
             <Route path="/inviteresponse" component={ InviteResponse } />
-            <Route path="/" component={Home} />
             <Route exact path="/create/trip" component={ CreateTrip } />
             <Route path="/" component={Home} />
 
