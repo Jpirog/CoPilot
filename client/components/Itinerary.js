@@ -19,10 +19,10 @@ class Itinerary extends React.Component {
     render () {
     const practiceSuggestedArray = ['Fernando Grill', 'Best Place Ever', 'A Cool Place'];
     const practiceChosenArray = ['Best Place Ever', 'A Cool Place'];
-
+    const thing = 'Morel'
     //const chosenTrip = this.props.trips.filter((trip) => trip.id === this.props.match.params.id)[0];
-    console.log('MATCH PARAMS:', this.props.match.params.id);
-    console.log('TRIPS', state.trips)
+    console.log('MATCH PARAMS:', this.props.match.params.tripId);
+    console.log('TRIPS', this.props.trips)
     console.log('chosenTrip:', chosenTrip);
         return (
             <div id='itineraryBox'>
@@ -123,7 +123,7 @@ class Itinerary extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        trips: state.trips
+        trips: state.trips.trip
     }
 }
 
