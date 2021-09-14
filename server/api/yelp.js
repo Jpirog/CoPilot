@@ -30,7 +30,7 @@ router.get("/restaurants", async (req, res, next) => {
         const { data } = await axios.get( URL, {
             headers: HEADERS, 
             params: {
-                'term': "restaurant",
+                'term': req.query.term,
                 'location': "NYC",
                 "limit": 20,
                 "sort_by": "rating"
@@ -40,6 +40,25 @@ router.get("/restaurants", async (req, res, next) => {
     } catch(er) {
         next(er)
     }
+})
+
+
+router.get("/activity",async (req, res, next) =>{
+    try{
+        
+        const {data} = await axios.get(URL,{
+            headers:HEADERS,
+            params:{
+                'term':req.query.term,
+                'location':"NYC",
+                "sort_by":"rating",
+                "limit":20,
+                "categories":req.query.category?req.query.category:"All"
+            }
+    
+        })
+        res.send(data.businesses)
+    }catch(er){next(er)}
 })
 
 module.exports = router
