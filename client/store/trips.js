@@ -167,7 +167,6 @@ export const updateTripAttendee = (attendee) => {
 export const getTripsNeedingResponse = async (userId) => {
   try{
     const { data: trips } = await axios.get(`/api/tripattendees/needresponse/${userId}`);
-    console.log('THERE ARE TRIPS', trips)
     return trips;
   }
   catch(ex){
