@@ -15,6 +15,8 @@ router.get('/:tripId', async (req, res, next) => {
   }
 })
 
+
+
 // returns all trips that a user created
 router.get('/usercreated/:userId', async (req, res, next) => {
   try {

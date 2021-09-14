@@ -13,6 +13,7 @@ import CreateTrip from './components/CreateTrip';
 import { AboutUs } from './components/AboutUs';
 import {me} from './store'
 import Itinerary from './components/Itinerary';
+import AllTrips from './components/AllTrips';
 
 class Routes extends Component {
   componentDidMount() {
@@ -35,9 +36,10 @@ class Routes extends Component {
             <Route path="/restaurant" component={AddRestaurant} />
             <Route path="/home" component={Home} />
             <Route path="/editprofile" component={ EditProfile } />
-            <Route exact path="/itinerary" component={Itinerary} />
+            <Route exact path="/:tripId/itinerary" component={Itinerary} />
             <Route exact path="/create/trip" component={ CreateTrip } />
             <Route exact path="/" component={Home} />
+            <Route exact path="/allTrips" component={AllTrips}/>
             {/* <Route exact path="/usercreated/:userId"><Trips/></Route> */}
             {/*<Redirect to="/home" /> */}
           </Switch>

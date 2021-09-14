@@ -576,6 +576,8 @@ video {
   width: 32%;
 }
 
+
+/* ITINERARY */
 #itineraryBox {
   padding: 50px;
 }
@@ -585,7 +587,7 @@ video {
   justify-content: center;
 }
 
-#tripDuration {
+.tripDuration {
   display:flex;
   justify-content: center;
 }
@@ -601,27 +603,58 @@ video {
   margin: 50px;
   border-radius: 10px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-evenly;
 }
 
 .eventCategory {
   /* border: black solid 1px; */
+  /* text-align: center;
   border-radius: 10px;
   padding: 15px;
   margin: 15px;
+  width: 20%; */
+  /* height: 10px; */
+  /* justify-content: space-evenly; */
+  padding: 9%;
+  margin: auto;
+  text-decoration-line: underline;
 }
 
 .events {
-  border:red solid 1px;
+  /* border:red solid 1px; */
   display: flex;
   justify-content: space-around;
   border-radius: 10px;
   padding: 15px;
   flex-direction: column;
+  margin: 15px;
+  text-align: center;
+  width: 30%;
 }
 
 .individualItem {
   border:blue solid 1px;
   padding: 10px;
   margin: 5px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+/* ALL TRIPS PAGE*/
+#allTripsPage {
+  padding: 50px;
+}
+
+#pageTitle {
+  display:flex;
+  justify-content: center;
+}
+
+.singleTripCard {
+  border: black solid 1px;
+  padding: 5px;
+  margin: 50px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-evenly;
 }

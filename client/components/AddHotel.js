@@ -27,7 +27,8 @@ const AddHotel= (props)=> {
     event.preventDefault();
     const {data} =  await axios.get("/api/yelp/hotel",{params:{term:searchValue}});
     setHotelList(data);
-}
+    }
+    
     useEffect(()=> {
       
        dispatch(getTripDetails(tripId))
