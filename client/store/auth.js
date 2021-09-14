@@ -1,7 +1,8 @@
-import axios from 'axios'
-import history from '../history'
+import axios from 'axios';
+import history from '../history';
+import { getTripsNeedingResponse  } from "../store/trips";
 
-const TOKEN = 'token'
+const TOKEN = 'token';
 
 /**
  * ACTION TYPES
@@ -33,6 +34,19 @@ export const authenticate = (username, password, method, name) => async dispatch
     const res = await axios.post(`/auth/${method}`, {username, password, name})
     window.localStorage.setItem(TOKEN, res.data.token)
     dispatch(me())
+
+// added code:    
+// user is now authenticated or registered - check for trips they were invited to and need a response.
+// direct to home page if none, or to inviteresponse if there are some.
+// 
+
+    const trips = await getTripsNeedingResponse(username);
+    if (trips.length > 0){
+      history.push('/inviteresponse');
+    } else {
+      history.push('/home'); 
+    }
+
   } catch (authError) {
     return dispatch(setAuth({error: authError}))
   }

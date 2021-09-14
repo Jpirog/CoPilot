@@ -11,6 +11,7 @@ import AddHotel from "./components/AddHotel"
 import AddRestaurant from './components/AddRestaurant';
 import AddActivity from './components/AddActivity';
 import CreateTrip from './components/CreateTrip';
+import InviteResponse from './components/InviteResponse';
 import { AboutUs } from './components/AboutUs';
 import { me } from './store'
 
@@ -35,7 +36,8 @@ class Routes extends Component {
             <Route path="/:tripId/restaurant" component={AddRestaurant} />
             <Route path="/home" component={Home} />
             <Route path="/editprofile" component={ EditProfile } />
-
+            <Route path="/inviteresponse" component={ InviteResponse } />
+            <Route path="/" component={Home} />
             <Route exact path="/create/trip" component={ CreateTrip } />
             <Route path="/" component={Home} />
 

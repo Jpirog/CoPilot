@@ -163,6 +163,29 @@ export const updateTripAttendee = (attendee) => {
   }
 }
 
+// getTripsNeedingResponse returns the trips a user is invited to but hasn't responded to
+export const getTripsNeedingResponse = async (userId) => {
+  try{
+    const { data: trips } = await axios.get(`/api/tripattendees/needresponse/${userId}`);
+    return trips;
+  }
+  catch(ex){
+    console.log('ERROR getting user invited trips needing response', ex);
+  }
+}
+
+// updateTripResponse updates the trip attendee table with a users accept or decline
+export const updateTripResponse = async (tripId, userId, response) => {
+  console.log('in thunk', tripId, userId, response)
+  try{
+    const { data: trips } = await axios.put('/api/tripattendees/response/', { tripId, userId, response });
+    return trips;
+  }
+  catch(ex){
+    console.log('ERROR updating user response', ex);
+  }
+}
+
 // * REDUCER
 
 export default function(state = {trip: {}, userCreatedTrips: [], userInvitedTrips: []}, action) {
