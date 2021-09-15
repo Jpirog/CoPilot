@@ -60,7 +60,9 @@ User.authenticate = async function({ username, password }){
       error.status = 401;
       throw error;
     }
-    return user.generateToken();
+//    return user.generateToken();  old
+    const token = user.generateToken(); // added
+    return {token, user };  // added
 };
 
 User.findByToken = async function(token) {

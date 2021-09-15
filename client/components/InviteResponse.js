@@ -20,9 +20,11 @@ const InviteResponse = props => {
     const fetchData = async () => {
       const trips = await getTripsNeedingResponse(userId);
       setTrips(trips);
+    };
+    if (userId){
+      fetchData();
     }
-    fetchData();
-  },[] );
+  },[userId] );
 
   const recordResponse = async (tripId, userId, response) => {
     await updateTripResponse(tripId, userId, response);
