@@ -1,6 +1,6 @@
 import axios from 'axios';
 import history from '../history';
-import { getTripsNeedingResponse  } from "../store/trips";
+import { getTripsNeedingResponse, updateInvitedTripsWithId  } from "../store/trips";
 
 const TOKEN = 'token';
 
@@ -34,13 +34,20 @@ export const authenticate = (username, password, method, name) => async dispatch
     const res = await axios.post(`/auth/${method}`, {username, password, name})
     window.localStorage.setItem(TOKEN, res.data.token)
     dispatch(me())
-
+    
 // added code:    
-// user is now authenticated or registered - check for trips they were invited to and need a response.
-// direct to home page if none, or to inviteresponse if there are some.
+// user is now authenticated or registered 
+// 1) If just signed up, update any tripAttendee rows with this email ID with the user id
+// 2) For all, cCheck for trips they were invited to and need a response.
+//     if none, redirect to home page 
+//     if there are some needing a response, redirect to inviteresponse
 // 
 
-    const trips = await getTripsNeedingResponse(username);
+    if (method === 'signup'){
+        const invitedTrips = await updateInvitedTripsWithId(username, res.data.userId);
+    }
+// console.log('-----', res.data)
+    const trips = await getTripsNeedingResponse(res.data.userId);
     if (trips.length > 0){
       history.push('/inviteresponse');
     } else {
@@ -54,7 +61,7 @@ export const authenticate = (username, password, method, name) => async dispatch
 
 export const logout = () => {
   window.localStorage.removeItem(TOKEN)
-  history.push('/login')
+  history.push('/') // was login
   return {
     type: SET_AUTH,
     auth: {}

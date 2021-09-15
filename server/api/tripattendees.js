@@ -54,3 +54,21 @@ router.put('/response', async (req, res, next) => {
     next(ex);
   }
 })
+
+// update a new user's trip invites with the user ID (which is not known if they were not registererd)
+router.put('/updateid', async (req, res, next) => {
+  try {
+    // console.log('IN API', req.body.username, req.body.userId)
+    // const data = await TripAttendee.update(
+    //  { userId: 1 }, 
+    //  { where: { email: 'lucy1@lucy' }, returning: true } );
+    const data = await TripAttendee.update(
+      { userId: req.body.userId}, 
+      { where: { email: req.body.username }} );
+//      console.log('SEQ results', data)
+    res.sendStatus(200);
+  } catch (ex) {
+    console.log('ERROR updating a trip attendee ID based off username (email)', ex);
+    next(ex);
+  }
+})
