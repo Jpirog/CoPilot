@@ -84,13 +84,13 @@ const AddRestaurant = (props) => {
               event.purpose === "LUNCH" ? (
                 <tr key={event.id}>
                   <td>{event.startDate}</td>
-                  <td>{JSON.parse(event.description).place}</td>
+                  <td>{JSON.parse(event.description).name}</td>
                   <td>
                     <a href={JSON.parse(event.description).website}>
                       Link of Website
                     </a>
                   </td>
-                  <td>{JSON.parse(event.description).address}</td>
+                  <td>{JSON.parse(event.description).location}</td>
                   <td>
                     <button
                       type="button"
@@ -134,30 +134,28 @@ const AddRestaurant = (props) => {
           <li>{restaurant.rating}</li>
           <li>{restaurant.price}</li>
 
-          {trip.id && (
-            <DatePicker
-              selected={startDate}
-              onChange={(date) => {
-                setStartDate(date);
-              }}
-              isClearable
-              showTimeSelect
-              timeFormat="HH:mm"
-              dateFormat="MMMM d, h:mm aa yyyy"
-              timeIntervals={30}
-              placeholderText="Select a date"
-              timeCaption="Time"
-              openToDate={new Date(trip.startDate)}
-              includeDates={availableDates()}
-              dayClassName={(date) => {
-                return date >= new Date(trip.startDate) &&
-                  date <= new Date(trip.endDate)
-                  ? "highlighted"
-                  : undefined;
-              }}
-              withPortal
-            />
-          )}
+          <DatePicker
+            selected={startDate}
+            onChange={(date) => {
+              setStartDate(date);
+            }}
+            isClearable
+            showTimeSelect
+            timeFormat="HH:mm"
+            dateFormat="MMMM d, h:mm aa yyyy"
+            timeIntervals={30}
+            placeholderText="Select a date"
+            timeCaption="Time"
+            openToDate={new Date(trip.startDate)}
+            includeDates={availableDates()}
+            dayClassName={(date) => {
+              return date >= new Date(trip.startDate) &&
+                date <= new Date(trip.endDate)
+                ? "highlighted"
+                : undefined;
+            }}
+            withPortal
+          />
           <button
             onClick={() => {
               if (startDate) {
@@ -167,9 +165,9 @@ const AddRestaurant = (props) => {
                     startDate,
                     tripId,
                     description: JSON.stringify({
-                      place: restaurant.name,
+                      name: restaurant.name,
                       website: restaurant.url,
-                      address: JSON.stringify(
+                      location: JSON.stringify(
                         restaurant.location.display_address
                       ),
                     }),
@@ -183,7 +181,7 @@ const AddRestaurant = (props) => {
             Add to trip
           </button>
         </ul>
-      ))}
+      ))}{" "}
     </div>
   );
 };
