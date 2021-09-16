@@ -200,7 +200,17 @@ a {
 }
 
 /* NAVBAR END */
-
+#footer {
+  width: 100%;
+  background-color: #222222;
+  color: #ededed;
+}
+#footer div {
+  width: calc(100% - 4em);
+  padding: 2em;
+  text-align: center;
+  letter-spacing: 0.03em;
+}
 /* BUTTON START */
 :root {
   --primary: #fff
