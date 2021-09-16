@@ -31,9 +31,11 @@ class Routes extends Component {
 
         {isLoggedIn ? (
           <Switch>
-            <Route exact path="/:tripId/hotel" component={AddHotel} />
-            <Route path="/:tripId/activity" component={AddActivity} />
-            <Route path="/:tripId/restaurant" component={AddRestaurant} />
+
+            <Route exact path="/hotel" component={AddHotel} />
+            <Route path="/activity" component={AddActivity} />
+            <Route path="/restaurant" component={AddRestaurant} />
+
             <Route path="/home" component={Home} />
             <Route path="/editprofile" component={ EditProfile } />
             <Route path="/inviteresponse" component={ InviteResponse } />

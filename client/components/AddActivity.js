@@ -2,7 +2,7 @@ import axios from "axios";
 import React,{useEffect,useState} from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {getTripDetails,addTripEvent,removeTripEvent} from "../store/trips"
+import {getTripDetails,addTripEvent,removeTripEvent,updateTripEvent} from "../store/trips"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -53,6 +53,7 @@ return (
     <th>Activity Website</th> 
     <th>Activity Address </th>
     <th>Delete</th>
+    <th>Edit</th>
   </tr>
 {tripevents&&tripevents.map(event=>
 event.purpose==="OTHER"?
@@ -65,6 +66,9 @@ event.purpose==="OTHER"?
     <td><button type="button" onClick={()=>{
 dispatch(removeTripEvent(tripId,event.id))
 }}>Delete</button></td>
+<td><button type="button" onClick={()=>{
+console.log("update the time")
+}}>Edit</button></td>
   </tr>
 :null
 )}</tbody></table>
@@ -122,7 +126,7 @@ dispatch(removeTripEvent(tripId,event.id))
     </>
         <button onClick={()=>{
 
-            if(startDate) {
+            if(startDate&&endDate) {
 
             dispatch(addTripEvent({
                 purpose:"OTHER",

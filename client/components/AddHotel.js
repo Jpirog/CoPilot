@@ -2,23 +2,26 @@ import axios from "axios";
 import React,{useEffect,useState} from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {getTripDetails,addTripEvent,removeTripEvent} from "../store/trips"
+import {addTripEvent,removeTripEvent} from "../store/trips"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import GoogleMap from "./googleMap";
+
+
+
+
 
 
 
 const AddHotel= (props)=> {
-    const tripId = props.match.params.tripId;
-   const {trip,tripevents} = useSelector((state)=>({trip:state.trips.trip,tripevents:state.trips.trip.tripevents}))
+   const {tripId,tripevents} = useSelector((state)=>({tripId:state.trips.trip.id,tripevents:state.trips.trip.tripevents}))
    const [hotelList,setHotelList] = useState([]);
    const [searchValue,setSearchValue] = useState("");
-
-
    const [startDate, setStartDate] = useState(null);
    const [endDate, setEndDate] = useState(null);
+   const [addressList,setAddressList] =useState([]);
 
-
+//dispatch thunk
    const dispatch = useDispatch();
 
 
@@ -27,10 +30,6 @@ const AddHotel= (props)=> {
     const {data} =  await axios.get("/api/yelp/hotel",{params:{term:searchValue}});
     setHotelList(data);
 }
-    useEffect(()=> {
-      
-       dispatch(getTripDetails(tripId))
-   },[]) 
 
     useEffect(
         ()=>{
@@ -41,8 +40,20 @@ const AddHotel= (props)=> {
             func()
     },[])
 
+    useEffect(()=>{
+
+      let list = tripevents&&tripevents.filter(event=>event.purpose==="SLEEP").map(event=>JSON.parse(event.description))
+   setAddressList(list)
+  
+  },[tripevents])
+
+    
+
 return (
     <div style={{padding:"20px"}}>
+
+
+     
 
 <table border="2px">
 <tbody>
@@ -66,11 +77,13 @@ event.purpose==="SLEEP"?
 dispatch(removeTripEvent(tripId,event.id))
 }}>Delete</button></td></tr>
 :null
+
+
 )}</tbody></table>
 
 <br />
 
-<Link to={`/${tripId}/activity`}><button>Go to Activity:</button></Link>
+<Link to={`/activity`}><button>Go to Activity:</button></Link>
         <form onSubmit={handleSubmit}>
         <input placeholder="search for your hotel" value={searchValue} onChange={(e)=>{setSearchValue(e.target.value)}}></input>
         <button type="submit">search</button>
@@ -84,6 +97,7 @@ dispatch(removeTripEvent(tripId,event.id))
         <li >{hotel.name}</li>
         <li >{hotel.rating}</li>
         <li >{hotel.price}</li>
+ 
       
 
        <>
@@ -114,7 +128,7 @@ dispatch(removeTripEvent(tripId,event.id))
     </>   
         <button onClick={()=>{
 
-            if(startDate) {
+            if(startDate&&endDate) {
 
             dispatch(addTripEvent({
                 purpose:"SLEEP",
@@ -133,7 +147,8 @@ dispatch(removeTripEvent(tripId,event.id))
 
         }}>Add to trip</button>
         </ul>)}  </div>
-
+<br />  
+<GoogleMap addressList={addressList}/>
         </div>
 
 )
