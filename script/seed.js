@@ -22,7 +22,6 @@ async function seed() {
     Trip.create({ destination: 'Disney World, Orlando, FL', 
                   startDate: '2021-10-06', endDate: '2021-10-31', 
                   purpose: 'RELAX', status: 'IN PROGRESS', ownerId: users[0].id,
-                  // numberMeals: 5
                 }),
   ])
 
