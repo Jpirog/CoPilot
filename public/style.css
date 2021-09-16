@@ -611,7 +611,6 @@ video {
 
 /* dropdown end */
 
-=======
 .highlighted {
   background-color: green;
 }
@@ -629,4 +628,6 @@ flex-wrap: wrap;
   align-items: center;
   text-align: center;
 }
+
+
 
