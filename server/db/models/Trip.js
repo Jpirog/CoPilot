@@ -33,12 +33,6 @@ const Trip = db.define('trip',{
     defaultValue: 'IN PROGRESS',
     allowNull: false,
   },
-  // numberMeals: {
-  //   type: INTEGER,
-  //   defaultValue: 3,
-  //   allowNull: false,
-  //   unique: false,
-  // },
 })
 
 module.exports = Trip;
