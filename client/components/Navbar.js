@@ -2,16 +2,31 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {logout} from '../store';
-import { Button } from './Button';
+//import { Button } from './Button';
 import Dropdown from './Dropdown';
+import { getUserCreatedTrips, getUserInvitedTrips, getTripDetails } from '../store/trips';
+import { useDispatch } from 'react-redux';
+import dateFormat from 'dateformat';
 
 
+const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips }) => {
+  const dispatch = useDispatch();
+  const [userTrips, setUserTrips] = useState([]);
 
-const Navbar = ({handleClick, isLoggedIn}) => {
+  useEffect( () => {
+    const fetchData = async () => {
+      await dispatch(getUserInvitedTrips(userId));
+      await dispatch(getUserCreatedTrips(userId));
+      setUserTrips(createdTrips.concat(invitedTrips)); // probably not needed
+    }
+    if (userId){
+      fetchData();
+    }
+  },[userId]);
+
   const[click, setClick] = useState(false);
   const[button, setButton] = useState(true)
   const [dropdown, setDropdown] = useState(false);
-
 
   const fastClick = () =>  setClick(!click);
   const closeMobileMenu = () => setClick(false);
@@ -23,7 +38,6 @@ const Navbar = ({handleClick, isLoggedIn}) => {
       setButton(true)
     }
   };
-
 
   const onMouseEnter = () => {
     if (window.innerWidth < 960) {
@@ -47,6 +61,9 @@ const Navbar = ({handleClick, isLoggedIn}) => {
 
   window.addEventListener('resize', showButton)
 
+  const handleTripChange = (ev) => {
+    dispatch(getTripDetails(ev.target.value));
+  }
 
   return (
   <div>
@@ -57,6 +74,23 @@ const Navbar = ({handleClick, isLoggedIn}) => {
           <Link to="/" className="navbar-logo">
             CoPilot
           </Link>
+          <div style={{color: 'white'}}>select trip
+          <select name="trips" id="navtrips" onChange={handleTripChange}>
+          {
+            invitedTrips.concat(createdTrips).map((trip, i) => {
+              if (i === 0){
+                dispatch(getTripDetails(trip.id))
+              }
+              const fromDate = dateFormat(trip.startDate, "mmm d");
+              const toDate = dateFormat(trip.endDate, "mmm d");
+              const prefix = trip.ownerId === userId ? 'owner' : 'invitee';
+              return (
+                <option value={trip.id} key={trip.id}>({prefix}) { trip.destination } ({fromDate}-{toDate}) </option>
+              )
+            })
+          }
+          </select>
+          </div>
           {/* <a href="#" onClick={handleClick}>
             <i className={'fa fa-sign-out-alt' } />
           </a> */}
@@ -127,14 +161,17 @@ const Navbar = ({handleClick, isLoggedIn}) => {
     </nav>
   </div>
   )
-      };
+};
 
 /**
  * CONTAINER
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.auth.id
+    isLoggedIn: !!state.auth.id,
+    userId: state.auth.id,
+    createdTrips: state.trips.userCreatedTrips,
+    invitedTrips: state.trips.userInvitedTrips,
   }
 }
 

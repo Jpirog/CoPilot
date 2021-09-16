@@ -30,7 +30,7 @@ router.get("/restaurants", async (req, res, next) => {
         const { data } = await axios.get( URL, {
             headers: HEADERS, 
             params: {
-                'term': "restaurant",
+                'term': req.query.term,
                 'location': "NYC",
                 "limit": 20,
                 "sort_by": "rating"

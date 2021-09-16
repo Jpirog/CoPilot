@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
@@ -10,6 +11,7 @@ import AddHotel from "./components/AddHotel"
 import AddRestaurant from './components/AddRestaurant';
 import AddActivity from './components/AddActivity';
 import CreateTrip from './components/CreateTrip';
+import InviteResponse from './components/InviteResponse';
 import { AboutUs } from './components/AboutUs';
 import { me } from './store'
 
@@ -29,12 +31,14 @@ class Routes extends Component {
 
         {isLoggedIn ? (
           <Switch>
+
             <Route exact path="/hotel" component={AddHotel} />
             <Route path="/activity" component={AddActivity} />
             <Route path="/restaurant" component={AddRestaurant} />
+
             <Route path="/home" component={Home} />
             <Route path="/editprofile" component={ EditProfile } />
-
+            <Route path="/inviteresponse" component={ InviteResponse } />
             <Route exact path="/create/trip" component={ CreateTrip } />
             <Route path="/" component={Home} />
 

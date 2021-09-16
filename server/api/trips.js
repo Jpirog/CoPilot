@@ -32,7 +32,7 @@ router.get('/usercreated/:userId', async (req, res, next) => {
 router.get('/userinvited/:userId', async (req, res, next) => {
   try {
     const trips = await Trip.findAll({
-      include: [{ model: TripAttendee, where: { userId: req.params.userId } },
+      include: [{ model: TripAttendee, where: { userId: req.params.userId, accepted: true } },
         // {model: Event}
       ]
 //      where: { ownerId: req.params.userId },
