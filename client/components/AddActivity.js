@@ -2,7 +2,7 @@ import axios from "axios";
 import React,{useEffect,useState} from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {getTripDetails,addTripEvent,removeTripEvent,updateTripEvent} from "../store/trips"
+import {addTripEvent,removeTripEvent,updateTripEvent} from "../store/trips"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -11,35 +11,35 @@ let categoryList =["active","beautysvc","arts","bicycles","education","eventserv
 
 
 const AddActivity= (props)=> {
-    const tripId = props.match.params.tripId;
 
-   const {trip,tripevents} = useSelector((state)=>({trip:state.trips.trip,tripevents:state.trips.trip.tripevents}))
+   const {trip,tripId,tripevents} = useSelector((state)=>({trip:state.trips.trip,tripId:state.trips.trip.id,tripevents:state.trips.trip.tripevents}))
    const [activityList,setActivityList] = useState([]);
    const [searchValue,setSearchValue] = useState("");
    const [category,setCategory] = useState("");
-
+   const [description,setDescription] = useState("");
    const [startDate, setStartDate] = useState(null);
    const [endDate, setEndDate] = useState(null);
+   const [location,setLocation] =useState("")
 
    const dispatch = useDispatch();
-
    const handleSubmit = async(event)=>{
     event.preventDefault();
-    const {data} =  await axios.get("/api/yelp/activity",{params:{term:searchValue,category:category}});
+    const {data} =  await axios.get("/api/yelp/activity",{params:{term:searchValue,category:category,location}});
     setActivityList(data);
 }
-    useEffect(()=> {
-       dispatch(getTripDetails(tripId))
-   },[]) 
 
     useEffect(
         ()=>{
           const func = async()=>{
-          const {data} =  await axios.get("/api/yelp/activity");
+          const {data} =  await axios.get("/api/yelp/activity",{params:{location}});
           setActivityList(data);
             };
             func()
-    },[])
+    },[location])
+
+    useEffect(()=>{
+      setLocation(trip.destination)
+    },[trip])
 
 return (
     <div style={{padding:"20px"}}>
@@ -53,29 +53,30 @@ return (
     <th>Activity Website</th> 
     <th>Activity Address </th>
     <th>Delete</th>
-    <th>Edit</th>
+
   </tr>
 {tripevents&&tripevents.map(event=>
 event.purpose==="OTHER"?
   <tr key = {event.id}>
     <td>{(event.startDate)}</td>
     <td>{event.endDate}</td>
-    <td>{JSON.parse(event.description).place}</td> 
-    <td><a href={JSON.parse(event.description).website}>Link of Website</a></td> 
-    <td>{JSON.parse(event.description).address}</td> 
+    <td>{event.placeName}</td> 
+    <td><a href={event.url}>Link of Website</a></td> 
+    <td>{event.location}</td> 
     <td><button type="button" onClick={()=>{
 dispatch(removeTripEvent(tripId,event.id))
 }}>Delete</button></td>
-<td><button type="button" onClick={()=>{
-console.log("update the time")
-}}>Edit</button></td>
   </tr>
 :null
 )}</tbody></table>
 
 <br />
 <Link to="/home"><button>Go to Next?:</button></Link>
-<Link to={`/${tripId}/hotel`}><button>Go Back to Hotel:</button></Link>
+<Link to={`/hotel`}><button>Go Back to Hotel:</button></Link>
+<br />
+<label>Change location</label>
+<input value={location} onChange={(e)=>{setLocation(e.target.value)}}></input>
+
 
         <form className ="flexBox" onSubmit={handleSubmit}>
           <select value ={category} onChange={(e)=>{setCategory(e.target.value)}}>
@@ -97,7 +98,7 @@ console.log("update the time")
         <li >{activity.name}</li>
         <li >{activity.rating}</li>
         <li >{activity.categories[0].title}</li>
-
+        <li><input placeholder="add event description" value={description} onChange={(e)=>{setDescription(e.target.value)}}></input></li>
 <>
       <DatePicker
       placeholderText='select a start DateTime'
@@ -125,6 +126,7 @@ console.log("update the time")
       />
     </>
         <button onClick={()=>{
+console.log(activity.location.display_address.join(""))
 
             if(startDate&&endDate) {
 
@@ -133,9 +135,13 @@ console.log("update the time")
                 startDate,
                 endDate,
                 tripId,
-                description:
-                JSON.stringify({place: activity.name, website:activity.url,address:JSON.stringify(activity.location.display_address)}),
-                
+                description,
+                placeName:activity.name,
+                url:activity.url,
+                location:activity.location.display_address.join(""),
+                yelpId:activity.id,
+                rating:activity.rating,
+                priceLevel:activity.price
             }));
             
         } else 
