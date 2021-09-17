@@ -82,9 +82,9 @@ a {
   grid-gap: 10px;
   list-style: none;
   text-align: center;
-  width: 60vw;
+  width: 55vw;
   justify-content: end;
-  margin-right: 2rem;
+  margin-right: 1rem;
 }
 
 .nav-item {
@@ -198,7 +198,10 @@ a {
     transition: 250ms;
   }
 }
-
+#navtrip{
+  color: white;
+  padding-left: 15px;
+}
 /* NAVBAR END */
 #footer {
   width: 100%;
