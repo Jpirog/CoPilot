@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {logout} from '../store';
-//import { Button } from './Button';
 import Dropdown from './Dropdown';
 import { getUserCreatedTrips, getUserInvitedTrips, getTripDetails } from '../store/trips';
 import { useDispatch } from 'react-redux';
 import dateFormat from 'dateformat';
-
 
 const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips }) => {
   const dispatch = useDispatch();
@@ -74,21 +72,21 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips }) 
           <Link to="/" className="navbar-logo">
             CoPilot
           </Link>
-          <div style={{color: 'white'}}>select trip
-          <select name="trips" id="navtrips" onChange={handleTripChange}>
-          {
-            invitedTrips.concat(createdTrips).map((trip, i) => {
-              if (i === 0){
-                dispatch(getTripDetails(trip.id))
-              }
-              const fromDate = dateFormat(trip.startDate, "mmm d");
-              const toDate = dateFormat(trip.endDate, "mmm d");
-              const prefix = trip.ownerId === userId ? 'owner' : 'invitee';
-              return (
-                <option value={trip.id} key={trip.id}>({prefix}) { trip.destination } ({fromDate}-{toDate}) </option>
-              )
-            })
-          }
+          <div style={{color: 'white'}}>Trip:&nbsp;
+            <select name="trips" id="navtrips" onChange={handleTripChange}>
+            {
+              invitedTrips.concat(createdTrips).map((trip, i) => {
+                if (i === 0){
+                  dispatch(getTripDetails(trip.id))
+                }
+                const fromDate = dateFormat(trip.startDate, "mmm d");
+                const toDate = dateFormat(trip.endDate, "mmm d");
+                const prefix = trip.ownerId === userId ? 'owner' : 'invitee';
+                return (
+                  <option value={trip.id} key={trip.id}>({prefix}) { trip.destination } ({fromDate}-{toDate}) </option>
+                )
+              })
+            }
           </select>
           </div>
           {/* <a href="#" onClick={handleClick}>

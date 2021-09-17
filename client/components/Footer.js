@@ -7,7 +7,7 @@ const Footer = () => {
         <span>
           Copyright © 2021 by CoPilot Trip Planning. All rights reserved.
           <br />
-          Ayan Haibeh + Konstantin Kuznetcov + + Shanntal Morel + John Pirog + Lucy Yan
+          Ayan Haibeh + Konstantin Kuznetcov + Shanntal Morel + John Pirog + Lucy Yan
         </span>
       </div>
     </div>
