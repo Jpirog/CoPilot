@@ -1,6 +1,6 @@
 //const Sequelize = require('sequelize');
 const {
-  STRING, BOOLEAN, DATE, ENUM,TEXT, INTEGER,
+  STRING, BOOLEAN, DATE, ENUM,TEXT, INTEGER, FLOAT
 } = require('sequelize');
 const db = require('../db');
 
@@ -41,16 +41,16 @@ const TripEvent = db.define('tripevent',{
     unique: false, 
   },
   rating: {
-    type: INTEGER,
+    type: FLOAT,
     required: false,
     allowNull: true,
-    unique: false, 
+    unique: false,
   },
   priceLevel: {
-    type: INTEGER,
+    type: STRING,
     required: false,
     allowNull: true,
-    unique: false, 
+    unique: false,
   },
   startDate: {
     type: DATE,
