@@ -11,6 +11,8 @@ import AddHotel from "./components/AddHotel"
 import AddRestaurant from './components/AddRestaurant';
 import AddActivity from './components/AddActivity';
 import CreateTrip from './components/CreateTrip';
+import InviteResponse from './components/InviteResponse';
+import TripAttendees from './components/TripAttendees';
 import { AboutUs } from './components/AboutUs';
 import { me } from './store'
 import Itinerary from './components/Itinerary';
@@ -32,12 +34,15 @@ class Routes extends Component {
 
         {isLoggedIn ? (
           <Switch>
-            <Route exact path="/:tripId/hotel" component={AddHotel} />
-            <Route path="/:tripId/activity" component={AddActivity} />
-            <Route path="/:tripId/restaurant" component={AddRestaurant} />
-            <Route exact path="/home" component={Home} />
-            <Route path="/editprofile" component={ EditProfile } />
 
+            <Route exact path="/hotel" component={AddHotel} />
+            <Route path="/activity" component={AddActivity} />
+            <Route path="/restaurant" component={AddRestaurant} />
+
+            <Route path="/home" component={Home} />
+            <Route path="/editprofile" component={ EditProfile } />
+            <Route path="/inviteresponse" component={ InviteResponse } />
+            <Route path="/tripattendees" component={ TripAttendees } />
             <Route exact path="/create/trip" component={ CreateTrip } />
             <Route exact path="/" component={Home} />
 

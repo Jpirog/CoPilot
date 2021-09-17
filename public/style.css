@@ -46,9 +46,10 @@ a {
   justify-content: center;
   align-items: center;
   font-size: 1.2rem;
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 999;
+  width: 100%;
 }
 
 .navbar-container {
@@ -81,9 +82,9 @@ a {
   grid-gap: 10px;
   list-style: none;
   text-align: center;
-  width: 60vw;
+  width: 55vw;
   justify-content: end;
-  margin-right: 2rem;
+  margin-right: 1rem;
 }
 
 .nav-item {
@@ -197,9 +198,22 @@ a {
     transition: 250ms;
   }
 }
-
+#navtrip{
+  color: white;
+  padding-left: 15px;
+}
 /* NAVBAR END */
-
+#footer {
+  width: 100%;
+  background-color: #222222;
+  color: #ededed;
+}
+#footer div {
+  width: calc(100% - 4em);
+  padding: 2em;
+  text-align: center;
+  letter-spacing: 0.03em;
+}
 /* BUTTON START */
 :root {
   --primary: #fff
@@ -433,7 +447,7 @@ video {
 }
 
 #content-wrapper {
-  padding-top: 0px;
+  padding-top: 80px;
 }  
 .container {
   padding: 2em;
@@ -611,7 +625,6 @@ video {
 
 /* dropdown end */
 
-
 .highlighted {
   background-color: green;
 }
@@ -628,6 +641,37 @@ flex-wrap: wrap;
 .item {
   align-items: center;
   text-align: center;
+}
+
+#attendees{
+  margin-top: 15px;
+  margin-bottom: 125px;
+  border-collapse: separate;
+  border-spacing: 15px 15px;
+  border: 1px solid black;
+  margin-left:auto; 
+  margin-right:auto;
+}
+#attendees > td {
+  padding: 1px 0;
+}
+#attendees > tr {
+  border: 1px solid black;
+}
+#attendeesheadings{
+  text-align: center;
+}
+#attendeesheadings h2 {
+  margin-top: 15px;
+}
+#attendeesheadings h3 {
+  margin-top: 15px;
+}
+#attendeesheadings h4 {
+  margin-top: 15px;
+}
+#newattendeeform{
+  margin-top: 20px;
 }
 
 /* ITINERARY */
