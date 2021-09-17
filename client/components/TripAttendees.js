@@ -65,6 +65,7 @@ const TripAttendees = () => {
             <button type="submit">Invite to trip</button>
           </form>
           </div>
+          <h3>--- Existing invitees ---</h3>
           <table id="attendees">
             <thead>
               <tr>

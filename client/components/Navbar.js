@@ -72,7 +72,7 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips }) 
           <Link to="/" className="navbar-logo">
             CoPilot
           </Link>
-          <div style={{color: 'white'}}>Trip:&nbsp;
+          <div id="navtrip">Trip:&nbsp;
             <select name="trips" id="navtrips" onChange={handleTripChange}>
             {
               invitedTrips.concat(createdTrips).map((trip, i) => {
@@ -92,9 +92,9 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips }) 
           {/* <a href="#" onClick={handleClick}>
             <i className={'fa fa-sign-out-alt' } />
           </a> */}
-          <div className="menu-icon" onClick={fastClick}>
+{/*}          <div className="menu-icon" onClick={fastClick}> *** commented out - JP 9/17
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
-          </div>
+        </div>*/}
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
             <li className='nav-item'>
               <Link to="/home" className="nav-links" onClick={closeMobileMenu}>
@@ -122,11 +122,11 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips }) 
               </Link>
             </li> */}
             <li 
-            className='nav-item'
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}>
+              className='nav-item'
+              onMouseEnter={onMouseEnter}
+              onMouseLeave={onMouseLeave}>
               <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-              More <i className='fas fa-caret-down' />
+                More <i className='fas fa-caret-down' />
               </Link>
               {dropdown && <Dropdown />}
             </li>
