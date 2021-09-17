@@ -76,6 +76,7 @@ export const addUpdateTrip = (trip) => {
     try{
       const { data: newTrip } = await axios.post('/api/trips', trip);
       dispatch(_getTripDetails(newTrip)); 
+      dispatch(getUserCreatedTrips(newTrip.ownerId)); // reload this since there is a new/changed trip
     }
     catch(ex){
       console.log('ERROR adding/updating trip', ex);
@@ -162,6 +163,41 @@ export const updateTripAttendee = (attendee) => {
     }
   }
 }
+
+// getTripsNeedingResponse returns the trips a user is invited to but hasn't responded to
+export const getTripsNeedingResponse = async (userId) => {
+  try{
+    const { data: trips } = await axios.get(`/api/tripattendees/needresponse/${userId}`);
+    return trips;
+  }
+  catch(ex){
+    console.log('ERROR getting user invited trips needing response', ex);
+  }
+}
+
+// updateTripResponse updates the trip attendee table with a users accept or decline
+export const updateTripResponse = async (tripId, userId, response) => {
+  try{
+    const { data: trips } = await axios.put('/api/tripattendees/response/', { tripId, userId, response });
+    return trips;
+  }
+  catch(ex){
+    console.log('ERROR updating user response', ex);
+  }
+}
+
+// updateTripResponse updates the trip attendee table with a users accept or decline
+export const updateInvitedTripsWithId = async (username, userId) => {
+  console.log('in thunk', username, userId);
+  try{
+    const resp = await axios.put('/api/tripattendees/updateid/', { username, userId });
+    console.log('RESPPNSE to UPDATE', resp)
+  }
+  catch(ex){
+    console.log('ERROR updating user response', ex);
+  }
+}
+
 
 // * REDUCER
 
