@@ -35,6 +35,7 @@ const _getUserInvitedTrips = userInvitedTrips => {
 export const getTripDetails = (tripId) => {
   return async (dispatch) => { 
     try{
+      console.log('api', tripId)
       const { data: trip } = await axios.get(`/api/trips/${tripId}`);
       dispatch(_getTripDetails(trip));
     }
@@ -142,6 +143,7 @@ export const removeTripAttendee = (tripId, email) => {
   return async (dispatch) => { 
     try{
       await axios.delete('/api/tripattendees', {data: { tripId: tripId, email: email}});
+      console.log('getting details on', tripId)
       dispatch(getTripDetails(tripId));
 
     }

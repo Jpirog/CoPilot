@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { getUser, updateUser } from "../store/user";
 import { removeTripAttendee } from "../store/trips";
-// import { useHistory } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
-// import { me } from '../store';
 import dateFormat from 'dateformat';
 
 const notify = (msg) => toast.success(msg, { duration: 3000, position: 'top-center' })
@@ -53,6 +50,7 @@ const TripAttendees = () => {
 
   return (
       <div id="content-wrapper">
+      <div id="attendeesheadings">
         <Toaster />
         <div>
           <h2>Trip Attendees</h2>
@@ -63,10 +61,11 @@ const TripAttendees = () => {
         <div>
           <form id="newattendeeform" onSubmit={console.log('submitted')}>
             <label htmlFor="newattendee">Enter email of invitee:&nbsp;</label>
-            <input name="newattendee" autoFocus type="email" />
+            <input name="newattendee" autoFocus type="email" />&nbsp;
             <button type="submit">Invite to trip</button>
           </form>
-          <table>
+          </div>
+          <table id="attendees">
             <thead>
               <tr>
                 <th>Email</th>
@@ -86,12 +85,20 @@ const TripAttendees = () => {
                   <td>{ name }</td>
                   <td>{ accepted }</td>
                   <td>{ respDate }</td>
-                  <td><button onClick={(ev) => handleUninvite(ev, attendee.id, attendee.email) }>Uninvite/remove</button></td>
+                  <td><button onClick={(ev) => handleUninvite(ev, tripDetails.id, attendee.email) }>Uninvite/remove</button></td>
                 </tr>
                 )
               })}
             </tbody>
-          </table>
+            {
+              tripDetails.tripattendees.length > 0 ? '' :
+                <tfoot>
+                  <tr>
+                    <td colSpan={5}>No attendees yet, add some above!</td>
+                  </tr>
+                </tfoot>
+            }
+            </table>
         </div>
       </div>
     );
