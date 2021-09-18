@@ -15,6 +15,11 @@ export const MenuItems = [
         cName: 'dropdown-link'
       },
     {
+        title: 'All Trips',
+        path: '/allTrips',
+        cName: 'dropdown-link',
+      },
+    {
       title: 'Logout',
       path: '/logout',
       cName: 'dropdown-link',
