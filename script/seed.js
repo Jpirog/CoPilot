@@ -19,7 +19,8 @@ async function seed() {
 
   // create a trip
   const trips = await Promise.all([
-    Trip.create({ destination: 'Disney World, Orlando, FL', 
+    Trip.create({ name: 'Disney trip',
+                  destination: 'Orlando, FL', 
                   startDate: '2021-10-06', endDate: '2021-10-31', 
                   purpose: 'RELAX', status: 'IN PROGRESS', ownerId: users[0].id,
                 }),

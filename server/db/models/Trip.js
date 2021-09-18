@@ -4,6 +4,13 @@ const {
 const db = require('../db');
 
 const Trip = db.define('trip',{
+  name: {
+    type: STRING,
+    required: true,
+    allowNull: false,
+    unique: false,
+    validate: { notEmpty: true },
+  },
   destination: {
     type: STRING,
     required: true,
