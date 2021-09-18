@@ -11,7 +11,7 @@ export const MenuItems = [
       },
     {
         title: 'Itinerary',
-        path: '/',
+        path: '/itinerary',
         cName: 'dropdown-link'
       },
     {
