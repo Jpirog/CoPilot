@@ -4,11 +4,7 @@ import { Link } from "react-router-dom";
 import {getTripDetails,addTripEvent,removeTripEvent} from "../store/trips"
 //import axios from "axios";
 import { connect } from 'react-redux';
-
-//need to use trip id in url to display specific itinerary for that specific trip
-
-
-//const fromDate = dateFormat(trip.fromDate, "ddd, mmm d, yyyy");
+const dateFormat = require("dateformat");
 
 class Itinerary extends React.Component {
     constructor(props) {
@@ -20,28 +16,30 @@ class Itinerary extends React.Component {
     }
 
     render () {
-    const practiceSuggestedArray = ['Fernando Grill', 'Best Place Ever', 'A Cool Place'];
-    const practiceChosenArray = ['Best Place Ever', 'A Cool Place'];
-
-
     //every component you write needs a check like this because otherwise you'll run into a lot of undefined variables that haven't been populated yet on the first run
     //check if tripevents is defined, on second run it will run componentDidMount and tripevents will be defined
     if(!this.props.tripevents) {
         return null;
     }
 
-    const trips = this.props.trips;
-    const allTrips = [...this.props.trips.userCreatedTrips, ...this.props.trips.userInvitedTrips];
-    const chosenTrip = allTrips.find((trip) => trip.id === (this.props.match.params.tripId) * 1)
+    const currentTrip = this.props.currentTrip;
+    // const trips = this.props.trips;
+    // const allTrips = [...this.props.trips.userCreatedTrips, ...this.props.trips.userInvitedTrips];
+    // const chosenTrip = allTrips.find((trip) => trip.id === (this.props.match.params.tripId) * 1)
 
 
     //console.log('MATCH PARAMS:', this.props.match.params.tripId);
-    console.log('TRIPS', trips)
-    console.log('chosenTrip:', chosenTrip);
-    console.log('allTrips', allTrips)
+
+    // console.log('TRIPS', trips)
+    // console.log('chosenTrip:', chosenTrip);
+    // console.log('allTrips', allTrips)
+
+    console.log('CURRENT TRIP', currentTrip);
     // console.log('MPTI', typeof this.props.match.params.tripId);
     // console.log('tt', trips[0] ? typeof trips[0].id : '');
 
+    const fromDate = dateFormat(currentTrip.startDate, "mmm d");
+    const toDate = dateFormat(currentTrip.endDate, "mmm d");
 
     let tripEvents = this.props.tripevents;
     console.log('TRIP EVENTS', tripEvents);
@@ -58,16 +56,16 @@ class Itinerary extends React.Component {
     let restaurantAcceptedEvents = acceptedEvents.filter(restaurantEvent => restaurantEvent.purpose === 'BREAKFAST' || restaurantEvent.purpose === 'LUNCH' || restaurantEvent.purpose === 'DINNER');
     console.log('RESTAURANT ACCEPTED EVENTS', restaurantAcceptedEvents);
 
-    let hotelProposedEvents = proposedEvents.filter(hotelEvent => hotelEvent.purpose === 'HOTEL');
-    console.log('HOTEL PROPOSED EVENTS', hotelProposedEvents);
+    let sleepProposedEvents = proposedEvents.filter(sleepEvent => sleepEvent.purpose === 'SLEEP');
+    console.log('SLEEP PROPOSED EVENTS', sleepProposedEvents);
 
-    let hotelAcceptedEvents = acceptedEvents.filter(hotelEvent => hotelEvent.purpose === 'HOTEL');
-    console.log('HOTEL ACCEPTED EVENTS', hotelAcceptedEvents);
+    let sleepAcceptedEvents = acceptedEvents.filter(sleepEvent => sleepEvent.purpose === 'SLEEP');
+    console.log('SLEEP ACCEPTED EVENTS', sleepAcceptedEvents);
 
-    let activityProposedEvents = proposedEvents.filter(activityEvent => activityEvent.purpose === 'ACTIVITY');
+    let activityProposedEvents = proposedEvents.filter(activityEvent => activityEvent.purpose === 'SIGHTSEE' || activityEvent.purpose === 'FREETIME' || activityEvent.purpose === 'OTHER');
     console.log('ACTIVITY PROPOSED EVENTS', activityProposedEvents);
 
-    let activityAcceptedEvents = acceptedEvents.filter(activityEvent => activityEvent.purpose === 'ACTIVITY');
+    let activityAcceptedEvents = acceptedEvents.filter(activityEvent => activityEvent.purpose === 'SIGHTSEE' || activityEvent.purpose === 'FREETIME' || activityEvent.purpose === 'OTHER');
     console.log('ACTIVITY ACCEPTED EVENTS', activityAcceptedEvents);
 
     //ternary statement notes:
@@ -75,15 +73,15 @@ class Itinerary extends React.Component {
     //on second render it will know that chosenTrip is now defined so it'll be truthy
 
         return (
-            <div id='itineraryBox'>
+            <div id='content-wrapper'>
                 <div id='itineraryName'>
-                    <h1> {chosenTrip ? chosenTrip.destination : ''} Itinerary</h1>
+                    <h1> {currentTrip ? currentTrip.destination : ''} Itinerary</h1>
                 </div>
+                {/* <div className='tripDuration'>
+                    <h3>Trip Duration: {`${(currentTrip ? currentTrip.startDate : '') - (currentTrip ? currentTrip.endDate : '')}`} Days</h3>
+                </div> */}
                 <div className='tripDuration'>
-                    <h3>Trip Duration: {`${(chosenTrip ? chosenTrip.startDate : '') - (chosenTrip ? chosenTrip.endDate : '')}`} Days</h3>
-                </div>
-                <div className='tripDuration'>
-                    <p>Proposed Dates: {chosenTrip ? chosenTrip.startDate : ''} - {chosenTrip ? chosenTrip.endDate : ''}</p>
+                    <p>Proposed Dates: {fromDate} - {toDate}</p>
                 </div>
                 <div id='eventBox'>
 
@@ -93,21 +91,23 @@ class Itinerary extends React.Component {
                         </div>
                         <div className='events'>
                             <h4>Suggested:</h4> 
-                            {proposedEvents.map((item) => (
+                            {
+                            sleepProposedEvents.map((item) => (
                                 <p className="individualItem">
                                     {item.description}
                                 </p>
                             ))
                             }
+                            
                         </div>
                         <div className='events'>
                             <h4>Chosen:</h4> 
-                            {/* {acceptedEvents.map((item) => (
+                            {sleepAcceptedEvents.map((item) => (
                                 <p className="individualItem">
-                                    {item}
+                                    {item.description}
                                 </p>
                             ))
-                            } */}
+                            }
                         </div>
                     </div>
 
@@ -117,18 +117,18 @@ class Itinerary extends React.Component {
                         </div>
                         <div className='events'>
                             <h4>Suggested:</h4>
-                                {practiceSuggestedArray.map((item) => (
+                                {restaurantProposedEvents.map((item) => (
                                 <p className="individualItem">
-                                    {item}
+                                    {item.description}
                                 </p>
                             ))
                             }
                         </div>
                         <div className='events'>
                             <h4>Chosen:</h4> 
-                            {practiceChosenArray.map((item) => (
+                            {restaurantAcceptedEvents.map((item) => (
                                 <p className="individualItem">
-                                    {item}
+                                    {item.description}
                                 </p>
                             ))
                             }
@@ -141,18 +141,18 @@ class Itinerary extends React.Component {
                         </div>
                         <div className='events'>
                             <h4>Suggested:</h4>
-                            {practiceSuggestedArray.map((item) => (
+                            {activityProposedEvents.map((item) => (
                                 <div className="individualItem">
-                                    {item}
+                                    {item.description}
                                 </div>
                             ))
                             }
                         </div>
                         <div className='events'>
                             <h4>Chosen:</h4>
-                            {practiceChosenArray.map((item) => (
+                            {activityAcceptedEvents.map((item) => (
                                 <div className="individualItem">
-                                    {item}
+                                    {item.description}
                                 </div>
                             ))
                             }

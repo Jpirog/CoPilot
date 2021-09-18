@@ -46,7 +46,7 @@ class Routes extends Component {
             <Route exact path="/create/trip" component={ CreateTrip } />
             <Route exact path="/" component={Home} />
 
-            <Route exact path="/:tripId/itinerary" component={Itinerary} />
+            <Route exact path="/itinerary" component={Itinerary} />
             <Route exact path="/allTrips" component={AllTrips}/>
             {/* <Route exact path="/usercreated/:userId"><Trips/></Route> */}
             {/*<Redirect to="/home" /> */}
