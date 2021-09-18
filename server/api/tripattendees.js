@@ -18,6 +18,7 @@ router.post('/', async (req, res, next) => {
 // remove a trip attendee
 router.delete('/', async (req, res, next) => {
   try {
+    console.log('deleting', req.body)
     const trip = req.body.tripId;
     const email = req.body.email;
     const data = await TripAttendee.destroy({

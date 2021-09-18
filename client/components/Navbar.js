@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {logout} from '../store';
-//import { Button } from './Button';
 import Dropdown from './Dropdown';
 import { getUserCreatedTrips, getUserInvitedTrips, getTripDetails } from '../store/trips';
 import { useDispatch } from 'react-redux';
 import dateFormat from 'dateformat';
-
 
 const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips }) => {
   const dispatch = useDispatch();
@@ -74,29 +72,29 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips }) 
           <Link to="/" className="navbar-logo">
             CoPilot
           </Link>
-          <div style={{color: 'white'}}>select trip
-          <select name="trips" id="navtrips" onChange={handleTripChange}>
-          {
-            invitedTrips.concat(createdTrips).map((trip, i) => {
-              if (i === 0){
-                dispatch(getTripDetails(trip.id))
-              }
-              const fromDate = dateFormat(trip.startDate, "mmm d");
-              const toDate = dateFormat(trip.endDate, "mmm d");
-              const prefix = trip.ownerId === userId ? 'owner' : 'invitee';
-              return (
-                <option value={trip.id} key={trip.id}>({prefix}) { trip.destination } ({fromDate}-{toDate}) </option>
-              )
-            })
-          }
+          <div id="navtrip">Trip:&nbsp;
+            <select name="trips" id="navtrips" onChange={handleTripChange}>
+            {
+              invitedTrips.concat(createdTrips).map((trip, i) => {
+                if (i === 0){
+                  dispatch(getTripDetails(trip.id))
+                }
+                const fromDate = dateFormat(trip.startDate, "mmm d");
+                const toDate = dateFormat(trip.endDate, "mmm d");
+                const prefix = trip.ownerId === userId ? 'owner' : 'invitee';
+                return (
+                  <option value={trip.id} key={trip.id}>({prefix}) { trip.destination } ({fromDate}-{toDate}) </option>
+                )
+              })
+            }
           </select>
           </div>
           {/* <a href="#" onClick={handleClick}>
             <i className={'fa fa-sign-out-alt' } />
           </a> */}
-          <div className="menu-icon" onClick={fastClick}>
+{/*}          <div className="menu-icon" onClick={fastClick}> *** commented out - JP 9/17
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
-          </div>
+        </div>*/}
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
             <li className='nav-item'>
               <Link to="/home" className="nav-links" onClick={closeMobileMenu}>
@@ -124,11 +122,11 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips }) 
               </Link>
             </li> */}
             <li 
-            className='nav-item'
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}>
+              className='nav-item'
+              onMouseEnter={onMouseEnter}
+              onMouseLeave={onMouseLeave}>
               <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-              More <i className='fas fa-caret-down' />
+                More <i className='fas fa-caret-down' />
               </Link>
               {dropdown && <Dropdown />}
             </li>

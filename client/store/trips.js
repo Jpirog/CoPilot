@@ -129,7 +129,6 @@ export const addTripAttendee = (attendee) => {
     try{
       const { data: newAttendee } = await axios.post('/api/tripattendees', attendee);
       dispatch(getTripDetails(newAttendee.tripId));
-
     }
     catch(ex){
       console.log('ERROR adding trip attendee', ex);
@@ -143,7 +142,6 @@ export const removeTripAttendee = (tripId, email) => {
     try{
       await axios.delete('/api/tripattendees', {data: { tripId: tripId, email: email}});
       dispatch(getTripDetails(tripId));
-
     }
     catch(ex){
       console.log('ERROR deleting trip attendee', ex);
@@ -188,10 +186,8 @@ export const updateTripResponse = async (tripId, userId, response) => {
 
 // updateTripResponse updates the trip attendee table with a users accept or decline
 export const updateInvitedTripsWithId = async (username, userId) => {
-  console.log('in thunk', username, userId);
   try{
     const resp = await axios.put('/api/tripattendees/updateid/', { username, userId });
-    console.log('RESPPNSE to UPDATE', resp)
   }
   catch(ex){
     console.log('ERROR updating user response', ex);

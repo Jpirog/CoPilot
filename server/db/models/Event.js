@@ -1,6 +1,6 @@
 //const Sequelize = require('sequelize');
 const {
-  STRING, BOOLEAN, DATE, ENUM,TEXT, INTEGER, FLOAT
+  STRING, BOOLEAN, DATE, ENUM,TEXT, FLOAT,
 } = require('sequelize');
 const db = require('../db');
 

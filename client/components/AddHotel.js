@@ -8,16 +8,18 @@ import "react-datepicker/dist/react-datepicker.css";
 import GoogleMap from "./googleMap";
 
 const AddHotel = (props) => {
-  const { tripId, tripevents } = useSelector((state) => ({
+  const { trip, tripId, tripevents } = useSelector((state) => ({
+    trip: state.trips.trip,
     tripId: state.trips.trip.id,
     tripevents: state.trips.trip.tripevents,
   }));
-  
   const [hotelList, setHotelList] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [description, setDescription] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [addressList, setAddressList] = useState([]);
+  const [hotelEvents, setHotelEvents] = useState([]);
+  const [location, setLocation] = useState("");
 
   //dispatch thunk
   const dispatch = useDispatch();
@@ -25,30 +27,33 @@ const AddHotel = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const { data } = await axios.get("/api/yelp/hotel", {
-      params: { term: searchValue },
+      params: { term: searchValue, location },
     });
     setHotelList(data);
   };
 
   useEffect(() => {
     const func = async () => {
-      const { data } = await axios.get("/api/yelp/hotel");
+      const { data } = await axios.get("/api/yelp/hotel", {
+        params: { location },
+      });
       setHotelList(data);
     };
     func();
-  }, []);
+  }, [location]);
 
   useEffect(() => {
     let list =
-      tripevents &&
-      tripevents
-        .filter((event) => event.purpose === "SLEEP")
-        .map((event) => JSON.parse(event.description));
-    setAddressList(list);
+      tripevents && tripevents.filter((event) => event.purpose === "SLEEP");
+    setHotelEvents(list);
   }, [tripevents]);
 
+  useEffect(() => {
+    setLocation(trip.destination);
+  }, [trip]);
+
   return (
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: "80px" }}>
       <table border="2px">
         <tbody>
           <tr>
@@ -65,13 +70,11 @@ const AddHotel = (props) => {
                 <tr key={event.id}>
                   <td>{event.startDate}</td>
                   <td>{event.endDate}</td>
-                  <td>{JSON.parse(event.description).name}</td>
+                  <td>{event.placeName}</td>
                   <td>
-                    <a href={JSON.parse(event.description).website}>
-                      Link of Website
-                    </a>
+                    <a href={event.url}>Link of Website</a>
                   </td>
-                  <td>{JSON.parse(event.description).location}</td>
+                  <td>{event.location}</td>
                   <td>
                     <button
                       type="button"
@@ -87,12 +90,20 @@ const AddHotel = (props) => {
             )}
         </tbody>
       </table>
-
       <br />
 
       <Link to={`/activity`}>
         <button>Go to Activity:</button>
       </Link>
+      <br />
+      <label>Change location</label>
+      <input
+        value={location}
+        onChange={(e) => {
+          setLocation(e.target.value);
+        }}
+      ></input>
+
       <form onSubmit={handleSubmit}>
         <input
           placeholder="search for your hotel"
@@ -128,7 +139,15 @@ const AddHotel = (props) => {
             <li>{hotel.name}</li>
             <li>{hotel.rating}</li>
             <li>{hotel.price}</li>
-
+            <li>
+              <input
+                placeholder="add event description"
+                value={description}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+              ></input>
+            </li>
             <>
               <DatePicker
                 placeholderText="select a CheckIn DateTime"
@@ -156,6 +175,7 @@ const AddHotel = (props) => {
                 withPortal
               />
             </>
+
             <button
               onClick={() => {
                 if (startDate && endDate) {
@@ -165,13 +185,13 @@ const AddHotel = (props) => {
                       startDate,
                       endDate,
                       tripId,
-                      description: JSON.stringify({
-                        name: hotel.name,
-                        website: hotel.url,
-                        location: JSON.stringify(
-                          hotel.location.display_address
-                        ),
-                      }),
+                      description,
+                      placeName: hotel.name,
+                      url: hotel.url,
+                      location: hotel.location.display_address.join(""),
+                      yelpId: hotel.id,
+                      rating: hotel.rating,
+                      priceLevel: hotel.price,
                     })
                   );
                 } else {
@@ -185,7 +205,7 @@ const AddHotel = (props) => {
         ))}{" "}
       </div>
       <br />
-      <GoogleMap addressList={addressList} />
+      <GoogleMap events={hotelEvents} />
     </div>
   );
 };

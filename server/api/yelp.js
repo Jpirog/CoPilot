@@ -13,7 +13,7 @@ router.get("/hotel",async (req, res, next) =>{
             headers:HEADERS,
             params:{
                 'term':req.query.term,
-                'location':"NYC",
+                'location':req.query.location?req.query.location:"NYC",
                 "sort_by":"rating",
                 "limit":req.query.term?5:20,
                 "categories":"hotels"
@@ -31,9 +31,10 @@ router.get("/restaurants", async (req, res, next) => {
             headers: HEADERS, 
             params: {
                 'term': req.query.term,
-                'location': "NYC",
-                "limit": 20,
-                "sort_by": "rating"
+                'location': req.query.location?req.query.location:"NYC",
+                "limit": req.query.term?5:20,
+                "sort_by": "rating",
+                "categories": "restaurants",
             } 
         })
         res.send(data.businesses)
@@ -50,7 +51,7 @@ router.get("/activity",async (req, res, next) =>{
             headers:HEADERS,
             params:{
                 'term':req.query.term,
-                'location':"NYC",
+                'location':req.query.location?req.query.location:"NYC",
                 "sort_by":"rating",
                 "limit":20,
                 "categories":req.query.category?req.query.category:"All"

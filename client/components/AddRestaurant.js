@@ -14,9 +14,12 @@ const AddRestaurant = (props) => {
     tripevents: state.trips.trip.tripevents,
   }));
 
+  console.log(trip)
+
   const [restaurantList, setRestaurantList] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [startDate, setStartDate] = useState(null);
+  const [location, setLocation] = useState('');
 
   const dispatch = useDispatch();
 
@@ -38,27 +41,31 @@ const AddRestaurant = (props) => {
 
   useEffect(() => {
     const func = async () => {
-      const { data } = await axios.get("/api/yelp/restaurants");
+      const { data } = await axios.get("/api/yelp/restaurants", {
+        params: { location }
+      });
       setRestaurantList(data);
     };
     func();
-  }, []);
+  }, [location]);
 
-  function handleChange(e) {
+  useEffect(() => {
+    setLocation(trip.destination);
+  }, [trip]);
+
+  function restaurantSearchFieldChange(e) {
     e.preventDefault();
     setSearchValue(e.target.value);
   }
 
-  function handleSubmit(e) {
+  function restaurantSearchSubmit(e) {
     e.preventDefault();
-
     const func = async () => {
       const { data } = await axios.get("/api/yelp/restaurants", {
-        params: { term: searchValue },
+        params: { term: searchValue, location },
       });
       setRestaurantList(data);
     };
-
     func();
   }
 
@@ -103,17 +110,27 @@ const AddRestaurant = (props) => {
         </tbody>
       </table>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={restaurantSearchSubmit}>
         <input
           placeholder="search for your restaurant"
           type="text"
           value={searchValue}
-          onChange={handleChange}
+          onChange={restaurantSearchFieldChange}
         />
         <input type="submit" value="Search a restaurant" />
       </form>
 
       <Link to={`/hotel`}>Go next to hotels:</Link>
+
+      <form>
+        <label>Change location:</label>
+        <input
+          value={location}
+          onChange={(e) => {
+            setLocation(e.target.value);
+          }}
+        ></input>
+      </form>
 
       {restaurantList.map((restaurant) => (
         <ul

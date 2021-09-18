@@ -1,8 +1,7 @@
 import React from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 
-const GoogleMap =({addressList})=> {
-
+const GoogleMap =({events})=> {
 //google map
 const loader = new Loader({
     apiKey: "AIzaSyAStFOdHfunpjDJckRnvA8zZNCLnOmuTLU",
@@ -19,21 +18,21 @@ const loader = new Loader({
     });
  
 
-    codeAddress(addressList,geocoder,map,infoWindow)
+    codeAddress(events,geocoder,map,infoWindow)
   });
 
 
-  function codeAddress(addressList,geocoder,map,infoWindow) {
+  function codeAddress(events,geocoder,map,infoWindow) {
 
-    addressList&&addressList.map(description=>{
+    events&&events.map(event=>{
         
-    geocoder.geocode( { 'address': description.location}, function(results, status) {
+    geocoder.geocode( { 'address': event.location}, function(results, status) {
       if (status == 'OK') {
         map.setCenter(results[0].geometry.location);
         var marker = new google.maps.Marker({
             map: map,
             position: results[0].geometry.location,
-            title:description.name,
+            title:event.placeName,
             
         });
  
