@@ -8,17 +8,18 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const AddRestaurant = (props) => {
-  const tripId = props.match.params.tripId;
-
-  const { trip, tripevents } = useSelector((state) => ({
+  const { tripId, tripevents, trip } = useSelector((state) => ({
     trip: state.trips.trip,
+    tripId: state.trips.trip.id,
     tripevents: state.trips.trip.tripevents,
   }));
 
+  console.log(trip)
+
   const [restaurantList, setRestaurantList] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(null);
+  const [location, setLocation] = useState('');
 
   const dispatch = useDispatch();
 
@@ -40,41 +41,42 @@ const AddRestaurant = (props) => {
 
   useEffect(() => {
     const func = async () => {
-      const { data } = await axios.get("/api/yelp/restaurants");
+      const { data } = await axios.get("/api/yelp/restaurants", {
+        params: { location }
+      });
       setRestaurantList(data);
     };
     func();
-  }, []);
+  }, [location]);
 
   useEffect(() => {
-    dispatch(getTripDetails(tripId));
-  }, []);
+    setLocation(trip.destination);
+  }, [trip]);
 
-  function handleChange(e) {
+  function restaurantSearchFieldChange(e) {
     e.preventDefault();
     setSearchValue(e.target.value);
   }
 
-  function handleSubmit(e) {
+  function restaurantSearchSubmit(e) {
     e.preventDefault();
-
     const func = async () => {
       const { data } = await axios.get("/api/yelp/restaurants", {
-        params: { term: searchValue },
+        params: { term: searchValue, location },
       });
       setRestaurantList(data);
     };
-
     func();
   }
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div id='content-wrapper' style={{ padding: "80px" }}>
       <table border="2px">
         <tbody>
           <tr>
             <th>Start Date</th>
             <th>Restaurant Name</th>
+            <th>Event description</th>
             <th>Restaurant Website</th>
             <th>Restaurant Location </th>
             <th>delete</th>
@@ -84,13 +86,14 @@ const AddRestaurant = (props) => {
               event.purpose === "LUNCH" ? (
                 <tr key={event.id}>
                   <td>{event.startDate}</td>
-                  <td>{JSON.parse(event.description).place}</td>
+                  <td>{event.placeName}</td>
+                  <td>{event.description}</td>
                   <td>
-                    <a href={JSON.parse(event.description).website}>
+                    <a href={event.url}>
                       Link of Website
                     </a>
                   </td>
-                  <td>{JSON.parse(event.description).address}</td>
+                  <td>{event.location}</td>
                   <td>
                     <button
                       type="button"
@@ -107,17 +110,27 @@ const AddRestaurant = (props) => {
         </tbody>
       </table>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={restaurantSearchSubmit}>
         <input
           placeholder="search for your restaurant"
           type="text"
           value={searchValue}
-          onChange={handleChange}
+          onChange={restaurantSearchFieldChange}
         />
         <input type="submit" value="Search a restaurant" />
       </form>
 
-      <Link to={`/${tripId}/hotel`}>Go next to hotels:</Link>
+      <Link to={`/hotel`}>Go next to hotels:</Link>
+
+      <form>
+        <label>Change location:</label>
+        <input
+          value={location}
+          onChange={(e) => {
+            setLocation(e.target.value);
+          }}
+        ></input>
+      </form>
 
       {restaurantList.map((restaurant) => (
         <ul
@@ -134,8 +147,7 @@ const AddRestaurant = (props) => {
           <li>{restaurant.rating}</li>
           <li>{restaurant.price}</li>
 
-          {trip.id && (
-            <DatePicker
+          <DatePicker
               selected={startDate}
               onChange={(date) => {
                 setStartDate(date);
@@ -156,8 +168,8 @@ const AddRestaurant = (props) => {
                   : undefined;
               }}
               withPortal
-            />
-          )}
+          />
+
           <button
             onClick={() => {
               if (startDate) {
@@ -166,13 +178,10 @@ const AddRestaurant = (props) => {
                     purpose: "LUNCH",
                     startDate,
                     tripId,
-                    description: JSON.stringify({
-                      place: restaurant.name,
-                      website: restaurant.url,
-                      address: JSON.stringify(
-                        restaurant.location.display_address
-                      ),
-                    }),
+                    description: 'Try european food',
+                    placeName: restaurant.name,
+                    url: restaurant.url,
+                    location: restaurant.location.display_address.join(''),
                   })
                 );
               } else {

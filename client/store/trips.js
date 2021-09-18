@@ -35,7 +35,6 @@ const _getUserInvitedTrips = userInvitedTrips => {
 export const getTripDetails = (tripId) => {
   return async (dispatch) => { 
     try{
-      console.log('api', tripId)
       const { data: trip } = await axios.get(`/api/trips/${tripId}`);
       dispatch(_getTripDetails(trip));
     }
