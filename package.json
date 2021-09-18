@@ -42,6 +42,7 @@
     "nodemailer": "^6.6.3",
     "pg": "^8.5.1",
     "react-add-to-calendar": "^0.1.5",
+    "react-big-calendar": "^0.35.0",
     "react-datepicker": "^4.2.1",
     "react-hot-toast": "^2.1.1",
     "sequelize": "^6.3.5",
@@ -51,6 +52,7 @@
     "@babel/core": "^7.12.10",
     "@babel/preset-react": "^7.12.10",
     "@babel/register": "^7.12.10",
+    "@event-calendar/core": "^0.5.0",
     "axios": "^0.21.1",
     "axios-mock-adapter": "^1.16.0",
     "babel-loader": "^8.2.2",
@@ -73,8 +75,9 @@
     "redux-logger": "^3.0.6",
     "redux-mock-store": "^1.5.3",
     "redux-thunk": "^2.3.0",
+    "sass": "^1.41.1",
     "supertest": "^4.0.2",
-    "webpack": "^5.15.0",
+    "webpack": "^5.53.0",
     "webpack-cli": "^4.3.1"
   }
 }

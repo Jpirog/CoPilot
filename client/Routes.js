@@ -15,8 +15,11 @@ import InviteResponse from './components/InviteResponse';
 import TripAttendees from './components/TripAttendees';
 import { AboutUs } from './components/AboutUs';
 import { me } from './store'
+
+import Calendar from "./components/Calendar";
 import Itinerary from './components/Itinerary';
 import AllTrips from './components/AllTrips';
+
 
 class Routes extends Component {
   componentDidMount() {
@@ -38,7 +41,7 @@ class Routes extends Component {
             <Route exact path="/hotel" component={AddHotel} />
             <Route path="/activity" component={AddActivity} />
             <Route path="/restaurant" component={AddRestaurant} />
-
+            <Route path="/calendar" component={Calendar} />
             <Route path="/home" component={Home} />
             <Route path="/editprofile" component={ EditProfile } />
             <Route path="/inviteresponse" component={ InviteResponse } />
