@@ -82,9 +82,9 @@ a {
   grid-gap: 10px;
   list-style: none;
   text-align: center;
-  width: 60vw;
+  width: 55vw;
   justify-content: end;
-  margin-right: 2rem;
+  margin-right: 1rem;
 }
 
 .nav-item {
@@ -198,7 +198,10 @@ a {
     transition: 250ms;
   }
 }
-
+#navtrip{
+  color: white;
+  padding-left: 15px;
+}
 /* NAVBAR END */
 #footer {
   width: 100%;
@@ -669,4 +672,86 @@ flex-wrap: wrap;
 }
 #newattendeeform{
   margin-top: 20px;
+}
+
+/* ITINERARY */
+#itineraryBox {
+  padding: 50px;
+}
+
+#itineraryName {
+  display:flex;
+  justify-content: center;
+}
+
+.tripDuration {
+  display:flex;
+  justify-content: center;
+}
+
+#eventBox {
+  padding: 15px;
+  /* border: black solid 1px; */
+}
+
+.category {
+  border: black solid 1px;
+  padding: 5px;
+  margin: 50px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.eventCategory {
+  /* border: black solid 1px; */
+  /* text-align: center;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 15px;
+  width: 20%; */
+  /* height: 10px; */
+  /* justify-content: space-evenly; */
+  padding: 9%;
+  margin: auto;
+  text-decoration-line: underline;
+}
+
+.events {
+  /* border:red solid 1px; */
+  display: flex;
+  justify-content: space-around;
+  border-radius: 10px;
+  padding: 15px;
+  flex-direction: column;
+  margin: 15px;
+  text-align: center;
+  width: 30%;
+}
+
+.individualItem {
+  border:blue solid 1px;
+  padding: 10px;
+  margin: 5px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+/* ALL TRIPS PAGE*/
+#allTripsPage {
+  padding: 50px;
+}
+
+#pageTitle {
+  display:flex;
+  justify-content: center;
+}
+
+.singleTripCard {
+  border: black solid 1px;
+  padding: 5px;
+  margin: 50px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-evenly;
 }

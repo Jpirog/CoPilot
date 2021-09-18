@@ -44,13 +44,13 @@ const TripEvent = db.define('tripevent',{
     type: FLOAT,
     required: false,
     allowNull: true,
-    unique: false, 
+    unique: false,
   },
   priceLevel: {
     type: STRING,
     required: false,
     allowNull: true,
-    unique: false, 
+    unique: false,
   },
   startDate: {
     type: DATE,

@@ -23,6 +23,10 @@ async function seed() {
                   startDate: '2021-10-06', endDate: '2021-10-31', 
                   purpose: 'RELAX', status: 'IN PROGRESS', ownerId: users[0].id,
                 }),
+    Trip.create({ destination: 'New York City, NY', 
+                startDate: '2021-11-10', endDate: '2021-11-25', 
+                purpose: 'RELAX', status: 'IN PROGRESS', ownerId: users[0].id,
+              })
   ])
 
   console.log(`seeded ${trips.length} trips`)

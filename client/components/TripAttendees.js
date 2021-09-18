@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { removeTripAttendee } from "../store/trips";
+import { removeTripAttendee, addTripAttendee } from "../store/trips";
+import { getUserByEmail } from '../store/user';
 import toast, { Toaster } from 'react-hot-toast';
 import dateFormat from 'dateformat';
 
@@ -11,6 +12,36 @@ const TripAttendees = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.id);
   const tripDetails = useSelector((state) => state.trips.trip);
+  const [errMsg, setErrMsg] = useState('');
+
+  const handleAddClick = async (ev) => {
+    ev.preventDefault();
+    const email = ev.target.newattendee.value.toLowerCase().trim();
+    
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
+      setErrMsg('This email address is not valid')
+      return (true)
+    }
+
+    if (tripDetails.tripattendees.find(c => c.email === email)){
+      setErrMsg('This email is already on the invite list')
+      return;
+    }
+    
+    setErrMsg('');
+    
+    const userData = await getUserByEmail(email); // check if the user exists in the system
+    const recData = {
+      accepted: false,
+      responseDate: null,
+      tripId: tripDetails.id,
+      userId: userData.length ? userData[0].id : null,
+      email: email,
+    }
+    dispatch(addTripAttendee(recData));
+    //ev.target.newattendee.value = 'hello';
+  }
+
   // const [dispName, setDispName] = useState("");
   // const [username, setusername] = useState("");
   // const [name, setname] = useState("");
@@ -59,12 +90,14 @@ const TripAttendees = () => {
         <h4>{ tripDetails.destination }</h4>
         <h4>({ dateFormat(tripDetails.startDate, "ddd, mmm d, yyyy") } - { dateFormat(tripDetails.endDate, "ddd, mmm d, yyyy") })</h4>
         <div>
-          <form id="newattendeeform" onSubmit={console.log('submitted')}>
+          <form id="newattendeeform" onSubmit={ handleAddClick }>
             <label htmlFor="newattendee">Enter email of invitee:&nbsp;</label>
             <input name="newattendee" autoFocus type="email" />&nbsp;
             <button type="submit">Invite to trip</button>
           </form>
+          <h4>{ errMsg }</h4>
           </div>
+          <h3>--- Existing invitees ---</h3>
           <table id="attendees">
             <thead>
               <tr>
@@ -91,7 +124,7 @@ const TripAttendees = () => {
               })}
             </tbody>
             {
-              tripDetails.tripattendees.length > 0 ? '' :
+              tripDetails.tripattendees.length > 0 ? null :
                 <tfoot>
                   <tr>
                     <td colSpan={5}>No attendees yet, add some above!</td>
