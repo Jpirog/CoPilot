@@ -8,7 +8,6 @@ import dateFormat from 'dateformat';
 const notify = (msg) => toast.success(msg, { duration: 3000, position: 'top-center' })
 
 const TripAttendees = () => {
-  // const history = useHistory();
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.id);
   const tripDetails = useSelector((state) => state.trips.trip);
@@ -39,38 +38,12 @@ const TripAttendees = () => {
       email: email,
     }
     dispatch(addTripAttendee(recData));
-    //ev.target.newattendee.value = 'hello';
   }
 
-  // const [dispName, setDispName] = useState("");
-  // const [username, setusername] = useState("");
-  // const [name, setname] = useState("");
-  // const [user, setUser] = useState({});
-  // const [enableSave, setenableSave] = useState(false);
-
-  // useEffect( () => {
-  //   const fetchData = async () => {
-  //     const userData = await getUser(userId);
-  //     setusername(userData.username);
-  //     setname(userData.name);
-  //     setUser(userData);
-  //     setDispName(userData.name);
-  //   }
-  //   fetchData();
-  // },[] );
-  
-  // const handleSubmit = (ev) => {
-  //   ev.preventDefault();
-  //   const newUser = user;
-  //   newUser.name = name;
-  //   updateUser(newUser);
-  //   dispatch(me());
-  //   notify();
-  //   history.push('/home');
-  // }
   if (!tripDetails.destination){
     return null;
   }
+  
   const handleUninvite = (ev, tripId, email) => {
     ev.preventDefault();
     if (confirm(`Please confirm ${email} should be removed from the invite list`)){
