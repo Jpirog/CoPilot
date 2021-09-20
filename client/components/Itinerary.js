@@ -11,9 +11,9 @@ class Itinerary extends React.Component {
         super(props);
     }
 
-    async componentDidMount() {
-        await this.props.getTripDetails();
-    }
+    // async componentDidMount() {
+    //     await this.props.getTripDetails();
+    // }
 
     render () {
     //every component you write needs a check like this because otherwise you'll run into a lot of undefined variables that haven't been populated yet on the first run
@@ -173,8 +173,8 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = {
-    getTripDetails
-}
+// const mapDispatchToProps = {
+//     getTripDetails
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Itinerary);
+export default connect(mapStateToProps)(Itinerary);
