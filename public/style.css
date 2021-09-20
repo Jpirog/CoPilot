@@ -755,3 +755,18 @@ flex-wrap: wrap;
   display: flex;
   justify-content: space-evenly;
 }
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+}
+.buttons button {
+  font-size: 20px;
+  margin: 20px ;
+  color: white;
+  border: 5px solid rgb(95, 53, 13);
+  box-shadow: wheat;
+  background-color: rgb(155, 93, 0);
+}
