@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getTripDetails, addTripEvent, removeTripEvent } from "../store/trips";
+import { addTripEvent, removeTripEvent } from "../store/trips";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -14,12 +14,12 @@ const AddRestaurant = (props) => {
     tripevents: state.trips.trip.tripevents,
   }));
 
-  console.log(trip)
-
   const [restaurantList, setRestaurantList] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [location, setLocation] = useState('');
+  const [description, setDescription] = useState('')
+  const [meal, setMeal] = useState('')
 
   const dispatch = useDispatch();
 
@@ -38,20 +38,20 @@ const AddRestaurant = (props) => {
     }
     return activeDays;
   }
+  console.log('location', location)
+  console.log('trip.destination', trip.destination)
+  console.log('meal', meal)
 
-  useEffect(() => {
-    const func = async () => {
-      const { data } = await axios.get("/api/yelp/restaurants", {
-        params: { location }
-      });
-      setRestaurantList(data);
-    };
-    func();
-  }, [location]);
-
-  useEffect(() => {
-    setLocation(trip.destination);
-  }, [trip]);
+  // useEffect(() => {
+  //   const func = async () => {
+  //     const { data } = await axios.get("/api/yelp/restaurants", {
+  //       params: { location: trip.destination }
+  //     });
+  //     setRestaurantList(data);
+  //   };
+  //   func();
+  //   console.log('mount', location)
+  // }, []);
 
   function restaurantSearchFieldChange(e) {
     e.preventDefault();
@@ -111,26 +111,27 @@ const AddRestaurant = (props) => {
       </table>
 
       <form onSubmit={restaurantSearchSubmit}>
+        <label>Search a restaurant:</label>
         <input
+          autoFocus
           placeholder="search for your restaurant"
           type="text"
           value={searchValue}
           onChange={restaurantSearchFieldChange}
         />
-        <input type="submit" value="Search a restaurant" />
-      </form>
-
-      <Link to={`/hotel`}>Go next to hotels:</Link>
-
-      <form>
+        <br/>
         <label>Change location:</label>
         <input
           value={location}
           onChange={(e) => {
             setLocation(e.target.value);
           }}
-        ></input>
+        />
+        <br/>
+        <input type="submit" value="Search" />
       </form>
+
+      <Link to={`/activity`}>Once restaurant is selected, go to activities</Link>
 
       {restaurantList.map((restaurant) => (
         <ul
@@ -146,6 +147,27 @@ const AddRestaurant = (props) => {
           <li>{restaurant.name}</li>
           <li>{restaurant.rating}</li>
           <li>{restaurant.price}</li>
+          <li>
+            <form onSubmit={() => {}}>
+              <select value ={meal} onChange={(e) => {setMeal(e.target.value)}}>
+                <option >{'Select a Meal'}</option>
+                <option >{'Breakfast'}</option>
+                <option >{'Lunch'}</option>
+                <option >{'Dinner'}</option>
+              </select>
+            </form>
+          </li>
+          <li>
+            <form>
+              <input
+                  placeholder="add event description"
+                  value={description}
+                  onChange={(e) => {
+                    setDescription(e.target.value);
+                  }}
+              ></input>
+            </form>
+          </li>
 
           <DatePicker
               selected={startDate}
@@ -178,7 +200,7 @@ const AddRestaurant = (props) => {
                     purpose: "LUNCH",
                     startDate,
                     tripId,
-                    description: 'Try european food',
+                    description,
                     placeName: restaurant.name,
                     url: restaurant.url,
                     location: restaurant.location.display_address.join(''),
