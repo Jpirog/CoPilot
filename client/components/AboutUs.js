@@ -8,7 +8,7 @@ export const AboutUs = props => {
         <img src="" />
         <div className="hero-text">
           <div className="brandblock"></div>
-          <h1>Copilot, your partner for group traveling</h1>
+          <h1>CoPilot, your partner for group traveling</h1>
           <h2>Let CoPilot make your group trip planning a breeze!</h2>
           <h2>&nbsp;</h2>
           <Link to="/login"><button className="cta">Login</button></Link>

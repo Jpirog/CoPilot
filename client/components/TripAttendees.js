@@ -4,6 +4,7 @@ import { removeTripAttendee, addTripAttendee } from "../store/trips";
 import { getUserByEmail } from '../store/user';
 import toast, { Toaster } from 'react-hot-toast';
 import dateFormat from 'dateformat';
+import { sendEmail } from '../utils/sendmail';
 
 const notify = (msg) => toast.success(msg, { duration: 3000, position: 'top-center' })
 
@@ -38,6 +39,16 @@ const TripAttendees = () => {
       email: email,
     }
     dispatch(addTripAttendee(recData));
+
+    sendEmail (email, 'You are invited on my trip!', { type: 'invited',
+      dest: tripDetails.destination,
+      host: `${tripDetails.owner.name} (${tripDetails.owner.username})`,
+      fromDate: dateFormat(tripDetails.startDate, "ddd, mmm d, yyyy") ,
+      toDate: dateFormat(tripDetails.endDate, "ddd, mmm d, yyyy") ,
+    }) ;
+
+    notify(`${email} added to the list and an email invite was sent`);
+
   }
 
   if (!tripDetails.destination){
