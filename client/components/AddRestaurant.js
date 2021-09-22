@@ -19,7 +19,7 @@ const AddRestaurant = (props) => {
   const [startDate, setStartDate] = useState(null);
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('')
-  const [meal, setMeal] = useState('')
+  const [meal, setMeal] = useState('DEFAULT')
 
   const dispatch = useDispatch();
 
@@ -38,20 +38,23 @@ const AddRestaurant = (props) => {
     }
     return activeDays;
   }
-  console.log('location', location)
-  console.log('trip.destination', trip.destination)
-  console.log('meal', meal)
 
-  // useEffect(() => {
-  //   const func = async () => {
-  //     const { data } = await axios.get("/api/yelp/restaurants", {
-  //       params: { location: trip.destination }
-  //     });
-  //     setRestaurantList(data);
-  //   };
-  //   func();
-  //   console.log('mount', location)
-  // }, []);
+  useEffect(() => {
+    const func = async () => {
+      const { data } = await axios.get("/api/yelp/restaurants", {
+        params: { location: trip.destination }
+      });
+      setRestaurantList(data);
+    };
+
+    if (trip.destination) {
+      func();
+      setLocation(trip.destination)
+      setDescription('');
+      setStartDate(null);
+      setMeal('DEFAULT');
+    }
+  }, [trip]);
 
   function restaurantSearchFieldChange(e) {
     e.preventDefault();
@@ -83,7 +86,7 @@ const AddRestaurant = (props) => {
           </tr>
           {tripevents &&
             tripevents.map((event) =>
-              event.purpose === "LUNCH" ? (
+              event.purpose === "LUNCH" || event.purpose === "BREAKFAST" ||  event.purpose === "DINNER" ? (
                 <tr key={event.id}>
                   <td>{event.startDate}</td>
                   <td>{event.placeName}</td>
@@ -149,11 +152,11 @@ const AddRestaurant = (props) => {
           <li>{restaurant.price}</li>
           <li>
             <form onSubmit={() => {}}>
-              <select value ={meal} onChange={(e) => {setMeal(e.target.value)}}>
-                <option >{'Select a Meal'}</option>
-                <option >{'Breakfast'}</option>
-                <option >{'Lunch'}</option>
-                <option >{'Dinner'}</option>
+              <select value={meal} onChange={(e) => {setMeal(e.target.value)}}>
+                <option value = {'DEFAULT'}>{'Select a Meal'}</option>
+                <option value = {'BREAKFAST'}>{'Breakfast'}</option>
+                <option value = {'LUNCH'}>{'Lunch'}</option>
+                <option value = {'DINNER'}>{'Dinner'}</option>
               </select>
             </form>
           </li>
@@ -197,7 +200,7 @@ const AddRestaurant = (props) => {
               if (startDate) {
                 dispatch(
                   addTripEvent({
-                    purpose: "LUNCH",
+                    purpose: meal,
                     startDate,
                     tripId,
                     description,
