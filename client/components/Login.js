@@ -1,15 +1,24 @@
 // *** This form replaces part of the AuthForm and is used for the login portion
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from '../store';
 
 export const Login = props => {
   const dispatch = useDispatch();
   const error = useSelector((state) => state.auth.error);
+  const [localError, setLocalError] = useState('')
+
 
   const handleSubmit = evt => {
-    evt.preventDefault()
+    evt.preventDefault();
+    
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(evt.target.username.value)){
+      setLocalError('This email address is not valid');
+      evt.target.username.focus();
+      return
+    }
+
     const formName = 'login';
     const username = evt.target.username.value;
     const password = evt.target.password.value;
@@ -35,7 +44,8 @@ export const Login = props => {
             <div>
               <button type="submit" className="cta">Login</button>
             </div>
-            { error && error.response && <div> { error.response.data } </div> }
+            { error && error.response && <div><p>&nbsp;</p> { error.response.data } </div> }
+            { localError &&  <div><br /><p> { localError } </p></div> }
           </form>
         </div>
       </div>
