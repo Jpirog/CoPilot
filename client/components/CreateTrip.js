@@ -6,8 +6,8 @@ import TripMap from "./TripMap";
 
 const initialState = {
     destination: '',
-    startDate: '',
-    endDate: '',
+    startDate: new Date(),
+    endDate: new Date(),
     name: '',
     purpose: 'VACATION',
 }
