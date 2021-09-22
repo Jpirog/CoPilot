@@ -9,6 +9,11 @@ export const MenuItems = [
         path: '/itinerary',
         cName: 'dropdown-link'
       },
+      {
+        title: 'Financials',
+        path: '/financials',
+        cName: 'dropdown-link',
+      },
     {
         title: 'All Trips',
         path: '/allTrips',

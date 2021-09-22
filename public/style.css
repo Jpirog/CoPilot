@@ -675,7 +675,7 @@ flex-wrap: wrap;
 }
 
 /* ITINERARY */
-#itineraryBox {
+/* #itineraryBox {
   padding: 50px;
 }
 
@@ -687,17 +687,30 @@ flex-wrap: wrap;
 .tripDuration {
   display:flex;
   justify-content: center;
+} */
+
+.itineraryInfo {
+  display: flex;
+  justify-content: center;
+  padding-top: 7px;
+}
+
+#tripAttendees {
+  /* padding: 5px; */
+  margin: 30px 52px;
+  /* border: black solid 1px; */
+  text-align: center;
 }
 
 #eventBox {
-  padding: 15px;
+  /* padding: 15px; */
   /* border: black solid 1px; */
 }
 
 .category {
   border: black solid 1px;
   padding: 5px;
-  margin: 50px;
+  margin: 20px 50px 20px 50px;
   border-radius: 10px;
   display: flex;
   justify-content: space-evenly;
@@ -769,4 +782,26 @@ flex-wrap: wrap;
   border: 5px solid rgb(95, 53, 13);
   box-shadow: wheat;
   background-color: rgb(155, 93, 0);
+}
+
+/* FINANCIALS  */
+.financialsForms {
+  /* display:flex; */
+  /* justify-content: center; */
+  padding: 25px 25px 10px;
+  margin: 15px;
+  background-color: cornsilk;
+
+}
+
+.addingMore {
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px;
+}
+
+.proposedItems {
+  border: #050505 solid 1px;
+  margin: 5px;
+  border-radius: 10px;
 }

@@ -18,6 +18,7 @@ import { me } from './store'
 import Calendar from "./components/Calendar";
 import Itinerary from './components/Itinerary';
 import AllTrips from './components/AllTrips';
+import Financials from './components/Financials'
 
 
 class Routes extends Component {
@@ -46,6 +47,7 @@ class Routes extends Component {
 
             <Route exact path="/itinerary" component={Itinerary} />
             <Route exact path="/allTrips" component={AllTrips}/>
+            <Route exact path="/financials" component={Financials} />
             {/* <Route exact path="/usercreated/:userId"><Trips/></Route> */}
             {/*<Redirect to="/home" /> */}
           </Switch>
