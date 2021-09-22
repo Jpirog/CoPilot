@@ -7,7 +7,7 @@ import { getUserCreatedTrips, getUserInvitedTrips, getTripDetails } from '../sto
 import { useDispatch } from 'react-redux';
 import dateFormat from 'dateformat';
 
-const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips }) => {
+const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips, currTrip }) => {
   const dispatch = useDispatch();
   const [userTrips, setUserTrips] = useState([]);
 
@@ -15,12 +15,22 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips }) 
     const fetchData = async () => {
       await dispatch(getUserInvitedTrips(userId));
       await dispatch(getUserCreatedTrips(userId));
-      setUserTrips(createdTrips.concat(invitedTrips)); // probably not needed
-    }
+      setUserTrips(createdTrips.concat(invitedTrips)); 
+
+  }
     if (userId){
       fetchData();
     }
   },[userId]);
+
+  useEffect( ()=> {
+    const fetchData = async (tripId) => {
+        await dispatch(getTripDetails(tripId));
+    };
+    if (currTrip){
+      fetchData(currTrip.id)
+    }
+}, [currTrip]);
 
   const[click, setClick] = useState(false);
   const[button, setButton] = useState(true)
@@ -77,7 +87,7 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips }) 
             {
               invitedTrips.concat(createdTrips).map((trip, i) => {
                 if (i === 0){
-                  dispatch(getTripDetails(trip.id))
+                  // dispatch(getTripDetails(trip.id));
                 }
                 const fromDate = dateFormat(trip.startDate, "mmm d");
                 const toDate = dateFormat(trip.endDate, "mmm d");
@@ -164,11 +174,14 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips }) 
  * CONTAINER
  */
 const mapState = state => {
+  const myTrips = state.trips.userCreatedTrips.concat(state.trips.userInvitedTrips);
+  const thisTrip = myTrips.length > 0 ? myTrips[0] : null;
   return {
     isLoggedIn: !!state.auth.id,
     userId: state.auth.id,
     createdTrips: state.trips.userCreatedTrips,
     invitedTrips: state.trips.userInvitedTrips,
+    currTrip: thisTrip,
   }
 }
 
