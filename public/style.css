@@ -785,6 +785,10 @@ label {
   box-shadow: wheat;
   background-color: rgb(155, 93, 0);
 }
+#notrips{
+  text-align: center;
+  color: white;
+}
 
 /* FINANCIALS  */
 .financialsForms {
@@ -807,4 +811,3 @@ label {
   margin: 5px;
   border-radius: 10px;
 }
-

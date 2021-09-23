@@ -73,10 +73,27 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips, cu
     dispatch(getTripDetails(ev.target.value));
   }
 
+  // console.log('CURRENT', currTrip)
+  // if (!currTrip || (currTrip && !currTrip.id)){
+  //   return (
+  //     <div id="notrips">
+  //       <h1>Welcome to CoPilot</h1>
+  //       <h2>Since you have no trips, please create a trip to start using the site!</h2>
+  //     </div>
+  //   )
+  // }
+
   return (
   <div>
     <nav className="navbar">
-      {isLoggedIn ? (
+      {isLoggedIn && !currTrip || (currTrip && !currTrip.id) ? 
+        (<div id="notrips">
+            <h2>Welcome to CoPilot</h2>
+            <h3>Since you have no trips, please create a trip to start using the site!</h3>
+          </div>
+        ) : 
+      
+      isLoggedIn ? (
         <div className="navbar-container">
           {/* The navbar will show these links after you log in */}
           <Link to="/" className="navbar-logo">
