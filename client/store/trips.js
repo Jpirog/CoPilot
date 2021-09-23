@@ -114,7 +114,7 @@ export const removeTripEvent = (tripId, eventId) => {
 export const updateTripEvent = (event) => {
   return async (dispatch) => { 
     try{
-      const { data: updatedEvent } = await axios.put('/api/tripevents', event);
+      const { data: updatedEvent } = await axios.post('/api/tripevents', event);
       dispatch(getTripDetails(updatedEvent.tripId));
     }
     catch(ex){

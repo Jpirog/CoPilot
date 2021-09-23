@@ -5,9 +5,26 @@ import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import moment from 'moment'
 import {connect} from 'react-redux'
+import{updateTripEvent} from "../store/trips";
+import AddToCalendar from 'react-add-to-calendar';
 
 
 
+function Event({ event }) {
+  return (
+    <span>
+      <strong>{event.title}</strong>
+      {event.desc && ':  ' + event.desc}
+    </span>
+  )
+}
+//render component AddToCal
+function AddToCal({event}) {
+  return <div>
+    {`Place Name: ${event.title} Description: ${event.desc}`}
+  <AddToCalendar event={{title:event.title,description:event.desc,startTime:event.start,endTime:event.end}} />
+</div>
+}
 
 //DnD Calendar
 const localizer = momentLocalizer(moment)
@@ -19,7 +36,6 @@ class Dnd extends React.Component {
     super(props)
     this.state = {
       events: [],
-      defaultDate:new Date(),
       displayDragItemInCell: true,
     }
 
@@ -28,8 +44,8 @@ class Dnd extends React.Component {
   }
 
 componentDidUpdate(prevProps){
-    if(!prevProps.eventList){
-    this.setState({events:this.props.eventList,defaultDate:this.props.trip.startDate})
+    if(prevProps.eventList!==this.props.eventList){
+    this.setState({events:this.props.eventList,defaultDate:new Date(moment(this.props.trip.startDate).format("MM/DD/YYYY"))})
 }
 }
   handleDragStart = event => {
@@ -55,27 +71,11 @@ componentDidUpdate(prevProps){
     this.moveEvent({ event, start, end })
   }
 
-  moveEvent = ({ event, start, end, isAllDay: droppedOnAllDaySlot }) => {
-    const { events } = this.state
+  moveEvent = ({ event, start, end}) => {
+    console.log(start,end)
 
-    let allDay = event.allDay
-
-    if (!event.allDay && droppedOnAllDaySlot) {
-      allDay = true
-    } else if (event.allDay && !droppedOnAllDaySlot) {
-      allDay = false
-    }
-    const nextEvents = events.map(existingEvent => {
-      return existingEvent.id == event.id
-        ? { ...existingEvent, start, end, allDay }
-        : existingEvent
-    })
-
-    this.setState({
-      events: nextEvents,
-    })
-
-    // alert(`${event.title} was dropped onto ${updatedEvent.start}`)
+    this.props.updateTripEvent({id:event.id,description:event.desc,startDate:start,endDate:end});
+    
   }
 
   resizeEvent = ({ event, start, end }) => {
@@ -110,12 +110,14 @@ componentDidUpdate(prevProps){
   }
 
   render() {
+
+
+
     return (
       <DragAndDropCalendar
         selectable
         onSelectEvent={(event)=>{
             alert(`${event.location},${event.start},${event.end}`)
-
         }}
         localizer={localizer}
         events={this.state.events}
@@ -125,6 +127,8 @@ componentDidUpdate(prevProps){
         onSelectSlot={this.newEvent}
         onDragStart={console.log}
         defaultView={Views.MONTH}
+        // onNavigate={console.log}
+        // date={this.state.defaultDate}
         defaultDate={this.state.defaultDate}
         popup={true}
         dragFromOutsideItem={
@@ -133,6 +137,13 @@ componentDidUpdate(prevProps){
         onDropFromOutside={this.onDropFromOutside}
         handleDragStart={this.handleDragStart}
         style={{height:1000,paddingTop:"10%"}}
+        components={{
+      title:event.title,
+          agenda: {
+            title:event.title,
+            event: AddToCal,
+          },
+        }}
    
       />
     )
@@ -141,9 +152,12 @@ componentDidUpdate(prevProps){
 
 const mapState =(state)=>({
 trip:state.trips.trip,
-eventList:state.trips.trip.tripevents&&state.trips.trip.tripevents.map(event=>({id:event.id,title:event.placeName,start:new Date(event.startDate),end:new Date(event.endDate),desc:event.description,location:event.location}))
+eventList:state.trips.trip.tripevents&&state.trips.trip.tripevents.map(event=>({id:event.id,title:event.placeName,start:new Date(event.startDate),end:new Date(event.endDate),desc:event.description,location:event.location,allDay:event.purpose==="SLEEP"?true:false}))
 })
+const mapDispatch ={
+  updateTripEvent
+}
 
 
-export default connect(mapState,null)(Dnd)
+export default connect(mapState,mapDispatch)(Dnd)
 

@@ -19,6 +19,7 @@ import { me } from './store'
 import Calendar from "./components/Calendar";
 import Itinerary from './components/Itinerary';
 import AllTrips from './components/AllTrips';
+import Test from "./components/test"
 
 
 class Routes extends Component {
@@ -37,7 +38,7 @@ class Routes extends Component {
 
         {isLoggedIn ? (
           <Switch>
-
+            <Route path="/test" component={Test} />
             <Route exact path="/hotel" component={AddHotel} />
             <Route path="/activity" component={AddActivity} />
             <Route path="/restaurant" component={AddRestaurant} />
