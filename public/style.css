@@ -770,3 +770,7 @@ flex-wrap: wrap;
   box-shadow: wheat;
   background-color: rgb(155, 93, 0);
 }
+#notrips{
+  text-align: center;
+  color: white;
+}
