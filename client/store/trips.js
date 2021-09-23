@@ -75,7 +75,7 @@ export const addUpdateTrip = (trip) => {
   return async (dispatch) => { 
     try{
       const { data: newTrip } = await axios.post('/api/trips', trip);
-      dispatch(_getTripDetails(newTrip)); 
+      dispatch(getTripDetails(newTrip.id)); 
       dispatch(getUserCreatedTrips(newTrip.ownerId)); // reload this since there is a new/changed trip
     }
     catch(ex){

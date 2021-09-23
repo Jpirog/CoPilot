@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 
 
 
-function Dropdown() {
+function Dropdown(props) {
   const [click, setClick] = useState(false);
 
   const handleClick = () => setClick(!click);
@@ -17,7 +17,7 @@ function Dropdown() {
     setClick(false);
     dispatch(logout());
   }
-
+  
   return (
     <>
       <ul
@@ -31,7 +31,10 @@ function Dropdown() {
             <Link
               className={item.cName}
               to={item.path}
-              onClick={() => handleLogoutClick()}
+              onClick={() => {handleLogoutClick();
+                              props.setDropdown(false);
+                             }
+                      }
             >
             {item.title}
            </Link>
@@ -51,5 +54,21 @@ function Dropdown() {
     </>
   );
 }
+
+// const mapState = state => {
+//   return {
+//     isLoggedIn: !!state.auth.id,
+//     userId: state.auth.id,
+//   }
+// }
+
+// const mapDispatch = dispatch => {
+//   return {
+//     handleClick() {
+//       dispatch(logout())
+//     }
+//   }
+// }
+
 
 export default Dropdown;
