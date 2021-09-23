@@ -1,64 +1,41 @@
-import React from "react";
-import { Loader } from "@googlemaps/js-api-loader";
-
-const TripMap =({trips})=> {
-//google map
-const loader = new Loader({
-    apiKey: "AIzaSyAG9cx-Cl81xpcjfNhL6emoDjhNVdF8oFE",
-    version: "weekly",
-    libraries: ["places"],
-  });
-  
-  loader.load().then(() => {
-    const infoWindow = new google.maps.InfoWindow();
-    let geocoder = new google.maps.Geocoder();
-    let map = new google.maps.Map(document.getElementById("map"), {
-      center: { lat: 40.730610, lng: -73.935242 },
-      zoom: 8,
-    });
- 
-
-    codeAddress(trips,geocoder,map,infoWindow)
-  });
+import React, {Component} from 'react';
+import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 
 
-  function codeAddress(trips,geocoder,map,infoWindow) {
+export class TripMap extends Component {
+    state = {
+      showingInfoWindow: false,
+      activeMarker: {},
+      selectedPlace: {},
 
-    trips&&trips.map(trip=>{
-        
-    geocoder.geocode( { 'address': trip.destination}, function(results, status) {
-      if (status == 'OK') {
-        map.setCenter(results[0].geometry.location);
-        var marker = new google.maps.Marker({
-            map: map,
-            position: results[0].geometry.location,
-            title:trip.name,
-            
-        });
- 
-        marker.addListener("click", () => {
-            infoWindow.close();
-            infoWindow.setContent(marker.getTitle());
-            infoWindow.open(marker.getMap(), marker);
-          });
-
-
-      } else {
-        alert('Geocode was not successful for the following reason: ' + status);
+      mapCenter: {
+          lat: 28.538336,
+          lng:  -81.379234
       }
-    })
+    };
+   
+  
+   
+    render() {
+      return (
+        <Map 
+        google={this.props.google}
+        initialCenter={{
+            lat: this.state.mapCenter.lat,
+            lng: this.state.mapCenter.lng
 
-    
-
-}
-);
+        }}
+            >
+          <Marker 
+                position={{
+                    lat: 28.538336,
+          lng:  -81.379234
+                }} />
+        </Map>
+      )
+    }
   }
 
-
-
-
-
-    return <div style={{ height: '100vh', width: '100%' }}><div id="map" style={{height: "100%"}}>this is map</div></div>
-}
-
-export default TripMap
+  export default GoogleApiWrapper({
+    apiKey: ('AIzaSyAG9cx-Cl81xpcjfNhL6emoDjhNVdF8oFE')
+  })(TripMap)
