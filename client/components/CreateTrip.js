@@ -1,8 +1,13 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import  { addUpdateTrip }  from '../store/trips'
-import TripMap from "./TripMap";
+import TripMap from './TripMap'
+import PlacesAutocomplete, {
+    geocodeByAddress,
+    getLatLng,
+  } from 'react-places-autocomplete';
+
 
 const initialState = {
     destination: '',
@@ -14,10 +19,18 @@ const initialState = {
 class CreateTrip extends Component{
   constructor(props){
     super(props)
-    this.state = initialState;
+    this.state = {
+        initialState,
+        address: ''
+    }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleChanges = this.handleChanges.bind(this)
+    this.handleSelect = this.handleSelect.bind(this)
+
   }
+
+
   handleSubmit = async (ev) => {
     ev.preventDefault();
     const {state} = this
@@ -30,7 +43,12 @@ class CreateTrip extends Component{
             name: state.name,
             ownerId:this.props.auth.id,
         })
-    this.setState(initialState)
+        console.log(this.props)
+
+    this.props.history.push('/tripattendees')
+
+    // this.setState(initialState)
+
     } catch (error) {
         console.log(error)
     }
@@ -41,8 +59,23 @@ handleChange = (ev) => {
     this.setState(change)
 }
 
+handleChanges = address => {
+    this.setState({ address });
+  };
+ 
+  handleSelect = address => {
+    geocodeByAddress(address)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => {
+        console.log('Success', latLng);
+        this.setState({ address })
+      })
+      .catch(error => console.error('Error', error));
+  };
+
+
 render() {
-    const { handleSubmit, handleChange } = this;
+    const { handleSubmit, handleChange, handleChanges, handleSelect } = this;
     const { destination, startDate, endDate, purpose, name} = this.state
     return ( 
     <div id="content-wrapper">
@@ -63,7 +96,46 @@ render() {
                 
                     <input type="text" name='destination' value= {destination} onChange={ handleChange }
                     required={true} />
-                    <label>Destination:</label>
+                    {/* <PlacesAutocomplete
+        value={this.state.address}
+        onChange={handleChanges}
+        onSelect={handleSelect}
+      >
+        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+          <div>
+            <input 
+              {...getInputProps({
+                placeholder: 'Search Places ...',
+                className: 'location-search-input',
+              })}
+            //   value= { destination }
+            />
+            <div className="autocomplete-dropdown-container">
+              {loading && <div>Loading...</div>}
+              {suggestions.map(suggestion => {
+                const className = suggestion.active
+                  ? 'suggestion-item--active'
+                  : 'suggestion-item';
+                // inline style for demonstration purpose
+                const style = suggestion.active
+                  ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                  : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                return (
+                  <div
+                    {...getSuggestionItemProps(suggestion, {
+                      className,
+                      style,
+                    })}
+                  >
+                    <span>{suggestion.description}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </PlacesAutocomplete> */}
+                    
                 </div>
                 <div className='formfield'>
                     
@@ -89,15 +161,15 @@ render() {
                     <label>Purpose:</label>
                 </div>
                 <div className="buttons">
-                <button type="submit" className="">Submit Trip</button>
+                <button type="submit" className="" onChange={ handleSubmit }>Submit Trip</button>
                 <br/>
-                <Link to="/tripattendees"><button>Add Trip Attendeese</button></Link>
+                {/* <Link to="/tripattendees"><button>Add Trip Attendeese</button></Link> */}
                 </div>
             </form>
             </div>
             <br/>
-            <TripMap  />
         </div>
+        {/* <TripMap /> */}
     </div>
      );
 }

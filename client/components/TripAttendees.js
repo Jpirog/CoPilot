@@ -93,7 +93,7 @@ const TripAttendees = () => {
               </tr>
             </thead>
             <tbody>
-              {tripDetails.tripattendees.map(attendee => {
+              {tripDetails.tripattendees&&tripDetails.tripattendees.map(attendee => {
                 const accepted = attendee.responseDate ? attendee.accepted ? 'Accepted' : 'Declined' : 'No response yet';
                 const respDate = attendee.responseDate ? dateFormat(attendee.responseDate, "mmm d, yyyy") : 'No response yet';
                 const name = attendee.user ? attendee.user.name : 'Unknown';

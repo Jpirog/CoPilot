@@ -13,17 +13,15 @@ class AllTrips extends React.Component {
         super(props);
     }
     
-    async componentDidMount() {
-        await this.props.getTripDetails();
-    }
+    // async componentDidMount() {
+    //     await this.props.getTripDetails();
+    // }
 
     render() {
-    const practiceTripsArray = ['trip1', 'trip2', 'trip3'];
-
-    const trips = this.props.trips;
+    //const trips = this.props.trips;
     const allTrips = [...this.props.trips.userCreatedTrips, ...this.props.trips.userInvitedTrips];
     console.log('ALL TRIPS', allTrips)
-    
+
         return (
             <div id='content-wrapper'>
                 <div id='pageTitle'>
@@ -34,14 +32,12 @@ class AllTrips extends React.Component {
                 </div>
                 <div className='allTripsCards'>
                     {allTrips.map((trip) => (
-                        <div className='singleTripCard'> 
-                        <p>{/* key of each trip card will be that trip's id # */}
+                        <div key={trip.id} className='singleTripCard'> 
                             <div className='tripInfo'>
-                                <p>Trip Name: {trip.destination}</p>
+                                <p>Trip Name: {trip.name}</p>
                                 <p>Destination: {trip.destination}</p>
                                 <p>Dates: {dateFormat(trip.startDate, "mmm d")} - {dateFormat(trip.endDate, "mmm d")}</p>
                             </div>
-                        </p>
                             <Link to='/itinerary'>
                                 <button className='moreDetails'>
                                     More Details
@@ -64,8 +60,9 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = {
-    getTripDetails
-}
+// const mapDispatchToProps = {
+//     getTripDetails
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllTrips);
+//export default connect(mapStateToProps, mapDispatchToProps)(AllTrips);
+export default connect(mapStateToProps)(AllTrips);

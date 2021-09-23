@@ -75,7 +75,7 @@ export const addUpdateTrip = (trip) => {
   return async (dispatch) => { 
     try{
       const { data: newTrip } = await axios.post('/api/trips', trip);
-      dispatch(_getTripDetails(newTrip)); 
+      dispatch(getTripDetails(newTrip.id)); 
       dispatch(getUserCreatedTrips(newTrip.ownerId)); // reload this since there is a new/changed trip
     }
     catch(ex){
@@ -114,7 +114,7 @@ export const removeTripEvent = (tripId, eventId) => {
 export const updateTripEvent = (event) => {
   return async (dispatch) => { 
     try{
-      const { data: updatedEvent } = await axios.put('/api/tripevents', event);
+      const { data: updatedEvent } = await axios.post('/api/tripevents', event);
       dispatch(getTripDetails(updatedEvent.tripId));
     }
     catch(ex){

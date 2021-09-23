@@ -55,4 +55,20 @@ function Dropdown(props) {
   );
 }
 
+// const mapState = state => {
+//   return {
+//     isLoggedIn: !!state.auth.id,
+//     userId: state.auth.id,
+//   }
+// }
+
+// const mapDispatch = dispatch => {
+//   return {
+//     handleClick() {
+//       dispatch(logout())
+//     }
+//   }
+// }
+
+
 export default Dropdown;
