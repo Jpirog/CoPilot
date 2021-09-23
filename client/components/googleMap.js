@@ -14,7 +14,7 @@ const loader = new Loader({
     let geocoder = new google.maps.Geocoder();
     let map = new google.maps.Map(document.getElementById("map"), {
       center: { lat: 40.730610, lng: -73.935242 },
-      zoom: 8,
+      zoom: 12,
     });
  
 

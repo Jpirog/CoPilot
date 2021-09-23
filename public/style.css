@@ -638,10 +638,6 @@ flex-wrap: wrap;
 
 }
 
-.item {
-  align-items: center;
-  text-align: center;
-}
 
 #attendees{
   margin-top: 15px;
@@ -769,6 +765,12 @@ flex-wrap: wrap;
   justify-content: space-evenly;
 }
 
+
+label {
+  font-weight: bolder;
+}
+
+
 .buttons {
   display: flex;
   justify-content: center;
@@ -805,3 +807,4 @@ flex-wrap: wrap;
   margin: 5px;
   border-radius: 10px;
 }
+
