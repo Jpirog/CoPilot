@@ -113,7 +113,7 @@ const AddRestaurant = (props) => {
                   <td>{event.placeName}</td>
                   <td>{event.description}</td>
                   <td>
-                    <a href={event.url}>Link of Website</a>
+                    <a href={event.url} target="_blank">Link of Website</a>
                   </td>
                   <td>{event.location}</td>
                   <td>
@@ -173,7 +173,7 @@ const AddRestaurant = (props) => {
           key={restaurant.id}
           style={{ flex: 1, flexDirection: "row", padding: "20px" }}
         >
-          <a href={restaurant.url}>
+          <a href={restaurant.url} target="_blank">
             <img
               style={{ width: "20%", height: "20%" }}
               src={restaurant.image_url}
