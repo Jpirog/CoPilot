@@ -5,14 +5,14 @@ export const MenuItems = [
       cName: 'dropdown-link'
     },
     {
-        title: 'Edit User',
-        path: '/edituser',
-        cName: 'dropdown-link'
-      },
-    {
         title: 'Itinerary',
         path: '/itinerary',
         cName: 'dropdown-link'
+      },
+      {
+        title: 'Financials',
+        path: '/financials',
+        cName: 'dropdown-link',
       },
     {
         title: 'All Trips',

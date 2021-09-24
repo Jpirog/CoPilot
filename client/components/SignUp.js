@@ -1,6 +1,6 @@
 // *** This form replaces part of the AuthForm and is used for the register portion
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from '../store';
 import toast from 'react-hot-toast';
@@ -10,9 +10,17 @@ const notify = () => toast.success('Registration successful! Welcome to CoPilot!
 export const Signup = props => {
   const dispatch = useDispatch();
   const error = useSelector((state) => state.auth.error);
+  const [localError, setLocalError] = useState('')
 
   const handleSubmit = evt => {
-    evt.preventDefault()
+    evt.preventDefault();
+
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(evt.target.username.value)){
+      setLocalError('This email address is not valid');
+      evt.target.username.focus();
+      return
+    }
+
     if (evt.target.password.value === evt.target.confirmpassword.value){
       const formName = 'signup';
       const username = evt.target.username.value;
@@ -21,10 +29,12 @@ export const Signup = props => {
       dispatch(authenticate(username, password, formName, name)); 
       notify();
     } else {
-      alert ('Passwords do not match - please correct and submit again')
+//      alert ('Passwords do not match - please correct and submit again')
+      setLocalError('Passwords do not match - please correct and submit again');
       evt.target.password.value = '';
       evt.target.confirmpassword.value = '';
       evt.target.password.focus();
+      setLocalError('');
     }
   }
 
@@ -51,7 +61,8 @@ export const Signup = props => {
             <div>
               <button type="submit" className="cta">Register!</button>
             </div>
-            { error && error.response && <div> { error.response.data } </div> }
+            { error && error.response && <div><br /><p> { error.response.data } </p></div> }
+            { localError &&  <div><br /><p> { localError } </p></div> }
           </form>
         </div>
       </div>

@@ -7,7 +7,7 @@ import { getUserCreatedTrips, getUserInvitedTrips, getTripDetails } from '../sto
 import { useDispatch } from 'react-redux';
 import dateFormat from 'dateformat';
 
-const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips }) => {
+const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips, currTrip }) => {
   const dispatch = useDispatch();
   const [userTrips, setUserTrips] = useState([]);
 
@@ -15,12 +15,22 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips }) 
     const fetchData = async () => {
       await dispatch(getUserInvitedTrips(userId));
       await dispatch(getUserCreatedTrips(userId));
-      setUserTrips(createdTrips.concat(invitedTrips)); // probably not needed
-    }
+      setUserTrips(createdTrips.concat(invitedTrips)); 
+
+  }
     if (userId){
       fetchData();
     }
   },[userId]);
+
+  useEffect( ()=> {
+    const fetchData = async (tripId) => {
+        await dispatch(getTripDetails(tripId));
+    };
+    if (currTrip){
+      fetchData(currTrip.id)
+    }
+}, [currTrip]);
 
   const[click, setClick] = useState(false);
   const[button, setButton] = useState(true)
@@ -63,10 +73,27 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips }) 
     dispatch(getTripDetails(ev.target.value));
   }
 
+  // console.log('CURRENT', currTrip)
+  // if (!currTrip || (currTrip && !currTrip.id)){
+  //   return (
+  //     <div id="notrips">
+  //       <h1>Welcome to CoPilot</h1>
+  //       <h2>Since you have no trips, please create a trip to start using the site!</h2>
+  //     </div>
+  //   )
+  // }
+
   return (
   <div>
     <nav className="navbar">
-      {isLoggedIn ? (
+      {isLoggedIn && !currTrip || (currTrip && !currTrip.id) ? 
+        (<div id="notrips">
+            <h2>Welcome to CoPilot</h2>
+            <h3>Since you have no trips, please create a trip to start using the site!</h3>
+          </div>
+        ) : 
+      
+      isLoggedIn ? (
         <div className="navbar-container">
           {/* The navbar will show these links after you log in */}
           <Link to="/" className="navbar-logo">
@@ -77,7 +104,7 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips }) 
             {
               invitedTrips.concat(createdTrips).map((trip, i) => {
                 if (i === 0){
-                  dispatch(getTripDetails(trip.id))
+                  // dispatch(getTripDetails(trip.id));
                 }
                 const fromDate = dateFormat(trip.startDate, "mmm d");
                 const toDate = dateFormat(trip.endDate, "mmm d");
@@ -96,23 +123,23 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips }) 
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
         </div>*/}
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-            <li className='nav-item'>
+{/*            <li className='nav-item'>
               <Link to="/home" className="nav-links" onClick={closeMobileMenu}>
               Home
               </Link>
-            </li>
+      </li>*/}
             <li className='nav-item'>
-              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
+              <Link to="/restaurant" className="nav-links" onClick={closeMobileMenu}>
               Restaurants
               </Link>
             </li>
               <li className='nav-item'>
-              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
+              <Link to="/hotel" className="nav-links" onClick={closeMobileMenu}>
               Hotels
             </Link>
               </li>
             <li className='nav-item'>
-              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
+              <Link to="/activity" className="nav-links" onClick={closeMobileMenu}>
               Tourist Activities
               </Link>
             </li>
@@ -126,9 +153,8 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips }) 
               onMouseEnter={onMouseEnter}
               onMouseLeave={onMouseLeave}>
               <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-                More <i className='fas fa-caret-down' />
-              </Link>
-              {dropdown && <Dropdown />}
+              More <i className='fas fa-caret-down' />
+              </Link> {dropdown && <Dropdown setDropdown={()=>setDropdown(false)}/>}
             </li>
           </ul>
           {/* {button && <Button onClick={handleClick} buttonStyle='btn--outline'><i className={'fa fa-sign-out-alt' } />
@@ -165,11 +191,14 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips }) 
  * CONTAINER
  */
 const mapState = state => {
+  const myTrips = state.trips.userCreatedTrips.concat(state.trips.userInvitedTrips);
+  const thisTrip = myTrips.length > 0 ? myTrips[0] : null;
   return {
     isLoggedIn: !!state.auth.id,
     userId: state.auth.id,
     createdTrips: state.trips.userCreatedTrips,
     invitedTrips: state.trips.userInvitedTrips,
+    currTrip: thisTrip,
   }
 }
 

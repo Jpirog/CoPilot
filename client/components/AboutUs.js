@@ -8,12 +8,12 @@ export const AboutUs = props => {
         <img src="" />
         <div className="hero-text">
           <div className="brandblock"></div>
-          <h1>Copilot, your partner for group traveling</h1>
+          <h1>CoPilot, your partner for group traveling</h1>
           <h2>Let CoPilot make your group trip planning a breeze!</h2>
           <h2>&nbsp;</h2>
           <Link to="/login"><button className="cta">Login</button></Link>
             <h2>or</h2>
-          <Link to="/signup"><button className="cta">Register</button></Link>
+          <Link to="/signup"><button className="cta">Sign Up</button></Link>
         </div>
       </div>
       <div className="hpcontent hpsection-1">
@@ -35,10 +35,10 @@ export const AboutUs = props => {
 
           <p>It’s time to let CoPilot make your pre-trip planning a breeze!</p>
 
-          <p><strong>Register and start planning a trip today.</strong></p>
+          <p><strong>Sign up and start planning a trip today.</strong></p>
 
           <form action="https://www.honeybeecoffeeco.com/blog/2020/4/2/6-benefits-of-buying-locally-roasted-coffee">
-            <Link to="/signup"><button className="cta">Register</button></Link>
+            <Link to="/signup"><button className="cta">Sign up</button></Link>
            </form>
       </div>
     </div>
@@ -85,7 +85,7 @@ export const AboutUs = props => {
         <h1>Destress your life</h1>
         <p>There is enough stress and pressure in life. Let us help your group collaboratively plan out your next trip so you can arrive prepared and ready to enjoy. </p>
         <form action="https://youmatter.world/en/definition/ecosystem-definition-example/">
-          <Link to="/signup"><button className="cta">Register</button></Link>
+          <Link to="/signup"><button className="cta">Sign up</button></Link>
         </form>
       </div>
       <div className="hpsection-1-imgB">
@@ -99,7 +99,7 @@ export const AboutUs = props => {
         <h1>Detailed Itinerary</h1>
         <p>Easily plan out activities and dining for each day of your trip. A detailed itinerary will be created with all of your choices. Items can be added to personal calendars to have all events easily available on your phone. </p>
         <form action="https://youmatter.world/en/definition/ecosystem-definition-example/">
-          <Link to="/signup"><button className="cta">Register</button></Link>
+          <Link to="/signup"><button className="cta">Sign up</button></Link>
         </form>
       </div>
       <div className="hpsection-1-imgC">

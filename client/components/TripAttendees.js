@@ -4,11 +4,11 @@ import { removeTripAttendee, addTripAttendee } from "../store/trips";
 import { getUserByEmail } from '../store/user';
 import toast, { Toaster } from 'react-hot-toast';
 import dateFormat from 'dateformat';
+import { sendEmail } from '../utils/sendmail';
 
 const notify = (msg) => toast.success(msg, { duration: 3000, position: 'top-center' })
 
 const TripAttendees = () => {
-  // const history = useHistory();
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.id);
   const tripDetails = useSelector((state) => state.trips.trip);
@@ -39,38 +39,22 @@ const TripAttendees = () => {
       email: email,
     }
     dispatch(addTripAttendee(recData));
-    //ev.target.newattendee.value = 'hello';
+
+    sendEmail (email, 'You are invited on my trip!', { type: 'invited',
+      dest: tripDetails.destination,
+      host: `${tripDetails.owner.name} (${tripDetails.owner.username})`,
+      fromDate: dateFormat(tripDetails.startDate, "ddd, mmm d, yyyy") ,
+      toDate: dateFormat(tripDetails.endDate, "ddd, mmm d, yyyy") ,
+    }) ;
+
+    notify(`${email} added to the list and an email invite was sent`);
+
   }
 
-  // const [dispName, setDispName] = useState("");
-  // const [username, setusername] = useState("");
-  // const [name, setname] = useState("");
-  // const [user, setUser] = useState({});
-  // const [enableSave, setenableSave] = useState(false);
-
-  // useEffect( () => {
-  //   const fetchData = async () => {
-  //     const userData = await getUser(userId);
-  //     setusername(userData.username);
-  //     setname(userData.name);
-  //     setUser(userData);
-  //     setDispName(userData.name);
-  //   }
-  //   fetchData();
-  // },[] );
-  
-  // const handleSubmit = (ev) => {
-  //   ev.preventDefault();
-  //   const newUser = user;
-  //   newUser.name = name;
-  //   updateUser(newUser);
-  //   dispatch(me());
-  //   notify();
-  //   history.push('/home');
-  // }
   if (!tripDetails.destination){
     return null;
   }
+  
   const handleUninvite = (ev, tripId, email) => {
     ev.preventDefault();
     if (confirm(`Please confirm ${email} should be removed from the invite list`)){

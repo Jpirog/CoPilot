@@ -7,12 +7,12 @@ async function seed() {
 
   // Create users
   const users = await Promise.all([
-    User.create({ username: 'cody', name: 'cody', password: '123' }),
-    User.create({ username: 'murphy', name: 'murphy', password: '123' }),
-    User.create({ username: 'lucy', name: 'lucy', password: '123' }),
-    User.create({ username: 'konstantin', name: 'konstantin', password: '123' }),
-    User.create({ username: 'ayan', name: 'ayan', password: '123' }),
-    User.create({ username: 'john', name: 'john', password: '123' }),
+    User.create({ username: 'cody@fsa.com', name: 'cody', password: '123' }),
+    User.create({ username: 'murphy@fsa.com', name: 'murphy', password: '123' }),
+    User.create({ username: 'lucy@fsa.com', name: 'lucy', password: '123' }),
+    User.create({ username: 'konstantin@fsa.com', name: 'konstantin', password: '123' }),
+    User.create({ username: 'ayan@fsa.com', name: 'ayan', password: '123' }),
+    User.create({ username: 'john@fsa.com', name: 'john', password: '123' }),
   ])
 
   console.log(`seeded ${users.length} users`)
@@ -25,7 +25,7 @@ async function seed() {
                   purpose: 'RELAX', status: 'IN PROGRESS', ownerId: users[0].id,
                 }),
     Trip.create({ 
-                  name: 'Holyday trip',
+                  name: 'Holiday trip',
                   destination: 'New York City, NY', 
                   startDate: '2021-10-06', endDate: '2021-10-31', 
                   purpose: 'RELAX', status: 'IN PROGRESS', ownerId: users[0].id,

@@ -31,7 +31,7 @@ router.get("/restaurants", async (req, res, next) => {
             headers: HEADERS, 
             params: {
                 'term': req.query.term,
-                'location': req.query.location?req.query.location:"NYC",
+                'location': req.query.location,
                 "limit": req.query.term?5:20,
                 "sort_by": "rating",
                 "categories": "restaurants",
