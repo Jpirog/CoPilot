@@ -20,9 +20,10 @@ function Dropdown(props) {
   
   return (
     <>
+    <div>Hello</div>
       <ul
         onClick={handleClick}
-        className={click ? 'dropdown-menu clicked' : 'dropdown-menu'}
+        className={click ? 'dropdown--menu clicked' : 'dropdown--menu'}
       >
         {MenuItems.map((item, index) => {
           return (

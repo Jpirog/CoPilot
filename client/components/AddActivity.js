@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import {addTripEvent,removeTripEvent} from "../store/trips"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { RatingView } from 'react-simple-star-rating'
 import dateFormat from "dateformat";
+import RatingStar from "./RatingStar"
 
 let categoryList =[
 {key:"active",value:"Active Life"},
@@ -137,7 +137,7 @@ dispatch(removeTripEvent(tripId,event.id))
         <a href={activity.url} target="_blank"><img className="img-thumbnail"
                 style={{ width: "300px", height: "300px" }} src={activity.image_url}></img></a>
         <li >{activity.name}</li>
-        <li> <RatingView ratingValue={activity.rating} /></li>
+        <li> <RatingStar rating={activity.rating} /></li>
         <li >{activity.categories[0].title}</li>
         <li><input placeholder="Add event description" value={description} onChange={(e)=>{setDescription(e.target.value)}}></input></li>
 

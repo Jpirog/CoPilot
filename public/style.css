@@ -586,7 +586,7 @@ video {
 
 /* dropdown start */
 
-.dropdown-menu {
+.dropdown--menu {
   background: red;
   width: 200px;
   position: absolute;
@@ -595,16 +595,16 @@ video {
   text-align: start;
 }
 
-.dropdown-menu li {
+.dropdown--menu li {
   background: #050505;
   cursor: pointer;
 }
 
-.dropdown-menu li:hover {
+.dropdown--menu li:hover {
   background: #a8a6a6;
 }
 
-.dropdown-menu.clicked {
+.dropdown--menu.clicked {
   display: none;
 }
 

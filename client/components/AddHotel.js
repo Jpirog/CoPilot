@@ -6,9 +6,9 @@ import { addTripEvent, removeTripEvent } from "../store/trips";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import GoogleMap from "./googleMap";
-import { RatingView } from 'react-simple-star-rating'
 import dateFormat from "dateformat";
-import moment from "moment"
+import moment from "moment";
+import RatingStar from "./RatingStar"
 
 const AddHotel = (props) => {
   const { trip, tripId, tripevents } = useSelector((state) => ({
@@ -185,7 +185,7 @@ useEffect(()=>{
               ></img>
             </a>
             <li>{hotel.name}</li>
-            <li> <RatingView ratingValue={hotel.rating} /></li>
+            <li> <RatingStar rating={hotel.rating} /></li>
             <li>{hotel.price}</li>
             <li>
               <input
