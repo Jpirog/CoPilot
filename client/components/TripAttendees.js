@@ -124,7 +124,7 @@ const TripAttendees = () => {
               })}
             </tbody>
             {
-              tripDetails.tripattendees.length > 0 ? null :
+              tripDetails.tripattendees&&tripDetails.tripattendees.length > 0 ? null :
                 <tfoot>
                   <tr>
                     <td colSpan={5}>No attendees yet, add some above!</td>
