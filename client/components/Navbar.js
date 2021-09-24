@@ -85,7 +85,7 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips, cu
 
   return (
   <div>
-    <nav className="navbar">
+    <nav className="navbarx">
       {isLoggedIn && !currTrip || (currTrip && !currTrip.id) ? 
         (<div id="notrips">
             <h2>Welcome to CoPilot</h2>
