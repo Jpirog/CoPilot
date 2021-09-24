@@ -154,7 +154,7 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips, cu
               onMouseLeave={onMouseLeave}>
               <Link to="/" className="nav-links" onClick={closeMobileMenu}>
               More <i className='fas fa-caret-down' />
-              </Link> {dropdown && <Dropdown setDropdown={()=>setDropdown(false)}/>}
+              </Link> {dropdown &&<Dropdown setDropdown={()=>setDropdown(false)}/>}
             </li>
           </ul>
           {/* {button && <Button onClick={handleClick} buttonStyle='btn--outline'><i className={'fa fa-sign-out-alt' } />

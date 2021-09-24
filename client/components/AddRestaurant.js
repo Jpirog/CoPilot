@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { addTripEvent, removeTripEvent } from "../store/trips";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { RatingView } from "react-simple-star-rating";
+import RatingStar from "./RatingStar"
 
 const AddRestaurant = (props) => {
   const { tripId, tripevents, trip } = useSelector((state) => ({
@@ -182,7 +182,7 @@ const AddRestaurant = (props) => {
           <li>{restaurant.name}</li>
           <li>
             {" "}
-            <RatingView ratingValue={restaurant.rating} />
+            <RatingStar rating={restaurant.rating} />
           </li>
           <li>{restaurant.price}</li>
           <li>
