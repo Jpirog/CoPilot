@@ -36,7 +36,7 @@ class CreateTrip extends Component{
     const {state} = this
     try {
         await this.props.addUpdateTrip({
-             destination: state.destination,
+             destination: state.address,
             startDate: state.startDate,
             endDate: state.endDate,
             purpose: state.purpose,
@@ -64,6 +64,7 @@ handleChanges = address => {
   };
  
   handleSelect = address => {
+      console.log(address)
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
       .then(latLng => {
@@ -94,9 +95,9 @@ render() {
             </div>
             <div className='formfield'>
                 
-                    <input type="text" name='destination' value= {destination} onChange={ handleChange }
-                    required={true} />
-                    {/* <PlacesAutocomplete
+                    {/* <input type="text" name='destination' value= {destination} onChange={ handleChange }
+                    required={true} /> */}
+                    <PlacesAutocomplete
         value={this.state.address}
         onChange={handleChanges}
         onSelect={handleSelect}
@@ -108,7 +109,9 @@ render() {
                 placeholder: 'Search Places ...',
                 className: 'location-search-input',
               })}
-            //   value= { destination }
+            //   name='destination'
+            //   onChange={handleChanges}
+              value= { this.state.address }
             />
             <div className="autocomplete-dropdown-container">
               {loading && <div>Loading...</div>}
@@ -134,7 +137,7 @@ render() {
             </div>
           </div>
         )}
-      </PlacesAutocomplete> */}
+      </PlacesAutocomplete>
                     
                 </div>
                 <div className='formfield'>
