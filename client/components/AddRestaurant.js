@@ -92,8 +92,9 @@ const AddRestaurant = (props) => {
   }
 
   return (
-    <div id="content-wrapper" style={{ padding: "80px" }}>
-      <table border="2px">
+    <div style={{ padding: "20px" }}>
+      <div className="d-lg-flex flex-column align-content-center flex-wrap mr-md-6"></div>
+      <table className="table table-hover shadow p-3 mb-5 bg-white rounded">
         <tbody>
           <tr>
             <th>Start Date</th>
@@ -118,12 +119,13 @@ const AddRestaurant = (props) => {
                   <td>{event.location}</td>
                   <td>
                     <button
+                     className="btn btn-outline-danger"
                       type="button"
                       onClick={() => {
                         dispatch(removeTripEvent(tripId, event.id));
                       }}
                     >
-                      Delete
+                     <i className="far fa-trash-alt"></i>
                     </button>
                   </td>
                 </tr>
@@ -133,27 +135,33 @@ const AddRestaurant = (props) => {
       </table>
 
       <form onSubmit={restaurantSearchSubmit}>
-        <label>Search a restaurant:</label>
-        <input
-          autoFocus
-          placeholder="search for your restaurant"
-          type="text"
-          value={searchValue}
-          onChange={restaurantSearchFieldChange}
-        />
-        <br />
-        <label>Change location:</label>
-        <input
+      <div className="input-group">
+  <span className="input-group-text mr-md-3">You can change a destination or search for a restaurant</span>
+  <input
+    type="text" aria-label="location" className="form-control" 
           value={location}
           onChange={(e) => {
             setLocation(e.target.value);
           }}
         />
-        <br />
-        <input type="submit" value="Search" />
-      </form>
+        <input
+          autoFocus type="text" aria-label="hotel" className="form-control" 
+          placeholder="search for your restaurant"
+          type="text"
+          value={searchValue}
+          onChange={restaurantSearchFieldChange}
+        />
 
-      <select
+<button type="submit" className="btn btn-primary input-group-text">Search</button>
+  <button type="button" className="btn btn-primary input-group-text mr-md-3"
+  onClick={() => {
+    setSearchValue("");
+  }}
+>
+  Clear
+</button>
+<select
+  className="btn btn-primary input-group-text" aria-label=".form-select-lg example" 
         value={sortValue}
         onChange={(e) => {
           setSortValue(e.target.value);
@@ -163,18 +171,23 @@ const AddRestaurant = (props) => {
         <option value="rating">rating-High to Low</option>
         <option value="price">price-Low to High</option>
       </select>
-
-      <Link to={`/activity`}>
+        </div>
+      </form>
+<br />
+<div>
+      <Link to={`/activity`} className="btn btn-primary">
         Once restaurant is selected, go to activities
       </Link>
-
+      </div>
+      <div className="d-lg-flex flex-row align-content-around flex-wrap mr-md-6"> 
       {restaurantList.map((restaurant) => (
         <ul
-          key={restaurant.id}
-          style={{ flex: 1, flexDirection: "row", padding: "20px" }}
+        className="shadow-lg p-3 mb-5 mr-md-3 d-flex flex-column align-content-center flex-wrap bg-white rounded"
+          key={restaurant.id} style={{ padding: "10%", width:"30%",listStyleType: "none" ,textAlign:"center"}} style={{ flex: 1, flexDirection: "row", padding: "20px" }}
         >
           <a href={restaurant.url}>
             <img
+            className="img-thumbnail"
               style={{ width: "20%", height: "20%" }}
               src={restaurant.image_url}
             ></img>
@@ -236,6 +249,7 @@ const AddRestaurant = (props) => {
           />
 
           <button
+          className="btn btn-outline-secondary"
             onClick={() => {
               if (startDate) {
                 dispatch(
@@ -258,6 +272,7 @@ const AddRestaurant = (props) => {
           </button>
         </ul>
       ))}
+       </div>
     </div>
   );
 };

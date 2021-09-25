@@ -11,6 +11,8 @@ router.use('/tripevents', require('./tripevents'));
 
 //for yelp api routes
 router.use('/yelp',require("./yelp"));
+//for google api routes
+router.use('/google',require("./google"));
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')
