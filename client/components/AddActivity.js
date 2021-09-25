@@ -6,7 +6,8 @@ import {addTripEvent,removeTripEvent} from "../store/trips"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dateFormat from "dateformat";
-import RatingStar from "./RatingStar"
+import RatingStar from "./RatingStar";
+import AutoComInput from "./GoogleAutoComplete"
 
 let categoryList =[
 {key:"active",value:"Active Life"},
@@ -24,6 +25,7 @@ const AddActivity= (props)=> {
 
    const {trip,tripId,tripevents} = useSelector((state)=>({trip:state.trips.trip,tripId:state.trips.trip.id,tripevents:state.trips.trip.tripevents}))
    const [activityList,setActivityList] = useState([]);
+   const [activityEvents,setActivityEvents] = useState([]);
    const [searchValue,setSearchValue] = useState("");
    const [category,setCategory] = useState("");
    const [description,setDescription] = useState("");
@@ -72,6 +74,12 @@ useEffect(()=>{
     
       },[sortValue])
 
+      useEffect(() => {
+        let list =
+          tripevents && tripevents.filter((event) => event.purpose === "ACTIVITY");
+          setActivityEvents(list);
+      }, [tripevents]);
+
 return (
     <div style={{padding:"20px"}}>
       <div className="d-lg-flex flex-column align-content-center flex-wrap mr-md-6">
@@ -86,8 +94,7 @@ return (
         </tr>
         </thead>
         <tbody>
-{tripevents&&tripevents.map(event=>
-event.purpose==="OTHER"?
+{activityEvents&&activityEvents.map(event=>
   <tr key = {event.id}>
     <td scope="row">{dateFormat(event.startDate,"mm/dd/yyyy h:MM:ss TT")}</td>
     <td>{event.placeName}</td> 
@@ -97,17 +104,7 @@ event.purpose==="OTHER"?
 dispatch(removeTripEvent(tripId,event.id))
 }}><i class="far fa-trash-alt"></i></button></td>
   </tr>
-:null
 )}</tbody></table>
-
-
-
-
-
-
-
-
-
 
         <form className ="flexBox" onSubmit={handleSubmit}>
         <div className="input-group">
@@ -116,7 +113,7 @@ dispatch(removeTripEvent(tripId,event.id))
             <option >{`<---Select a Category--->`}</option>
             {categoryList.map((cate,ind)=><option key ={ind} value={cate.key} >{cate.value}</option>)}
           </select>
-        <input value={location} onChange={(e)=>{setLocation(e.target.value)}} aria-label="location" className="form-control" />
+        <AutoComInput value={location} onChange={(e)=>{setLocation(e.target.value)}} aria-label="location" className="form-control" />
         <input autoFocus placeholder="search for activity" value={searchValue} onChange={(e)=>{setSearchValue(e.target.value)}} autoFocus type="text" aria-label="activity" className="form-control" />
           
           <button type="submit" className="btn btn-primary input-group-text">search</button>

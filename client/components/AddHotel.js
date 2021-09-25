@@ -5,10 +5,12 @@ import { Link } from "react-router-dom";
 import { addTripEvent, removeTripEvent } from "../store/trips";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import GoogleMap from "./googleMap";
 import dateFormat from "dateformat";
 import moment from "moment";
+
+import AutoComInput from "./GoogleAutoComplete"
 import StarRatings from "react-star-ratings"
+
 
 const AddHotel = (props) => {
   const { trip, tripId, tripevents } = useSelector((state) => ({
@@ -74,7 +76,7 @@ useEffect(()=>{
       list = hotelList.sort(function(a,b) {
        return b.rating-a.rating;
       })
-      console.log(list)
+
       setHotelList(list);
     }else if(sortValue==="price") {
       list = hotelList.sort(function(a,b) {
@@ -100,9 +102,8 @@ useEffect(()=>{
           </tr>
           </thead>
           <tbody>
-          {tripevents &&
-            tripevents.map((event) =>
-              event.purpose === "SLEEP" ? (
+          {hotelEvents &&
+            hotelEvents.map((event) =>
                 <tr key={event.id}>
                   <td scope="row">{dateFormat(event.startDate,"mm/dd/yyyy h:MM:ss TT")}</td>
                   <td>{dateFormat(event.endDate,"mm/dd/yyyy h:MM:ss TT")}</td>
@@ -113,7 +114,7 @@ useEffect(()=>{
                   <td>{event.location}</td>
                   <td>
                     <button
-                      type="button" className="btn btn-outline-primary"
+                      type="button" className="btn btn-outline-danger"
                       onClick={() => {
                         dispatch(removeTripEvent(tripId, event.id));
                       }} >
@@ -121,7 +122,6 @@ useEffect(()=>{
                     </button>
                   </td>
                 </tr>
-              ) : null
             )}
         </tbody>
       </table>
@@ -129,18 +129,16 @@ useEffect(()=>{
 <form onSubmit={handleSubmit}>
   <div className="input-group">
   <span className="input-group-text mr-md-3">You can change a destination or search for a hotel</span>
-  <input value={location}
+  <AutoComInput value={location}
         onChange={(e) => {
           setLocation(e.target.value);
         }} type="text" aria-label="location" className="form-control" />
 
-  <input  value={searchValue}
+  <input value={searchValue}
   placeholder="search for hotel"
           onChange={(e) => {
             setSearchValue(e.target.value);
           }} autoFocus type="text" aria-label="hotel" className="form-control" />
-
-
 
       <button type="submit" className="btn btn-primary input-group-text">Search</button>
   <button type="button" className="btn btn-primary input-group-text mr-md-3"
@@ -269,8 +267,6 @@ useEffect(()=>{
           </ul>
         ))}{" "}
       </div>
-      <br />
-      {/* <GoogleMap events={hotelEvents} /> */}
     </div>
   );
 };
