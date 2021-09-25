@@ -20,13 +20,12 @@ export const AboutUs = props => {
         <div className="hpsection-1-imgA">
         </div>
         <div className="hpsection-1-txt">
-          <br /><br />
           <div className="brandblock"></div>
           <h1>About CoPilot</h1>
           <h3>We’re a group of friends who want to make travel planning easier!</h3>
-          <p>&nbsp;</p>
+          <br />
           <h4>Have you ever tried to plan a trip with friends and/or family and encountered:</h4>
-          <p>&nbsp;</p>
+          <br />
           <ul>
             <li>Arriving at your destination with no plans for anything?</li>
             <li>Spending hours researching only to find that some don’t want to do that?</li>

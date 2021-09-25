@@ -40,11 +40,12 @@ export const Signup = props => {
 
   return (
     <div id="content-wrapper">
+    <div id="fb-root"></div>
       <div id="profilecontainer">
-        <div className="container" id="profileleft">
-          <h2 className="profilehdr">Please enter your information to register</h2>
+        <div className="containerx" id="profileleft">
+          <h1 className="profilehdr">Please enter your information to register</h1>
         </div>
-        <div className="container" id="profileright">
+        <div className="containerx" id="profileright">
           <form id="profileform" onSubmit={ handleSubmit }>
             <div className="formfield">
               <input name="username" autoFocus type="email" required maxLength={ 75 } autoComplete="on" />

@@ -82,10 +82,10 @@ render() {
     <div id="content-wrapper">
     <div id="fb-root"></div>
         <div id="profilecontainer">
-        <div className="container" id="profileleft">
+        <div className="containerx" id="profileleft">
             <h1 className="profilehdr">Add Trip</h1>
             </div>
-            <div className="container" id="profileright">
+            <div className="containerx" id="profileright">
             <form id="profileform" onSubmit={handleSubmit}>
             <div className='formfield'>
                 

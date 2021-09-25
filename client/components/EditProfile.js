@@ -46,10 +46,10 @@ const EditProfile = props => {
       <div id="content-wrapper">
         <div id="fb-root"></div>
           <div id="profilecontainer">
-            <div className="container" id="profileleft">
-              <h2 className="profilehdr">Update Your Profile</h2>
+            <div className="containerx" id="profileleft">
+              <h1 className="profilehdr">Update Your Profile</h1>
             </div>
-            <div className="container" id="profileright">
+            <div className="containerx" id="profileright">
               <form id="profileform">
                 <h2>{ dispName }</h2>
                 <br />
