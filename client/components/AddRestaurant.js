@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { addTripEvent, removeTripEvent } from "../store/trips";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import RatingStar from "./RatingStar"
+import StarRatings from "react-star-ratings"
 
 const AddRestaurant = (props) => {
   const { tripId, tripevents, trip } = useSelector((state) => ({
@@ -51,7 +51,7 @@ const AddRestaurant = (props) => {
       setRestaurantList(list);
     } else if (sortValue === "price") {
       list = restaurantList.sort(function (a, b) {
-        return a.price.length - b.price.length
+        return a.price ? a.price.length : 0 - b.price.length
       });
       console.log(list);
       setRestaurantList(list);
@@ -195,7 +195,7 @@ const AddRestaurant = (props) => {
           <li>{restaurant.name}</li>
           <li>
             {" "}
-            <RatingStar rating={restaurant.rating} />
+            <StarRatings rating = {restaurant.rating} />
           </li>
           <li>{restaurant.price}</li>
           <li>

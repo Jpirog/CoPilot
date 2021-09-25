@@ -52,10 +52,10 @@ const InviteResponse = props => {
       <Toaster />
         <div id="fb-root"></div>
           <div id="profilecontainer">
-            <div className="container" id="profileleft">
-              <h2 className="profilehdr">Respond to invitations!</h2>
+            <div className="containerx" id="profileleft">
+              <h1 className="profilehdr">Respond to invitations!</h1>
             </div>
-            <div className="container" id="profileright">
+            <div className="containerx" id="profileright">
             <div id="profileform">
                 <h2>{ dispName }</h2>
                 <hr />

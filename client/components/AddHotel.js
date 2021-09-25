@@ -7,8 +7,10 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dateFormat from "dateformat";
 import moment from "moment";
-import RatingStar from "./RatingStar"
+
 import AutoComInput from "./GoogleAutoComplete"
+import StarRatings from "react-star-ratings"
+
 
 const AddHotel = (props) => {
   const { trip, tripId, tripevents } = useSelector((state) => ({
@@ -181,7 +183,7 @@ useEffect(()=>{
               ></img>
             </a>
             <li>{hotel.name}</li>
-            <li> <RatingStar rating={hotel.rating} /></li>
+            <li> <StarRatings rating={hotel.rating} /></li>
             <li>{hotel.price}</li>
             <li>
               <input
