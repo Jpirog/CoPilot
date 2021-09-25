@@ -81,7 +81,7 @@ useEffect(()=>{
       }, [tripevents]);
 
 return (
-    <div style={{padding:"20px"}}>
+    <div style={{padding:"100px"}}>
       <div className="d-lg-flex flex-column align-content-center flex-wrap mr-md-6">
         <table className="table table-hover shadow p-3 mb-5 bg-white rounded">
         <thead>
@@ -127,10 +127,12 @@ dispatch(removeTripEvent(tripId,event.id))
 <Link className="btn btn-primary mr-md-3"to="/calendar">Once Activity is added, click here to go the calendar</Link>
 </div>     
        
-</div>      
+</div>  
+
+<br />
         <div className="flexBox">
         {activityList.map(activity=>
-        <ul className="shadow-lg p-3 mb-5 mr-md-3 d-flex flex-column bg-white rounded" key ={activity.id} style={{ padding: "10%", width:"30%",listStyleType: "none" ,textAlign:"center"}}>
+        <ul className="shadow-lg mx-auto p-3 d-flex flex-column align-content-center flex-wrap bg-white rounded" key ={activity.id} style={{ padding: "10%", width:"30%",listStyleType: "none" ,textAlign:"center"}}>
         <a href={activity.url} target="_blank"><img className="img-thumbnail"
                 style={{ width: "300px", height: "300px" }} src={activity.image_url}></img></a>
         <li >{activity.name}</li>

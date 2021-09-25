@@ -88,9 +88,9 @@ useEffect(()=>{
   },[sortValue])
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: "100px" }}>
       <div className="d-lg-flex flex-column align-content-center flex-wrap mr-md-6">
-      <table className="table table-hover shadow p-3 mb-5 bg-white rounded">
+      <table className="table table-hover shadow p-3 mb-5 bg-white rounded ">
       <thead>
           <tr>
           <th scope="col">CheckIn Date Time</th>
@@ -166,12 +166,12 @@ useEffect(()=>{
       </Link>
       </div>
 </div> 
+<br />
+
       <div className="d-lg-flex flex-row align-content-around flex-wrap mr-md-6">  
-
-
         {hotelList.map((hotel) => (
           
-          <ul className="shadow-lg p-3 mb-5 mr-md-3 d-flex flex-column align-content-center flex-wrap bg-white rounded"
+          <ul className="shadow-lg mx-auto p-3 d-flex flex-column align-content-center flex-wrap bg-white rounded"
             key={hotel.id}
             style={{ padding: "10%", width:"30%",listStyleType: "none" ,textAlign:"center"}}
           >
