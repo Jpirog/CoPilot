@@ -6,7 +6,7 @@ import {addTripEvent,removeTripEvent} from "../store/trips"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dateFormat from "dateformat";
-import RatingStar from "./RatingStar";
+import StarRatings from "react-star-ratings"
 import AutoComInput from "./GoogleAutoComplete"
 
 let categoryList =[
@@ -134,7 +134,14 @@ dispatch(removeTripEvent(tripId,event.id))
         <a href={activity.url} target="_blank"><img className="img-thumbnail"
                 style={{ width: "300px", height: "300px" }} src={activity.image_url}></img></a>
         <li >{activity.name}</li>
-        <li> <RatingStar rating={activity.rating} /></li>
+        <li> 
+          <StarRatings
+          rating={activity.rating}
+          starRatedColor = 'gold'
+          starDimension = '20px'
+          starSpacing = '3px'
+          />
+        </li>
         <li >{activity.categories[0].title}</li>
         <li><input placeholder="Add event description" value={description} onChange={(e)=>{setDescription(e.target.value)}}></input></li>
 

@@ -195,7 +195,12 @@ const AddRestaurant = (props) => {
           <li>{restaurant.name}</li>
           <li>
             {" "}
-            <StarRatings rating = {restaurant.rating} />
+            <StarRatings
+              rating = {restaurant.rating}
+              starRatedColor = 'gold'
+              starDimension = '20px'
+              starSpacing = '3px'
+            />
           </li>
           <li>{restaurant.price}</li>
           <li>

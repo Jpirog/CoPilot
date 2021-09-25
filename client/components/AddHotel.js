@@ -183,7 +183,12 @@ useEffect(()=>{
               ></img>
             </a>
             <li>{hotel.name}</li>
-            <li> <StarRatings rating={hotel.rating} /></li>
+            <li> <StarRatings
+                  rating={hotel.rating}
+                  starRatedColor = 'gold'
+                  starDimension = '20px'
+                  starSpacing = '3px'
+                  /></li>
             <li>{hotel.price}</li>
             <li>
               <input
