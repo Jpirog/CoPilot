@@ -92,7 +92,7 @@ const AddRestaurant = (props) => {
   }
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div id="content-wrapper" style={{ padding: "100px" }}>
       <div className="d-lg-flex flex-column align-content-center flex-wrap mr-md-6"></div>
       <table className="table table-hover shadow p-3 mb-5 bg-white rounded">
         <tbody>
@@ -114,7 +114,7 @@ const AddRestaurant = (props) => {
                   <td>{event.placeName}</td>
                   <td>{event.description}</td>
                   <td>
-                    <a href={event.url}>Link of Website</a>
+                    <a href={event.url} target="_blank">Website Link</a>
                   </td>
                   <td>{event.location}</td>
                   <td>
@@ -172,23 +172,28 @@ const AddRestaurant = (props) => {
         <option value="price">price-Low to High</option>
       </select>
         </div>
-      </form>
+    </form>
+
+
 <br />
+
 <div>
       <Link to={`/activity`} className="btn btn-primary">
         Once restaurant is selected, go to activities
       </Link>
-      </div>
+</div>
+      
+      <br />
       <div className="d-lg-flex flex-row align-content-around flex-wrap mr-md-6"> 
       {restaurantList.map((restaurant) => (
         <ul
-        className="shadow-lg p-3 mb-5 mr-md-3 d-flex flex-column align-content-center flex-wrap bg-white rounded"
-          key={restaurant.id} style={{ padding: "10%", width:"30%",listStyleType: "none" ,textAlign:"center"}} style={{ flex: 1, flexDirection: "row", padding: "20px" }}
+        className="shadow-lg mx-auto p-3 d-flex flex-column align-content-center flex-wrap bg-white rounded"
+          key={restaurant.id} style={{ padding: "10%", width:"30%",listStyleType: "none" ,textAlign:"center"}}
         >
-          <a href={restaurant.url}>
+          <a href={restaurant.url} target="_blank">
             <img
-            className="img-thumbnail"
-              style={{ width: "20%", height: "20%" }}
+           className="img-thumbnail"
+           style={{ width: "300px", height: "300px" }}
               src={restaurant.image_url}
             ></img>
           </a>
