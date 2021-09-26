@@ -262,7 +262,9 @@ useEffect(()=>{
 
             <button type="button" className="btn btn-outline-secondary "
               onClick={() => {
-                if (startDate && endDate &&(startDate<endDate)) {
+                if (description === '') {
+                  alert("Please add a description")
+                } else if (startDate && endDate &&(startDate<endDate)) {
                   dispatch(
                     addTripEvent({
                       purpose: "SLEEP",
