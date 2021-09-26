@@ -30,6 +30,7 @@ const AddActivity= (props)=> {
    const [category,setCategory] = useState("");
    const [description,setDescription] = useState("");
    const [startDate, setStartDate] = useState(null);
+   const [endDate, setEndDate] = useState(null);
    const [location,setLocation] =useState("");
    const [sortValue,setSortValue] =useState("");
 
@@ -104,6 +105,7 @@ return (
         <thead>
         <tr>
           <th scope="col">Reserved Date Time</th>
+          <th scope="col">End Date Time</th>
           <th scope="col">Activity Place</th> 
           <th scope="col">Activity Website</th> 
           <th scope="col">Activity Address </th>
@@ -113,7 +115,8 @@ return (
         <tbody>
 {activityEvents&&activityEvents.map(event=>
   <tr key = {event.id}>
-    <td scope="row">{dateFormat(event.startDate,"mm/dd/yyyy h:MM:ss TT")}</td>
+    <td scope="row">{dateFormat(event.startDate,"mm/dd/yyyy h:MM TT")}</td>
+    <td scope="row">{dateFormat(event.endDate,"mm/dd/yyyy h:MM TT")}</td>
     <td>{event.placeName}</td> 
     <td><a href={event.url} target="_blank">Website Link</a></td> 
     <td>{event.location}</td> 
@@ -169,11 +172,12 @@ dispatch(removeTripEvent(tripId,event.id))
         timeInputLabel="Pick a time:"
         dateFormat="MM/dd/yyyy h:mm aa"
         includeDates={availableDates()}
-        showTimeInput
         selected={startDate}
-        onChange={(date) => 
+        showTimeInput
+        onChange={(date) => {
           setStartDate(date)
-        }
+          setEndDate(new Date(Date.parse(date) + 60000*120))
+        }}
         withPortal
       />
         <button type="button" className="btn btn-outline-secondary " onClick={()=>{
@@ -184,7 +188,7 @@ dispatch(removeTripEvent(tripId,event.id))
             dispatch(addTripEvent({
                 purpose:"ACTIVITY",
                 startDate,
-                // endDate,
+                endDate,
                 tripId,
                 description,
                 placeName:activity.name,

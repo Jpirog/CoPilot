@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { addTripEvent, removeTripEvent } from "../store/trips";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import dateFormat from "dateformat";
 import StarRatings from "react-star-ratings";
 
 const AddRestaurant = (props) => {
@@ -18,6 +19,7 @@ const AddRestaurant = (props) => {
   const [restaurantList, setRestaurantList] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const [meal, setMeal] = useState("DEFAULT");
@@ -97,11 +99,12 @@ const AddRestaurant = (props) => {
       <table className="table table-hover shadow p-3 mb-5 bg-white rounded">
         <tbody>
           <tr>
-            <th>Start Date</th>
-            <th>Restaurant Name</th>
+            <th>Start date</th>
+            <th>End date</th>
+            <th>Restaurant name</th>
             <th>Event description</th>
-            <th>Restaurant Website</th>
-            <th>Restaurant Location </th>
+            <th>Restaurant website</th>
+            <th>Restaurant location </th>
             <th>delete</th>
           </tr>
           {tripevents &&
@@ -110,7 +113,8 @@ const AddRestaurant = (props) => {
               event.purpose === "BREAKFAST" ||
               event.purpose === "DINNER" ? (
                 <tr key={event.id}>
-                  <td>{event.startDate}</td>
+                  <td scope="row">{dateFormat(event.startDate,"mm/dd/yyyy h:MM TT")}</td>
+                  <td scope="row">{dateFormat(event.endDate,"mm/dd/yyyy h:MM TT")}</td>
                   <td>{event.placeName}</td>
                   <td>{event.description}</td>
                   <td>
@@ -255,11 +259,12 @@ const AddRestaurant = (props) => {
               timeInputLabel="Pick a time:"
               dateFormat="MM/dd/yyyy h:mm aa"
               includeDates={availableDates()}
-              showTimeInput
               selected={startDate}
-              onChange={(date) => 
+              showTimeInput
+              onChange={(date) => {
                 setStartDate(date)
-              }
+                setEndDate(new Date(Date.parse(date) + 60000*120))
+              }}
               withPortal
             />
 
@@ -275,6 +280,7 @@ const AddRestaurant = (props) => {
                     addTripEvent({
                       purpose: meal,
                       startDate,
+                      endDate,
                       tripId,
                       description,
                       placeName: restaurant.name,
