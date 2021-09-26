@@ -1,14 +1,16 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect, useDispatch } from 'react-redux'
 import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import { logout } from '../store';
 
-/**
- * COMPONENT
- */
  const Home = props => {
   const { username, name } = props
+  const dispatch  = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+  }
 
   return (
     <div className="home-container">
@@ -22,13 +24,13 @@ import toast, { Toaster } from 'react-hot-toast';
         <Button style={{backgroundColor: 'pink'}} className="btns" buttonStyle="btn--outline"
         buttonSize="btn--large"><Link to="/create/trip" color="red">CREATE A TRIP</Link></Button>
       </div>
-    </div>
+      <p>&nbsp;</p>
+      <Button style={{backgroundColor: 'pink'}} className="btns" buttonStyle="btn--outline"
+      buttonSize="btn--medium" onClick={handleLogout}>Logout</Button>
+  </div>
   )
 }
 
-/**
- * CONTAINER
- */
 const mapState = state => {
   return {
     username: state.auth.username,
@@ -37,5 +39,3 @@ const mapState = state => {
 }
 
 export default connect(mapState)(Home)
-
-// <p style={{fontSize: '15px'}}>or continue on from your last visit -- <Link to="/" style={{color: 'black'}}><u>click here</u></Link></p>
