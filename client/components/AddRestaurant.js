@@ -92,7 +92,7 @@ const AddRestaurant = (props) => {
   }
 
   return (
-    <div style={{ padding: "60px" }}>
+    <div id="content-wrapper" style={{ padding: "100px" }}>
       <div className="d-lg-flex flex-column align-content-center flex-wrap mr-md-6"></div>
       <table className="table table-hover shadow p-3 mb-5 bg-white rounded">
         <tbody>
@@ -251,23 +251,15 @@ const AddRestaurant = (props) => {
             </li>
 
             <DatePicker
-              selected={startDate}
-              onChange={(date) => {
-                setStartDate(date);
-              }}
-              showTimeSelect
-              timeFormat="h:mm aa"
-              dateFormat="MM/dd/yyyy h:mm aa"
-              timeIntervals={30}
               placeholderText="Select a date"
-              timeCaption="Time"
+              timeInputLabel="Pick a time:"
+              dateFormat="MM/dd/yyyy h:mm aa"
               includeDates={availableDates()}
-              // dayClassName={(date) => {
-              //   return date >= new Date(trip.startDate) &&
-              //     date <= new Date(trip.endDate)
-              //     ? "highlighted"
-              //     : undefined;
-              // }}
+              showTimeInput
+              selected={startDate}
+              onChange={(date) => 
+                setStartDate(date)
+              }
               withPortal
             />
 

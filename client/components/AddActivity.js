@@ -41,6 +41,23 @@ const AddActivity= (props)=> {
     const {data} =  await axios.get("/api/yelp/activity",{params:{term:searchValue,category:category,location}});
     setActivityList(data);
 }
+
+  function availableDates() {
+    let activeDays = [];
+    let amountActDays =
+      new Date(trip.endDate).getDate() - new Date(trip.startDate).getDate();
+    for (let i = 0; i <= amountActDays; i++) {
+      activeDays.push(
+        new Date(
+          new Date(trip.startDate).setDate(
+            new Date(trip.startDate).getDate() + i
+          )
+        )
+      );
+    }
+    return activeDays;
+  }
+
 useEffect(()=>{
   const func = async()=> {
     const { data } = await axios.get("/api/yelp/activity", {
@@ -81,7 +98,7 @@ useEffect(()=>{
       }, [tripevents]);
 
 return (
-    <div style={{padding:"20px"}}>
+    <div style={{padding:"100px"}}>
       <div className="d-lg-flex flex-column align-content-center flex-wrap mr-md-6">
         <table className="table table-hover shadow p-3 mb-5 bg-white rounded">
         <thead>
@@ -127,10 +144,12 @@ dispatch(removeTripEvent(tripId,event.id))
 <Link className="btn btn-primary mr-md-3"to="/calendar">Once Activity is added, click here to go the calendar</Link>
 </div>     
        
-</div>      
+</div>  
+
+<br />
         <div className="flexBox">
         {activityList.map(activity=>
-        <ul className="shadow-lg p-3 mb-5 mr-md-3 d-flex flex-column bg-white rounded" key ={activity.id} style={{ padding: "10%", width:"30%",listStyleType: "none" ,textAlign:"center"}}>
+        <ul className="shadow-lg mx-auto p-3 d-flex flex-column align-content-center flex-wrap bg-white rounded" key ={activity.id} style={{ padding: "10%", width:"30%",listStyleType: "none" ,textAlign:"center"}}>
         <a href={activity.url} target="_blank"><img className="img-thumbnail"
                 style={{ width: "300px", height: "300px" }} src={activity.image_url}></img></a>
         <li >{activity.name}</li>
@@ -146,15 +165,17 @@ dispatch(removeTripEvent(tripId,event.id))
         <li><input placeholder="Add event description" value={description} onChange={(e)=>{setDescription(e.target.value)}}></input></li>
 
       <DatePicker
-      placeholderText='Reserve DateTime'
-      timeInputLabel="Pick a Time:"
-      dateFormat="MM/dd/yyyy h:mm aa"
-      showTimeInput
+        placeholderText='Select a date'
+        timeInputLabel="Pick a time:"
+        dateFormat="MM/dd/yyyy h:mm aa"
+        includeDates={availableDates()}
+        showTimeInput
         selected={startDate}
-        onChange={(date) => setStartDate(date)}
-        selectsStart
-        startDate={startDate}
-        withPortal/>
+        onChange={(date) => 
+          setStartDate(date)
+        }
+        withPortal
+      />
         <button type="button" className="btn btn-outline-secondary " onClick={()=>{
 
             if(startDate) {
