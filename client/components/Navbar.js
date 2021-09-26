@@ -77,9 +77,13 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips, cu
       <nav className="navbarx">
       {isLoggedIn && !currTrip || (currTrip && !currTrip.id) ? 
         (<div id="notrips">
-            <h2>Welcome to CoPilot</h2>
-            <h3>Since you have no trips, please create a trip to start using the site!</h3>
-          </div>
+           <div></div>
+           <div id="notripsx">
+             <h2>Welcome to CoPilot</h2>
+             <h3>Since you have no trips, please create a trip to start using the site!</h3>
+           </div>
+           <div></div>
+         </div>
         ) :     
       isLoggedIn ? (
         <div className="navbar-container">

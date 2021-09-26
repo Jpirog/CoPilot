@@ -13,6 +13,7 @@ import CreateTrip from './components/CreateTrip';
 import InviteResponse from './components/InviteResponse';
 import TripAttendees from './components/TripAttendees';
 import { AboutUs } from './components/AboutUs';
+import PageNotFound from './components/PageNotFound';
 import { me } from './store'
 
 import Calendar from "./components/Calendar";
@@ -45,13 +46,11 @@ class Routes extends Component {
             <Route path="/inviteresponse" component={ InviteResponse } />
             <Route path="/tripattendees" component={ TripAttendees } />
             <Route exact path="/create/trip" component={ CreateTrip } />
-            <Route exact path="/" component={Home} />
-
             <Route exact path="/itinerary" component={Itinerary} />
             <Route exact path="/allTrips" component={AllTrips}/>
             <Route exact path="/financials" component={Financials} />
-            {/* <Route exact path="/usercreated/:userId"><Trips/></Route> */}
-            {/*<Redirect to="/home" /> */}
+            <Route exact path="/" component={Home} />
+            <Route component={ PageNotFound } />
           </Switch>
         ) : (
           <Switch>
@@ -59,8 +58,8 @@ class Routes extends Component {
             <Route path="/login" component={ Login } />
             <Route path="/signup" component={ Signup } />
             <Route path="/aboutus" component={ AboutUs } />
-            <Route path="/" component={ AboutUs } />
-            {/*<Redirect to="/aboutus" /> */}
+            <Route exact path="/" component={ AboutUs } />
+            <Route component={ PageNotFound } />
           </Switch>
         )}
       </div>
