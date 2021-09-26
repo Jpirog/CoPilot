@@ -41,6 +41,23 @@ const AddActivity= (props)=> {
     const {data} =  await axios.get("/api/yelp/activity",{params:{term:searchValue,category:category,location}});
     setActivityList(data);
 }
+
+  function availableDates() {
+    let activeDays = [];
+    let amountActDays =
+      new Date(trip.endDate).getDate() - new Date(trip.startDate).getDate();
+    for (let i = 0; i <= amountActDays; i++) {
+      activeDays.push(
+        new Date(
+          new Date(trip.startDate).setDate(
+            new Date(trip.startDate).getDate() + i
+          )
+        )
+      );
+    }
+    return activeDays;
+  }
+
 useEffect(()=>{
   const func = async()=> {
     const { data } = await axios.get("/api/yelp/activity", {
@@ -148,15 +165,17 @@ dispatch(removeTripEvent(tripId,event.id))
         <li><input placeholder="Add event description" value={description} onChange={(e)=>{setDescription(e.target.value)}}></input></li>
 
       <DatePicker
-      placeholderText='Reserve DateTime'
-      timeInputLabel="Pick a Time:"
-      dateFormat="MM/dd/yyyy h:mm aa"
-      showTimeInput
+        placeholderText='Select a date'
+        timeInputLabel="Pick a time:"
+        dateFormat="MM/dd/yyyy h:mm aa"
+        includeDates={availableDates()}
+        showTimeInput
         selected={startDate}
-        onChange={(date) => setStartDate(date)}
-        selectsStart
-        startDate={startDate}
-        withPortal/>
+        onChange={(date) => 
+          setStartDate(date)
+        }
+        withPortal
+      />
         <button type="button" className="btn btn-outline-secondary " onClick={()=>{
 
             if(startDate) {

@@ -87,6 +87,22 @@ useEffect(()=>{
 
   },[sortValue])
 
+  function availableDates() {
+    let activeDays = [];
+    let amountActDays =
+      new Date(trip.endDate).getDate() - new Date(trip.startDate).getDate();
+    for (let i = 0; i <= amountActDays; i++) {
+      activeDays.push(
+        new Date(
+          new Date(trip.startDate).setDate(
+            new Date(trip.startDate).getDate() + i
+          )
+        )
+      );
+    }
+    return activeDays;
+  }
+
   return (
     <div style={{ padding: "100px" }}>
       <div className="d-lg-flex flex-column align-content-center flex-wrap mr-md-6">
@@ -160,11 +176,11 @@ useEffect(()=>{
 </form>
 
 <br />
-<div>
+    <div>
       <Link to={`/restaurant`} className="btn btn-primary">
         Once hotel is added, go to restaurant
       </Link>
-      </div>
+    </div>
 </div> 
 <br />
 
@@ -204,6 +220,7 @@ useEffect(()=>{
                 placeholderText="CheckIn DateTime"
                 timeInputLabel="Pick a Time:"
                 dateFormat="MM/dd/yyyy h:mm aa"
+                includeDates={availableDates()}
                 showTimeInput
                 selected={startDate}
                 onChange={(date) => setStartDate(date)}
@@ -211,17 +228,19 @@ useEffect(()=>{
                 startDate={startDate}
                 endDate={endDate}
                 withPortal
-                dayClassName={(date) => {
-                  return date >= new Date(trip.startDate) &&
-                    date <= new Date(trip.endDate)
-                    ? "highlighted"
-                    : undefined;
-                }}
+                // Green background for dates appears with no perpose (Konstantin)
+                // dayClassName={(date) => {
+                //   return date >= new Date(trip.startDate) &&
+                //     date <= new Date(trip.endDate)
+                //     ? "highlighted"
+                //     : undefined;
+                // }}
               />
               <DatePicker
                 placeholderText="CheckOut DateTime"
                 timeInputLabel="Pick a Time:"
                 dateFormat="MM/dd/yyyy h:mm aa"
+                includeDates={availableDates()}
                 showTimeInput
                 selected={endDate}
                 onChange={(date) => setEndDate(date)}
@@ -230,12 +249,13 @@ useEffect(()=>{
                 endDate={endDate}
                 minDate={startDate}
                 withPortal
-                dayClassName={(date) => {
-                  return date >= new Date(trip.startDate) &&
-                    date <= new Date(trip.endDate)
-                    ? "highlighted"
-                    : undefined;
-                }}
+                // Green background for dates appears with no perpose (Konstantin)
+                // dayClassName={(date) => {
+                //   return date >= new Date(trip.startDate) &&
+                //     date <= new Date(trip.endDate)
+                //     ? "highlighted"
+                //     : undefined;
+                // }}
               />
               {/* <div className="className">CheckOut Date is missing</div> */}
             </>
