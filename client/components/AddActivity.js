@@ -102,7 +102,7 @@ return (
     <td>{event.location}</td> 
     <td><button type="button" className="btn btn-outline-danger" onClick={()=>{
 dispatch(removeTripEvent(tripId,event.id))
-}}><i class="far fa-trash-alt"></i></button></td>
+}}><i className="far fa-trash-alt"></i></button></td>
   </tr>
 )}</tbody></table>
 
@@ -164,6 +164,7 @@ dispatch(removeTripEvent(tripId,event.id))
             dispatch(addTripEvent({
                 purpose:"ACTIVITY",
                 startDate,
+                // endDate,
                 tripId,
                 description,
                 placeName:activity.name,

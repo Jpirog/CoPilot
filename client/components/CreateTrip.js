@@ -9,6 +9,7 @@ import PlacesAutocomplete, {
   } from 'react-places-autocomplete';
   import DatePicker from 'react-datepicker';
   import "react-datepicker/dist/react-datepicker.css";
+  import moment from 'moment'
 
 
 const initialState = {
@@ -44,8 +45,8 @@ class CreateTrip extends Component{
     try {
         await this.props.addUpdateTrip({
             destination: state.address,
-            startDate: state.startDate,
-            endDate: state.endDate,
+            startDate: moment(state.startDate),
+            endDate: moment(state.endDate),
             purpose: state.purpose,
             name: state.name,
             ownerId:this.props.auth.id,
@@ -169,27 +170,27 @@ render() {
                     
                 </div>
                 <div className='formfield'> 
-                    {/* <input type="date" name='startDate' value= {startDate} onChange={ handleChange }
-                    required={true} /> */}
-                    <DatePicker
+                    <input type="date" name='startDate' value= {startDate} onChange={ handleChange }
+                    required={true} />
+                    {/* <DatePicker
               selected={ this.state.startDate }
               onChange={ this.handleDate }
               name="startDate"
               dateFormat="MM/dd/yyyy"
-          />
-                    {/* <label>Start Date:</label> */}
+          /> */}
+                    <label>Start Date:</label>
                 </div>
-                {/* <div className='formfield'> */}
-                    {/* <input type="date" name='endDate' value= {endDate} onChange={ handleChange }
-                    required={true}/> */}
-                     {/* <label>End Date:</label> */}
+                <div className='formfield'>
+                    <input type="date" name='endDate' value= {endDate} onChange={ handleChange }
+                    required={true}/>
+                     <label>End Date:</label>
                      {/* <DatePicker
               selected={ this.state.endDate }
               onChange={ this.handleEndDate }
               name="endDate"
               dateFormat="MM/dd/yyyy"
-          />
-                </div> */}
+          /> */}
+                </div>
                 <div className='formfield'>
                     <select name='purpose' value= {purpose} onChange={ handleChange }>
                        <option value="VACATION">Vacation</option>
