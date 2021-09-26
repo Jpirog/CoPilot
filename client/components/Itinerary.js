@@ -206,7 +206,7 @@ class Itinerary extends React.Component {
     let num = 1;
         return (
             <div id='content-wrapper-double'>
-                <div className='itineraryInfo'>
+                <div className='itineraryName'>
                     <h1> {currentTrip ? currentTrip.name : ''} ITINERARY</h1>
                 </div>
 
@@ -266,7 +266,7 @@ class Itinerary extends React.Component {
                             ))
                             : ''}
                         </div>
-                        <div className="container-fluid">
+                        <div className="container-f">
                             {Array(duration).fill('*').map(item => (
                                 <div className="singleCard">
                                     <div className="dayNum">DAY <br/>{num++}</div>

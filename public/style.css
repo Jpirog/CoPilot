@@ -673,76 +673,6 @@ flex-wrap: wrap;
   margin-top: 20px;
 }
 
-/* ITINERARY */
-/* #itineraryBox {
-  padding: 50px;
-}
-
-#itineraryName {
-  display:flex;
-  justify-content: center;
-}
-
-.tripDuration {
-  display:flex;
-  justify-content: center;
-} */
-
-.itineraryInfo {
-  display: flex;
-  justify-content: center;
-  padding-top: 7px;
-}
-
-#tripAttendees {
-  /* padding: 5px; */
-  margin: 30px 52px;
-  /* border: black solid 1px; */
-  text-align: center;
-}
-
-.category {
-  border: black solid 1px;
-  padding: 5px;
-  margin: 20px 50px 20px 50px;
-  border-radius: 10px;
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.eventCategory {
-  /* border: black solid 1px; */
-  /* text-align: center;
-  border-radius: 10px;
-  padding: 15px;
-  margin: 15px;
-  width: 20%; */
-  /* height: 10px; */
-  /* justify-content: space-evenly; */
-  padding: 9%;
-  margin: auto;
-  text-decoration-line: underline;
-}
-
-.events {
-  /* border:red solid 1px; */
-  display: flex;
-  justify-content: space-around;
-  border-radius: 10px;
-  padding: 15px;
-  flex-direction: column;
-  margin: 15px;
-  text-align: center;
-  width: 30%;
-}
-
-.individualItem {
-  border:blue solid 1px;
-  padding: 10px;
-  margin: 5px;
-  text-align: center;
-  border-radius: 10px;
-}
 
 /* ALL TRIPS PAGE*/
 #allTripsPage {
@@ -818,6 +748,87 @@ label {
   text-align: center;
 }
 
+/* ITINERARY */
+/* #itineraryBox {
+  padding: 50px;
+}
+
+#itineraryName {
+  display:flex;
+  justify-content: center;
+}
+
+.tripDuration {
+  display:flex;
+  justify-content: center;
+} */
+
+.itineraryInfo {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+.itineraryName {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 35px;
+  margin-bottom: 20px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+#tripAttendees {
+  /* padding: 5px; */
+  margin-right: 60px;
+  /* border: black solid 1px; */
+  text-align: left;
+  margin-top: 15px;
+}
+
+.category {
+  border: black solid 1px;
+  padding: 5px;
+  margin: 20px 50px 20px 50px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.eventCategory {
+  /* border: black solid 1px; */
+  /* text-align: center;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 15px;
+  width: 20%; */
+  /* height: 10px; */
+  /* justify-content: space-evenly; */
+  padding: 9%;
+  margin: auto;
+  text-decoration-line: underline;
+}
+
+.events {
+  /* border:red solid 1px; */
+  display: flex;
+  justify-content: space-around;
+  border-radius: 10px;
+  padding: 15px;
+  flex-direction: column;
+  margin: 15px;
+  text-align: center;
+  width: 30%;
+}
+
+.individualItem {
+  border:blue solid 1px;
+  padding: 10px;
+  margin: 5px;
+  text-align: center;
+  border-radius: 10px;
+}
 
 .singleCard {
   position: relative;
@@ -867,3 +878,10 @@ label {
   padding-bottom: 15px;
 }
   
+.container-f {
+  width: 100%;
+  /* padding-right: 15px; */
+  /* padding-left: 15px; */
+  margin-right: auto;
+  margin-left: auto;
+}
