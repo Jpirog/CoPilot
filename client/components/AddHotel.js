@@ -88,7 +88,7 @@ useEffect(()=>{
   },[sortValue])
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: "60px" }}>
       <div className="d-lg-flex flex-column align-content-center flex-wrap mr-md-6">
       <table className="table table-hover shadow p-3 mb-5 bg-white rounded">
       <thead>
@@ -160,11 +160,11 @@ useEffect(()=>{
 </form>
 
 <br />
-<div>
+    <div>
       <Link to={`/restaurant`} className="btn btn-primary">
         Once hotel is added, go to restaurant
       </Link>
-      </div>
+    </div>
 </div> 
       <div className="d-lg-flex flex-row align-content-around flex-wrap mr-md-6">  
 
