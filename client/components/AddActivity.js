@@ -46,6 +46,7 @@ const AddActivity= (props)=> {
     setActivityList(data);
 }
 
+
 //error handling
 useEffect(()=>{
 
@@ -61,6 +62,23 @@ if(startDate) {
 
 
 },[description,startDate])
+
+
+  function availableDates() {
+    let activeDays = [];
+    let amountActDays =
+      new Date(trip.endDate).getDate() - new Date(trip.startDate).getDate();
+    for (let i = 0; i <= amountActDays; i++) {
+      activeDays.push(
+        new Date(
+          new Date(trip.startDate).setDate(
+            new Date(trip.startDate).getDate() + i
+          )
+        )
+      );
+    }
+    return activeDays;
+  }
 
 
 useEffect(()=>{
@@ -171,11 +189,13 @@ dispatch(removeTripEvent(tripId,event.id))
         <li style={{color:"red"}} id="eventDescription" hidden={true}>Description can not be blank</li>
 
       <DatePicker
-      placeholderText='Reserve DateTime'
-      timeInputLabel="Pick a Time:"
-      dateFormat="MM/dd/yyyy h:mm aa"
-      showTimeInput
+        placeholderText='Select a date'
+        timeInputLabel="Pick a time:"
+        dateFormat="MM/dd/yyyy h:mm aa"
+        includeDates={availableDates()}
+        showTimeInput
         selected={startDate}
+
         onChange={(date) => setStartDate(date)}
         selectsStart
         startDate={startDate}

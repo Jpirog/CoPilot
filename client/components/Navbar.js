@@ -16,7 +16,6 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips, cu
       await dispatch(getUserInvitedTrips(userId));
       await dispatch(getUserCreatedTrips(userId));
       setUserTrips(createdTrips.concat(invitedTrips)); 
-
   }
     if (userId){
       fetchData();
@@ -73,26 +72,15 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips, cu
     dispatch(getTripDetails(ev.target.value));
   }
 
-  // console.log('CURRENT', currTrip)
-  // if (!currTrip || (currTrip && !currTrip.id)){
-  //   return (
-  //     <div id="notrips">
-  //       <h1>Welcome to CoPilot</h1>
-  //       <h2>Since you have no trips, please create a trip to start using the site!</h2>
-  //     </div>
-  //   )
-  // }
-
   return (
-  <div>
-    <nav className="navbarx">
+    <div>
+      <nav className="navbarx">
       {isLoggedIn && !currTrip || (currTrip && !currTrip.id) ? 
         (<div id="notrips">
             <h2>Welcome to CoPilot</h2>
             <h3>Since you have no trips, please create a trip to start using the site!</h3>
           </div>
-        ) : 
-      
+        ) :     
       isLoggedIn ? (
         <div className="navbar-container">
           {/* The navbar will show these links after you log in */}
@@ -103,9 +91,9 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips, cu
             <select name="trips" id="navtrips" onChange={handleTripChange}>
             {
               invitedTrips.concat(createdTrips).map((trip, i) => {
-                if (i === 0){
+//                if (i === 0){
                   // dispatch(getTripDetails(trip.id));
-                }
+  //              }
                 const fromDate = dateFormat(trip.startDate, "mmm d");
                 const toDate = dateFormat(trip.endDate, "mmm d");
                 const prefix = trip.ownerId === userId ? 'owner' : 'invitee';
@@ -114,51 +102,33 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips, cu
                 )
               })
             }
-          </select>
+            </select>
           </div>
-          {/* <a href="#" onClick={handleClick}>
-            <i className={'fa fa-sign-out-alt' } />
-          </a> */}
-{/*}          <div className="menu-icon" onClick={fastClick}> *** commented out - JP 9/17
-            <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
-        </div>*/}
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-{/*            <li className='nav-item'>
-              <Link to="/home" className="nav-links" onClick={closeMobileMenu}>
-              Home
+            <li className='nav-item'>
+              <Link to="/hotel" className="nav-links" onClick={closeMobileMenu}>
+                Hotels
               </Link>
-      </li>*/}
+            </li>
             <li className='nav-item'>
               <Link to="/restaurant" className="nav-links" onClick={closeMobileMenu}>
               Restaurants
               </Link>
             </li>
-              <li className='nav-item'>
-              <Link to="/hotel" className="nav-links" onClick={closeMobileMenu}>
-              Hotels
-            </Link>
-              </li>
             <li className='nav-item'>
               <Link to="/activity" className="nav-links" onClick={closeMobileMenu}>
               Tourist Activities
               </Link>
             </li>
-            {/* <li className='nav-item'>
-              <Link to="/editprofile" className="nav-links" onClick={closeMobileMenu}>
-              My Profile
-              </Link>
-            </li> */}
             <li 
               className='nav-item'
               onMouseEnter={onMouseEnter}
               onMouseLeave={onMouseLeave}>
-              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-              More <i className='fas fa-caret-down' />
+              <Link to="#" className="nav-links" onClick={closeMobileMenu}>
+              More&nbsp;<i className='fas fa-caret-down' />
               </Link> {dropdown &&<Dropdown setDropdown={()=>setDropdown(false)}/>}
             </li>
           </ul>
-          {/* {button && <Button onClick={handleClick} buttonStyle='btn--outline'><i className={'fa fa-sign-out-alt' } />
-</Button>} */}
         </div>
       ) : (
         <div className='navbar-container'>
@@ -187,9 +157,6 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips, cu
   )
 };
 
-/**
- * CONTAINER
- */
 const mapState = state => {
   const myTrips = state.trips.userCreatedTrips.concat(state.trips.userInvitedTrips);
   const thisTrip = myTrips.length > 0 ? myTrips[0] : null;

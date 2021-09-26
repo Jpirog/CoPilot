@@ -1,5 +1,20 @@
 export const MenuItems = [
     {
+      title: 'Trip Attendees',
+      path: '/tripattendees',
+      cName: 'dropdown-link'
+    },
+    {
+      title: 'Trip Calendar',
+      path: '/calendar',
+      cName: 'dropdown-link'
+    },
+    {
+      title: 'Create a Trip',
+      path: '/create/trip',
+      cName: 'dropdown-link'
+    },
+    {
       title: 'Edit Profile',
       path: '/editprofile',
       cName: 'dropdown-link'
