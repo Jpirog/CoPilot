@@ -109,7 +109,7 @@ render() {
     <div id="fb-root"></div>
         <div id="profilecontainer">
         <div className="containerx" id="profileleft">
-            <h1 className="profilehdr">Add Trip</h1>
+            <h1 className="profilehdr">Create Trip</h1>
             </div>
             <div className="containerx" id="profileright">
             <form id="profileform" onSubmit={handleSubmit}>

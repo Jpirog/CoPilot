@@ -5,6 +5,8 @@ import { getUserByEmail } from '../store/user';
 import toast, { Toaster } from 'react-hot-toast';
 import dateFormat from 'dateformat';
 import { sendEmail } from '../utils/sendmail';
+import { Link } from "react-router-dom";
+
 
 const notify = (msg) => toast.success(msg, { duration: 3000, position: 'top-center' })
 
@@ -20,11 +22,13 @@ const TripAttendees = () => {
     
     if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
       setErrMsg('This email address is not valid')
+      ev.target.newattendee.focus();
       return (true)
     }
 
     if (tripDetails.tripattendees.find(c => c.email === email)){
       setErrMsg('This email is already on the invite list')
+      ev.target.newattendee.focus();
       return;
     }
     
@@ -64,15 +68,17 @@ const TripAttendees = () => {
   }
 
   return (
-      <div id="content-wrapper">
+    <div id="content-wrapper">
+      <div  id="tabutton">
+        <Link className="btn btn-primary mr-md-3" to="/hotel">Once attendees are added, click here to add a hotel</Link>
+      </div>
       <div id="attendeesheadings">
         <Toaster />
         <div>
-          <h2>Trip Attendees</h2>
-          <h3>Who should be included in this trip?</h3>
+          <h2>Trip Attendees - Who should be included in this trip?</h2>
         </div>
-        <h4>{ tripDetails.destination }</h4>
-        <h4>({ dateFormat(tripDetails.startDate, "ddd, mmm d, yyyy") } - { dateFormat(tripDetails.endDate, "ddd, mmm d, yyyy") })</h4>
+        <h4>{ tripDetails.destination } 
+        &nbsp; &mdash; { dateFormat(tripDetails.startDate, "ddd, mmm d, yyyy") } - { dateFormat(tripDetails.endDate, "ddd, mmm d, yyyy") }</h4>
         <div>
           <form id="newattendeeform" onSubmit={ handleAddClick }>
             <label htmlFor="newattendee">Enter email of invitee:&nbsp;</label>
@@ -81,7 +87,7 @@ const TripAttendees = () => {
           </form>
           <h4>{ errMsg }</h4>
           </div>
-          <h3>--- Existing invitees ---</h3>
+          <h3>&mdash; Existing invitees &mdash;</h3>
           <table id="attendees">
             <thead>
               <tr>
