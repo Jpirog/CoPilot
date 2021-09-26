@@ -228,7 +228,7 @@ useEffect(()=>{
                 startDate={startDate}
                 endDate={endDate}
                 withPortal
-                // Green background for dates never appears with no perpose (Konstantin)
+                // Green background for dates appears with no perpose (Konstantin)
                 // dayClassName={(date) => {
                 //   return date >= new Date(trip.startDate) &&
                 //     date <= new Date(trip.endDate)
@@ -249,7 +249,7 @@ useEffect(()=>{
                 endDate={endDate}
                 minDate={startDate}
                 withPortal
-                // Green background for dates never appears with no perpose (Konstantin)
+                // Green background for dates appears with no perpose (Konstantin)
                 // dayClassName={(date) => {
                 //   return date >= new Date(trip.startDate) &&
                 //     date <= new Date(trip.endDate)
