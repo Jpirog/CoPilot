@@ -266,7 +266,11 @@ const AddRestaurant = (props) => {
             <button
               className="btn btn-outline-secondary"
               onClick={() => {
-                if (startDate) {
+                if (meal === 'DEFAULT') {
+                  alert("Please select a meal")
+                } else if (description === '') {
+                  alert("Please add a description")
+                } else if (startDate) {
                   dispatch(
                     addTripEvent({
                       purpose: meal,
@@ -279,7 +283,7 @@ const AddRestaurant = (props) => {
                     })
                   );
                 } else {
-                  alert("please select your startDate");
+                  alert("please select date");
                 }
               }}
             >

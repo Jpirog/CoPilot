@@ -177,8 +177,9 @@ dispatch(removeTripEvent(tripId,event.id))
         withPortal
       />
         <button type="button" className="btn btn-outline-secondary " onClick={()=>{
-
-            if(startDate) {
+            if (description === '') {
+              alert("Please add a description")
+            } else if(startDate) {
 
             dispatch(addTripEvent({
                 purpose:"ACTIVITY",
