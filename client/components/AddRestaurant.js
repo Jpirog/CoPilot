@@ -118,7 +118,7 @@ const AddRestaurant = (props) => {
                   <td>{event.placeName}</td>
                   <td>{event.description}</td>
                   <td>
-                    <a href={event.url} target="_blank">
+                    <a href={event.url} target="_blank" rel="noreferrer">
                       Link of Website
                     </a>
                   </td>
@@ -160,7 +160,6 @@ const AddRestaurant = (props) => {
             aria-label="hotel"
             className="form-control"
             placeholder="search for your restaurant"
-            type="text"
             value={searchValue}
             onChange={restaurantSearchFieldChange}
           />
@@ -209,7 +208,8 @@ const AddRestaurant = (props) => {
               textAlign: "center",
             }}
           >
-            <a href={restaurant.url} target="_blank">
+            {/*rel="noreferrer" added for security reason to prevent referrer info leaks */}
+            <a href={restaurant.url} target="_blank" rel="noreferrer">
               <img
                 className="img-thumbnail"
                 style={{ width: "300px", height: "300px" }}

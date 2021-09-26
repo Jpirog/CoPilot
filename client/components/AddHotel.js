@@ -125,7 +125,8 @@ useEffect(()=>{
                   <td>{dateFormat(event.endDate,"mm/dd/yyyy h:MM:ss TT")}</td>
                   <td>{event.placeName}</td>
                   <td>
-                    <a href={event.url} target="_blank">Website Link</a>
+                    {/*rel="noreferrer" added for security reason to prevent referrer info leaks */}
+                    <a href={event.url} target="_blank" rel="noreferrer">Website Link</a>
                   </td>
                   <td>{event.location}</td>
                   <td>
@@ -191,7 +192,7 @@ useEffect(()=>{
             key={hotel.id}
             style={{ padding: "10%", width:"30%",listStyleType: "none" ,textAlign:"center"}}
           >
-            <a href={hotel.url} target="_blank">
+            <a href={hotel.url} target="_blank" rel="noreferrer">
               <img
                 className="img-thumbnail"
                 style={{ width: "300px", height: "300px" }}
