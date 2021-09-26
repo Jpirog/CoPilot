@@ -38,6 +38,17 @@ const AddHotel = (props) => {
     setHotelList(data);
   };
 
+
+   //error handling
+useEffect(()=>{
+
+  if(description) {
+    let ele = document.getElementById("eventDescription");
+    ele.hidden=true
+  
+  }
+},[description])
+
   useEffect(()=> {
     setStartDate(new Date(`${moment(trip.startDate).format("MM/DD/yyyy")} 4:00 pm`));
     setEndDate(new Date(`${moment(trip.endDate).format("MM/DD/yyyy")} 10:00 am`))
@@ -199,6 +210,7 @@ useEffect(()=>{
                 }}
               ></input>
             </li>
+            <li style={{color:"red"}} id="eventDescription" hidden={true}>Description can not be blank</li>
             <>
               <DatePicker
                 placeholderText="CheckIn DateTime"
@@ -218,6 +230,7 @@ useEffect(()=>{
                     : undefined;
                 }}
               />
+              <span style={{color:"red"}}  id="startDate" hidden={true}>CheckIn Date can not be blank</span>
               <DatePicker
                 placeholderText="CheckOut DateTime"
                 timeInputLabel="Pick a Time:"
@@ -237,12 +250,13 @@ useEffect(()=>{
                     : undefined;
                 }}
               />
-              {/* <div className="className">CheckOut Date is missing</div> */}
+              <li style={{color:"red"}}  id="endDate" hidden={true}>CheckOut Date can not be blank</li>
+              <li style={{color:"red"}}  id="dateRange" hidden={true}>CheckOut Date can not be earlier than CheckIn Date</li>
             </>
 
             <button type="button" className="btn btn-outline-secondary "
               onClick={() => {
-                if (startDate && endDate &&(startDate<endDate)) {
+                if (description && startDate && endDate &&(startDate<endDate)) {
                   dispatch(
                     addTripEvent({
                       purpose: "SLEEP",
@@ -262,9 +276,19 @@ useEffect(()=>{
                   setStartDate(null);
                   setEndDate(null)
                   setDescription("")
-                } else {
-                  alert("Attention on the date");
-                }
+                }else if(!description){
+                  let ele = document.getElementById("eventDescription");
+                  ele.hidden=false
+                  } else if (!startDate){ 
+                    let ele = document.getElementById("startDate");
+                  ele.hidden=false}
+                  else if (!endDate){ 
+                    let ele = document.getElementById("startDate");
+                  ele.hidden=false}
+                  else if(startDate>endDate) {
+                    let ele = document.getElementById("dateRange");
+                    ele.hidden=false
+                  }
               }}
             >
               Add to trip

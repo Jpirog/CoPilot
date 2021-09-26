@@ -7,6 +7,7 @@ import { addTripEvent, removeTripEvent } from "../store/trips";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import StarRatings from "react-star-ratings"
+import dateFormat from "dateformat";
 
 const AddRestaurant = (props) => {
   const { tripId, tripevents, trip } = useSelector((state) => ({
@@ -40,6 +41,21 @@ const AddRestaurant = (props) => {
     }
     return activeDays;
   }
+
+  //error handling
+useEffect(()=>{
+
+  if(startDate) {
+    let ele = document.getElementById("startDate");
+            ele.hidden=true
+  
+  } else if (description){
+    let ele = document.getElementById("eventDescription");
+            ele.hidden=true
+  
+  }
+  
+  },[description,startDate])
 
   useEffect(() => {
     let list;
@@ -110,8 +126,8 @@ const AddRestaurant = (props) => {
               event.purpose === "BREAKFAST" ||
               event.purpose === "DINNER" ? (
                 <tr key={event.id}>
-                  <td>{event.startDate}</td>
-                  <td>{event.placeName}</td>
+                  <td scope="row">{dateFormat(event.startDate,"mm/dd/yyyy h:MM:ss TT")}</td>
+                  <td>{dateFormat(event.endDate,"mm/dd/yyyy h:MM:ss TT")}</td>
                   <td>{event.description}</td>
                   <td>
                     <a href={event.url} target="_blank">Website Link</a>
@@ -234,6 +250,7 @@ const AddRestaurant = (props) => {
               ></input>
             </form>
           </li>
+          <li style={{color:"red"}} id="eventDescription" hidden={true}>Description can not be blank</li>
 
           <DatePicker
             selected={startDate}
@@ -257,6 +274,7 @@ const AddRestaurant = (props) => {
             }}
             withPortal
           />
+    <li style={{color:"red"}}  id="startDate" hidden={true}>Researve Date can not be blank</li>
 
           <button
           className="btn btn-outline-secondary"
@@ -266,6 +284,7 @@ const AddRestaurant = (props) => {
                   addTripEvent({
                     purpose: meal,
                     startDate,
+                    endDate:new Date(startDate).setHours(startDate.getHours()+2),
                     tripId,
                     description,
                     placeName: restaurant.name,
@@ -273,8 +292,12 @@ const AddRestaurant = (props) => {
                     location: restaurant.location.display_address.join(""),
                   })
                 );
-              } else {
-                alert("please select your startDate");
+              } else if(!description){
+                let ele = document.getElementById("eventDescription");
+                ele.hidden=false
+              }else if(!startDate) {
+                let ele = document.getElementById("startDate");
+                ele.hidden=false
               }
             }}
           >

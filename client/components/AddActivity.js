@@ -21,6 +21,10 @@ let categoryList =[
 {key:"shopping",value:"Shopping"},
 {key:"localflavor",value:"Local Flavor"}]
 
+
+
+
+
 const AddActivity= (props)=> {
 
    const {trip,tripId,tripevents} = useSelector((state)=>({trip:state.trips.trip,tripId:state.trips.trip.id,tripevents:state.trips.trip.tripevents}))
@@ -41,6 +45,24 @@ const AddActivity= (props)=> {
     const {data} =  await axios.get("/api/yelp/activity",{params:{term:searchValue,category:category,location}});
     setActivityList(data);
 }
+
+//error handling
+useEffect(()=>{
+
+if(startDate) {
+  let ele = document.getElementById("startDate");
+          ele.hidden=true
+
+} else if (description){
+  let ele = document.getElementById("eventDescription");
+          ele.hidden=true
+
+}
+
+
+},[description,startDate])
+
+
 useEffect(()=>{
   const func = async()=> {
     const { data } = await axios.get("/api/yelp/activity", {
@@ -146,6 +168,7 @@ dispatch(removeTripEvent(tripId,event.id))
         </li>
         <li >{activity.categories[0].title}</li>
         <li><input placeholder="Add event description" value={description} onChange={(e)=>{setDescription(e.target.value)}}></input></li>
+        <li style={{color:"red"}} id="eventDescription" hidden={true}>Description can not be blank</li>
 
       <DatePicker
       placeholderText='Reserve DateTime'
@@ -157,14 +180,14 @@ dispatch(removeTripEvent(tripId,event.id))
         selectsStart
         startDate={startDate}
         withPortal/>
+        <li  className="validate"  style={{color:"red"}}  id="startDate" hidden={true}>Researve Date can not be blank</li>
         <button type="button" className="btn btn-outline-secondary " onClick={()=>{
 
-            if(startDate) {
-
+            if(startDate && description) {
             dispatch(addTripEvent({
                 purpose:"ACTIVITY",
                 startDate,
-                // endDate,
+                endDate:new Date(startDate).setHours(startDate.getHours()+2),
                 tripId,
                 description,
                 placeName:activity.name,
@@ -177,10 +200,12 @@ dispatch(removeTripEvent(tripId,event.id))
             setStartDate(null);
             setDescription("")
             
-        } else 
-        
-        {
-            alert("please select your dateRange")}
+        } else if(!description){
+          let ele = document.getElementById("eventDescription");
+          ele.hidden=false
+          } else if (!startDate){ 
+            let ele = document.getElementById("startDate");
+          ele.hidden=false}
 
         }}>Add to trip</button>
         </ul>)}</div>
