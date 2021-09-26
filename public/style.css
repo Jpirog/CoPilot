@@ -701,6 +701,11 @@ flex-wrap: wrap;
   text-align: center;
 }
 
+#eventBox {
+  /* padding: 15px; */
+  /* border: black solid 1px; */
+}
+
 .category {
   border: black solid 1px;
   padding: 5px;
