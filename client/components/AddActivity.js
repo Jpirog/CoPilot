@@ -118,7 +118,8 @@ return (
     <td scope="row">{dateFormat(event.startDate,"mm/dd/yyyy h:MM TT")}</td>
     <td scope="row">{dateFormat(event.endDate,"mm/dd/yyyy h:MM TT")}</td>
     <td>{event.placeName}</td> 
-    <td><a href={event.url} target="_blank">Website Link</a></td> 
+    {/*rel="noreferrer" added for security reason to prevent referrer info leaks */}
+    <td><a href={event.url} target="_blank" rel="noreferrer">Website Link</a></td> 
     <td>{event.location}</td> 
     <td><button type="button" className="btn btn-outline-danger" onClick={()=>{
 dispatch(removeTripEvent(tripId,event.id))
@@ -134,7 +135,7 @@ dispatch(removeTripEvent(tripId,event.id))
             {categoryList.map((cate,ind)=><option key ={ind} value={cate.key} >{cate.value}</option>)}
           </select>
         <AutoComInput value={location} onChange={(e)=>{setLocation(e.target.value)}} aria-label="location" className="form-control" />
-        <input autoFocus placeholder="search for activity" value={searchValue} onChange={(e)=>{setSearchValue(e.target.value)}} autoFocus type="text" aria-label="activity" className="form-control" />
+        <input autoFocus placeholder="search for activity" value={searchValue} onChange={(e)=>{setSearchValue(e.target.value)}} type="text" aria-label="activity" className="form-control" />
           
           <button type="submit" className="btn btn-primary input-group-text">search</button>
           <button type="button" className="btn btn-primary input-group-text" onClick={()=>{setSearchValue("");setCategory("")}}>clear</button>
@@ -153,7 +154,7 @@ dispatch(removeTripEvent(tripId,event.id))
         <div className="flexBox">
         {activityList.map(activity=>
         <ul className="shadow-lg mx-auto p-3 d-flex flex-column align-content-center flex-wrap bg-white rounded" key ={activity.id} style={{ padding: "10%", width:"30%",listStyleType: "none" ,textAlign:"center"}}>
-        <a href={activity.url} target="_blank"><img className="img-thumbnail"
+        <a href={activity.url} target="_blank" rel="noreferrer"><img className="img-thumbnail"
                 style={{ width: "300px", height: "300px" }} src={activity.image_url}></img></a>
         <li >{activity.name}</li>
         <li> 
