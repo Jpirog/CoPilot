@@ -6,7 +6,9 @@ import { Link } from "react-router-dom";
 import { addTripEvent, removeTripEvent } from "../store/trips";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import StarRatings from "react-star-ratings";
+import StarRatings from "react-star-ratings"
+import dateFormat from "dateformat";
+
 
 const AddRestaurant = (props) => {
   const { tripId, tripevents, trip } = useSelector((state) => ({
@@ -40,6 +42,21 @@ const AddRestaurant = (props) => {
     }
     return activeDays;
   }
+
+  //error handling
+useEffect(()=>{
+
+  if(startDate) {
+    let ele = document.getElementById("startDate");
+            ele.hidden=true
+  
+  } else if (description){
+    let ele = document.getElementById("eventDescription");
+            ele.hidden=true
+  
+  }
+  
+  },[description,startDate])
 
   useEffect(() => {
     let list;
@@ -110,8 +127,8 @@ const AddRestaurant = (props) => {
               event.purpose === "BREAKFAST" ||
               event.purpose === "DINNER" ? (
                 <tr key={event.id}>
-                  <td>{event.startDate}</td>
-                  <td>{event.placeName}</td>
+                  <td scope="row">{dateFormat(event.startDate,"mm/dd/yyyy h:MM:ss TT")}</td>
+                  <td>{dateFormat(event.endDate,"mm/dd/yyyy h:MM:ss TT")}</td>
                   <td>{event.description}</td>
                   <td>
                     <a href={event.url} target="_blank">
@@ -137,17 +154,127 @@ const AddRestaurant = (props) => {
       </table>
 
       <form onSubmit={restaurantSearchSubmit}>
-        <div className="input-group">
-          <span className="input-group-text mr-md-3">
-            You can change a destination or search for a restaurant
-          </span>
-          <input
-            type="text"
-            aria-label="location"
-            className="form-control"
-            value={location}
-            onChange={(e) => {
-              setLocation(e.target.value);
+
+      <div className="input-group">
+  <span className="input-group-text mr-md-3">You can change a destination or search for a restaurant</span>
+  <input
+    type="text" aria-label="location" className="form-control" 
+          value={location}
+          onChange={(e) => {
+            setLocation(e.target.value);
+          }}
+        />
+        <input
+          autoFocus type="text" aria-label="hotel" className="form-control" 
+          placeholder="search for your restaurant"
+          type="text"
+          value={searchValue}
+          onChange={restaurantSearchFieldChange}
+        />
+
+<button type="submit" className="btn btn-primary input-group-text">Search</button>
+  <button type="button" className="btn btn-primary input-group-text mr-md-3"
+  onClick={() => {
+    setSearchValue("");
+  }}
+>
+  Clear
+</button>
+<select
+  className="btn btn-primary input-group-text" aria-label=".form-select-lg example" 
+        value={sortValue}
+        onChange={(e) => {
+          setSortValue(e.target.value);
+        }}
+      >
+        <option>Sort By</option>
+        <option value="rating">rating-High to Low</option>
+        <option value="price">price-Low to High</option>
+      </select>
+        </div>
+    </form>
+
+
+<br />
+
+<div>
+      <Link to={`/activity`} className="btn btn-primary">
+        Once restaurant is selected, go to activities
+      </Link>
+</div>
+      
+      <br />
+      <div className="d-lg-flex flex-row align-content-around flex-wrap mr-md-6"> 
+      {restaurantList.map((restaurant) => (
+        <ul
+        className="shadow-lg mx-auto p-3 d-flex flex-column align-content-center flex-wrap bg-white rounded"
+          key={restaurant.id} style={{ padding: "10%", width:"30%",listStyleType: "none" ,textAlign:"center"}}
+        >
+          <a href={restaurant.url} target="_blank">
+            <img
+           className="img-thumbnail"
+           style={{ width: "300px", height: "300px" }}
+              src={restaurant.image_url}
+            ></img>
+          </a>
+          <li>{restaurant.name}</li>
+          <li>
+            {" "}
+            <StarRatings
+              rating = {restaurant.rating}
+              starRatedColor = 'gold'
+              starDimension = '20px'
+              starSpacing = '3px'
+            />
+          </li>
+          <li>{restaurant.price}</li>
+          <li>
+            <form onSubmit={() => {}}>
+              <select
+                value={meal}
+                onChange={(e) => {
+                  setMeal(e.target.value);
+                }}
+              >
+                <option value={"DEFAULT"}>{"Select a Meal"}</option>
+                <option value={"BREAKFAST"}>{"Breakfast"}</option>
+                <option value={"LUNCH"}>{"Lunch"}</option>
+                <option value={"DINNER"}>{"Dinner"}</option>
+              </select>
+            </form>
+          </li>
+          <li>
+            <form>
+              <input
+                placeholder="add event description"
+                value={description}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+              ></input>
+            </form>
+          </li>
+          <li style={{color:"red"}} id="eventDescription" hidden={true}>Description can not be blank</li>
+
+          <DatePicker
+            selected={startDate}
+            onChange={(date) => {
+              setStartDate(date);
+            }}
+            isClearable
+            showTimeSelect
+            timeFormat="HH:mm"
+            dateFormat="MMMM d, h:mm aa yyyy"
+            timeIntervals={30}
+            placeholderText="Select a date"
+            timeCaption="Time"
+            openToDate={new Date(trip.startDate)}
+            includeDates={availableDates()}
+            dayClassName={(date) => {
+              return date >= new Date(trip.startDate) &&
+                date <= new Date(trip.endDate)
+                ? "highlighted"
+                : undefined;
             }}
           />
           <input
@@ -160,6 +287,7 @@ const AddRestaurant = (props) => {
             value={searchValue}
             onChange={restaurantSearchFieldChange}
           />
+    <li style={{color:"red"}}  id="startDate" hidden={true}>Researve Date can not be blank</li>
 
           <button type="submit" className="btn btn-primary input-group-text">
             Search
@@ -168,7 +296,30 @@ const AddRestaurant = (props) => {
             type="button"
             className="btn btn-primary input-group-text mr-md-3"
             onClick={() => {
+
+              if (startDate) {
+                dispatch(
+                  addTripEvent({
+                    purpose: meal,
+                    startDate,
+                    endDate:new Date(startDate).setHours(startDate.getHours()+2),
+                    tripId,
+                    description,
+                    placeName: restaurant.name,
+                    url: restaurant.url,
+                    location: restaurant.location.display_address.join(""),
+                  })
+                );
+              } else if(!description){
+                let ele = document.getElementById("eventDescription");
+                ele.hidden=false
+              }else if(!startDate) {
+                let ele = document.getElementById("startDate");
+                ele.hidden=false
+              }
+
               setSearchValue("");
+
             }}
           >
             Clear
