@@ -701,11 +701,6 @@ flex-wrap: wrap;
   text-align: center;
 }
 
-#eventBox {
-  /* padding: 15px; */
-  /* border: black solid 1px; */
-}
-
 .category {
   border: black solid 1px;
   padding: 5px;
@@ -822,3 +817,53 @@ label {
   width: 400px;
   text-align: center;
 }
+
+
+.singleCard {
+  position: relative;
+  /* display: -ms-flexbox; */
+  display: flex;
+  /* -ms-flex-direction: column; */
+  flex-direction: row;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: rgb(221, 154, 10);
+  background-clip: border-box;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+  margin: 10px;
+}
+  
+.card-body {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  /* border: 1px solid black; */
+  color: white;
+}
+  
+.dayNum {
+  width: 18%;
+  background-color: white;
+  text-align: center;
+  padding: 20px 10px;
+  margin-left: 30px;
+  margin-right: 30px;
+  font-size: xxx-large;
+}
+  
+#content-wrapper-double {
+  padding: 80px;
+  /* background-color: rgb(41, 73, 99); */
+  background-image: linear-gradient(rgb(70, 70, 104), grey);
+}
+  
+#sideBySide {
+  display: flex;
+}
+  
+.iiinfo {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+  
