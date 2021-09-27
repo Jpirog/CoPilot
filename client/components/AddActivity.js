@@ -30,6 +30,7 @@ const AddActivity= (props)=> {
    const [category,setCategory] = useState("");
    const [description,setDescription] = useState("");
    const [startDate, setStartDate] = useState(null);
+   const [endDate, setEndDate] = useState(null);
    const [location,setLocation] =useState("");
    const [sortValue,setSortValue] =useState("");
 
@@ -83,10 +84,12 @@ useEffect(()=>{
           console.log(list,activityList)
           setActivityList(list);
         }else if(sortValue==="price") {
-          list = activityList.sort(function(a,b) {
-            return a.price?a.price.length:0-b.price.length;
-           })
-           setActivityList(list);
+          list = activityList.filter((obj) => obj.price).sort(function (a, b) {
+            return a.price.length - b.price.length;
+        });
+        setActivityList(
+          list.concat(activityList.filter((obj) => !obj.price))
+        );
         }
     
       },[sortValue])
@@ -104,6 +107,7 @@ return (
         <thead>
         <tr>
           <th scope="col">Reserved Date Time</th>
+          <th scope="col">End Date Time</th>
           <th scope="col">Activity Place</th> 
           <th scope="col">Activity Website</th> 
           <th scope="col">Activity Address </th>
@@ -113,9 +117,11 @@ return (
         <tbody>
 {activityEvents&&activityEvents.map(event=>
   <tr key = {event.id}>
-    <td scope="row">{dateFormat(event.startDate,"mm/dd/yyyy h:MM:ss TT")}</td>
+    <td scope="row">{dateFormat(event.startDate,"mm/dd/yyyy h:MM TT")}</td>
+    <td scope="row">{dateFormat(event.endDate,"mm/dd/yyyy h:MM TT")}</td>
     <td>{event.placeName}</td> 
-    <td><a href={event.url} target="_blank">Website Link</a></td> 
+    {/*rel="noreferrer" added for security reason to prevent referrer info leaks */}
+    <td><a href={event.url} target="_blank" rel="noreferrer">Website Link</a></td> 
     <td>{event.location}</td> 
     <td><button type="button" className="btn btn-outline-danger" onClick={()=>{
 dispatch(removeTripEvent(tripId,event.id))
@@ -126,22 +132,35 @@ dispatch(removeTripEvent(tripId,event.id))
         <form className ="flexBox" onSubmit={handleSubmit}>
         <div className="input-group">
         <span className="input-group-text mr-md-3">You can change a destination or search for an activity</span>
-        <select className="btn btn-primary input-group-text mr-md-3" aria-label=".form-select-lg example" value ={category} onChange={(e)=>{setCategory(e.target.value)}}>
+        <select className="btn btn-outline-primary input-group-text mr-md-3" aria-label=".form-select-lg example" value ={category} onChange={(e)=>{setCategory(e.target.value)}}>
             <option >{`<---Select a Category--->`}</option>
             {categoryList.map((cate,ind)=><option key ={ind} value={cate.key} >{cate.value}</option>)}
           </select>
         <AutoComInput value={location} onChange={(e)=>{setLocation(e.target.value)}} aria-label="location" className="form-control" />
-        <input autoFocus placeholder="search for activity" value={searchValue} onChange={(e)=>{setSearchValue(e.target.value)}} autoFocus type="text" aria-label="activity" className="form-control" />
+        <input autoFocus placeholder="search for activity" value={searchValue} onChange={(e)=>{setSearchValue(e.target.value)}} type="text" aria-label="activity" className="form-control" />
           
-          <button type="submit" className="btn btn-primary input-group-text">search</button>
-          <button type="button" className="btn btn-primary input-group-text" onClick={()=>{setSearchValue("");setCategory("")}}>clear</button>
+          <button type="submit" className="btn-outline-primary input-group-text">search</button>
+          <button type="button" className="btn-outline-primary input-group-text" onClick={()=>{setSearchValue("");setCategory("")}}>clear</button>
         
+          <select
+            className="btn btn-primary input-group-text"
+            aria-label=".form-select-lg example"
+            value={sortValue}
+            onChange={(e) => {
+              setSortValue(e.target.value);
+            }}
+          >
+            <option>Sort by</option>
+            <option value={"rating"}>rating - High to low</option>
+            <option value={"price"}>price - Low to high</option>
+          </select>
+
         </div>
         </form>
         <br />
 <div>
-<Link className="btn btn-primary mr-md-3"to={`/restaurant`}>Go Back to Restaurant Page:</Link>
-<Link className="btn btn-primary mr-md-3"to="/calendar">Once Activity is added, click here to go the calendar</Link>
+<Link className="btn btn-outline-primary mr-md-3"to={`/restaurant`}>Go Back to Restaurant Page:</Link>
+<Link className="btn btn-outline-primary mr-md-3"to="/calendar">Once Activity is added, click here to go the calendar</Link>
 </div>     
        
 </div>  
@@ -150,7 +169,7 @@ dispatch(removeTripEvent(tripId,event.id))
         <div className="flexBox">
         {activityList.map(activity=>
         <ul className="shadow-lg mx-auto p-3 d-flex flex-column align-content-center flex-wrap bg-white rounded" key ={activity.id} style={{ padding: "10%", width:"30%",listStyleType: "none" ,textAlign:"center"}}>
-        <a href={activity.url} target="_blank"><img className="img-thumbnail"
+        <a href={activity.url} target="_blank" rel="noreferrer"><img className="img-thumbnail"
                 style={{ width: "300px", height: "300px" }} src={activity.image_url}></img></a>
         <li >{activity.name}</li>
         <li> 
@@ -161,6 +180,7 @@ dispatch(removeTripEvent(tripId,event.id))
           starSpacing = '3px'
           />
         </li>
+        <li>{activity.price}</li>
         <li >{activity.categories[0].title}</li>
         <li><input placeholder="Add event description" value={description} onChange={(e)=>{setDescription(e.target.value)}}></input></li>
 
@@ -169,11 +189,12 @@ dispatch(removeTripEvent(tripId,event.id))
         timeInputLabel="Pick a time:"
         dateFormat="MM/dd/yyyy h:mm aa"
         includeDates={availableDates()}
-        showTimeInput
         selected={startDate}
-        onChange={(date) => 
+        showTimeInput
+        onChange={(date) => {
           setStartDate(date)
-        }
+          setEndDate(new Date(Date.parse(date) + 60000*180))
+        }}
         withPortal
       />
         <button type="button" className="btn btn-outline-secondary " onClick={()=>{
@@ -184,7 +205,7 @@ dispatch(removeTripEvent(tripId,event.id))
             dispatch(addTripEvent({
                 purpose:"ACTIVITY",
                 startDate,
-                // endDate,
+                endDate,
                 tripId,
                 description,
                 placeName:activity.name,

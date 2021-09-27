@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,6 +5,7 @@ import { Link } from "react-router-dom";
 import { addTripEvent, removeTripEvent } from "../store/trips";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import dateFormat from "dateformat";
 import StarRatings from "react-star-ratings";
 
 const AddRestaurant = (props) => {
@@ -18,6 +18,7 @@ const AddRestaurant = (props) => {
   const [restaurantList, setRestaurantList] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const [meal, setMeal] = useState("DEFAULT");
@@ -47,14 +48,15 @@ const AddRestaurant = (props) => {
       list = restaurantList.sort(function (a, b) {
         return b.rating - a.rating;
       });
-      console.log(list);
+      console.log(list)
       setRestaurantList(list);
     } else if (sortValue === "price") {
-      list = restaurantList.sort(function (a, b) {
-        return a.price ? a.price.length : 0 - b.price.length;
+      list = restaurantList.filter((obj) => obj.price).sort(function (a, b) {
+          return a.price.length - b.price.length;
       });
-      console.log(list);
-      setRestaurantList(list);
+      setRestaurantList(
+        list.concat(restaurantList.filter((obj) => !obj.price))
+      );
     }
   }, [sortValue]);
 
@@ -97,11 +99,12 @@ const AddRestaurant = (props) => {
       <table className="table table-hover shadow p-3 mb-5 bg-white rounded">
         <tbody>
           <tr>
-            <th>Start Date</th>
-            <th>Restaurant Name</th>
+            <th>Start date</th>
+            <th>End date</th>
+            <th>Restaurant name</th>
             <th>Event description</th>
-            <th>Restaurant Website</th>
-            <th>Restaurant Location </th>
+            <th>Restaurant website</th>
+            <th>Restaurant location </th>
             <th>delete</th>
           </tr>
           {tripevents &&
@@ -110,11 +113,16 @@ const AddRestaurant = (props) => {
               event.purpose === "BREAKFAST" ||
               event.purpose === "DINNER" ? (
                 <tr key={event.id}>
-                  <td>{event.startDate}</td>
+                  <td scope="row">
+                    {dateFormat(event.startDate, "mm/dd/yyyy h:MM TT")}
+                  </td>
+                  <td scope="row">
+                    {dateFormat(event.endDate, "mm/dd/yyyy h:MM TT")}
+                  </td>
                   <td>{event.placeName}</td>
                   <td>{event.description}</td>
                   <td>
-                    <a href={event.url} target="_blank">
+                    <a href={event.url} target="_blank" rel="noreferrer">
                       Link of Website
                     </a>
                   </td>
@@ -156,17 +164,17 @@ const AddRestaurant = (props) => {
             aria-label="hotel"
             className="form-control"
             placeholder="search for your restaurant"
-            type="text"
             value={searchValue}
             onChange={restaurantSearchFieldChange}
           />
 
-          <button type="submit" className="btn btn-primary input-group-text">
+          <button type="submit" className="btn btn-outline-primary input-group-text">
             Search
           </button>
+
           <button
             type="button"
-            className="btn btn-primary input-group-text mr-md-3"
+            className="btn btn-outline-primary input-group-text mr-md-3"
             onClick={() => {
               setSearchValue("");
             }}
@@ -174,29 +182,30 @@ const AddRestaurant = (props) => {
             Clear
           </button>
           <select
-            className="btn btn-primary input-group-text"
+            className="btn btn-outline-primary input-group-text"
             aria-label=".form-select-lg example"
             value={sortValue}
             onChange={(e) => {
               setSortValue(e.target.value);
             }}
           >
-            <option>Sort By</option>
-            <option value="rating">rating-High to Low</option>
-            <option value="price">price-Low to High</option>
+            <option>Sort by</option>
+            <option value={"rating"}>rating - High to low</option>
+            <option value={"price"}>price - Low to high</option>
           </select>
         </div>
       </form>
       <br />
       <div>
-        <Link to={`/activity`} className="btn btn-primary">
+        <Link to={`/activity`} className="btn btn-outline-primary">
           Once restaurant is selected, go to activities
         </Link>
       </div>
+      <br />
       <div className="d-lg-flex flex-row align-content-around flex-wrap mr-md-6">
         {restaurantList.map((restaurant) => (
           <ul
-            className="shadow-lg p-3 mb-5 mr-md-3 d-flex flex-column align-content-center flex-wrap bg-white rounded"
+          className="shadow-lg mx-auto p-3 d-flex flex-column align-content-center flex-wrap bg-white rounded"
             key={restaurant.id}
             style={{
               padding: "10%",
@@ -205,7 +214,8 @@ const AddRestaurant = (props) => {
               textAlign: "center",
             }}
           >
-            <a href={restaurant.url} target="_blank">
+            {/*rel="noreferrer" added for security reason to prevent referrer info leaks */}
+            <a href={restaurant.url} target="_blank" rel="noreferrer">
               <img
                 className="img-thumbnail"
                 style={{ width: "300px", height: "300px" }}
@@ -225,7 +235,7 @@ const AddRestaurant = (props) => {
             <li>{restaurant.price}</li>
             <li>
               <form onSubmit={() => {}}>
-                <select 
+                <select
                   value={meal}
                   onChange={(e) => {
                     setMeal(e.target.value);
@@ -255,26 +265,28 @@ const AddRestaurant = (props) => {
               timeInputLabel="Pick a time:"
               dateFormat="MM/dd/yyyy h:mm aa"
               includeDates={availableDates()}
-              showTimeInput
               selected={startDate}
-              onChange={(date) => 
-                setStartDate(date)
-              }
+              showTimeInput
+              onChange={(date) => {
+                setStartDate(date);
+                setEndDate(new Date(Date.parse(date) + 60000 * 120));
+              }}
               withPortal
             />
 
             <button
               className="btn btn-outline-secondary"
               onClick={() => {
-                if (meal === 'DEFAULT') {
-                  alert("Please select a meal")
-                } else if (description === '') {
-                  alert("Please add a description")
+                if (meal === "DEFAULT") {
+                  alert("Please select a meal");
+                } else if (description === "") {
+                  alert("Please add a description");
                 } else if (startDate) {
                   dispatch(
                     addTripEvent({
                       purpose: meal,
                       startDate,
+                      endDate,
                       tripId,
                       description,
                       placeName: restaurant.name,
