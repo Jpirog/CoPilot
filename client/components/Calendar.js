@@ -42,7 +42,9 @@ class Dnd extends React.Component {
     this.moveEvent = this.moveEvent.bind(this)
     this.newEvent = this.newEvent.bind(this)
   }
-
+componentDidMount (){
+  this.setState({events:this.props.eventList,defaultDate:new Date(moment(this.props.trip.startDate).format("MM/DD/YYYY"))})
+}
 componentDidUpdate(prevProps){
     if(prevProps.eventList!==this.props.eventList){
     this.setState({events:this.props.eventList,defaultDate:new Date(moment(this.props.trip.startDate).format("MM/DD/YYYY"))})
@@ -120,7 +122,7 @@ componentDidUpdate(prevProps){
             alert(`${event.location},${event.start},${event.end}`)
         }}
         localizer={localizer}
-        events={this.state.events}
+        events={this.state.events?this.state.events:[]}
         onEventDrop={this.moveEvent}
         resizable
         onEventResize={this.resizeEvent}

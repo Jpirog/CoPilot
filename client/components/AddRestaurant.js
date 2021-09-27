@@ -164,12 +164,12 @@ const AddRestaurant = (props) => {
             onChange={restaurantSearchFieldChange}
           />
 
-          <button type="submit" className="btn btn-primary input-group-text">
+          <button type="submit" className="btn btn-outline-primary input-group-text">
             Search
           </button>
           <button
             type="button"
-            className="btn btn-primary input-group-text mr-md-3"
+            className="btn btn-outline-primary input-group-text mr-md-3"
             onClick={() => {
               setSearchValue("");
             }}
@@ -177,7 +177,7 @@ const AddRestaurant = (props) => {
             Clear
           </button>
           <select
-            className="btn btn-primary input-group-text"
+            className="btn btn-outline-primary input-group-text"
             aria-label=".form-select-lg example"
             value={sortValue}
             onChange={(e) => {
@@ -192,7 +192,7 @@ const AddRestaurant = (props) => {
       </form>
       <br />
       <div>
-        <Link to={`/activity`} className="btn btn-primary">
+        <Link to={`/activity`} className="btn btn-outline-primary">
           Once restaurant is selected, go to activities
         </Link>
       </div>
