@@ -33,7 +33,7 @@ router.get("/restaurants", async (req, res, next) => {
                 'term': req.query.term,
                 'location': req.query.location,
                 "limit": req.query.term?5:20,
-                "sort_by": "rating",
+                "sort_by": "distance",
                 "categories": "restaurants",
             } 
         })
