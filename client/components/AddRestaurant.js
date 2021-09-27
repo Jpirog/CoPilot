@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -49,14 +48,15 @@ const AddRestaurant = (props) => {
       list = restaurantList.sort(function (a, b) {
         return b.rating - a.rating;
       });
-      console.log(list);
+      console.log(list)
       setRestaurantList(list);
     } else if (sortValue === "price") {
-      list = restaurantList.sort(function (a, b) {
-        return a.price ? a.price.length : 0 - b.price.length;
+      list = restaurantList.filter((obj) => obj.price).sort(function (a, b) {
+          return a.price.length - b.price.length;
       });
-      console.log(list);
-      setRestaurantList(list);
+      setRestaurantList(
+        list.concat(restaurantList.filter((obj) => !obj.price))
+      );
     }
   }, [sortValue]);
 
@@ -113,8 +113,12 @@ const AddRestaurant = (props) => {
               event.purpose === "BREAKFAST" ||
               event.purpose === "DINNER" ? (
                 <tr key={event.id}>
-                  <td scope="row">{dateFormat(event.startDate,"mm/dd/yyyy h:MM TT")}</td>
-                  <td scope="row">{dateFormat(event.endDate,"mm/dd/yyyy h:MM TT")}</td>
+                  <td scope="row">
+                    {dateFormat(event.startDate, "mm/dd/yyyy h:MM TT")}
+                  </td>
+                  <td scope="row">
+                    {dateFormat(event.endDate, "mm/dd/yyyy h:MM TT")}
+                  </td>
                   <td>{event.placeName}</td>
                   <td>{event.description}</td>
                   <td>
@@ -167,6 +171,7 @@ const AddRestaurant = (props) => {
           <button type="submit" className="btn btn-primary input-group-text">
             Search
           </button>
+
           <button
             type="button"
             className="btn btn-primary input-group-text mr-md-3"
@@ -184,9 +189,9 @@ const AddRestaurant = (props) => {
               setSortValue(e.target.value);
             }}
           >
-            <option>Sort By</option>
-            <option value="rating">rating-High to Low</option>
-            <option value="price">price-Low to High</option>
+            <option>Sort by</option>
+            <option value={"rating"}>rating - High to low</option>
+            <option value={"price"}>price - Low to high</option>
           </select>
         </div>
       </form>
@@ -229,7 +234,7 @@ const AddRestaurant = (props) => {
             <li>{restaurant.price}</li>
             <li>
               <form onSubmit={() => {}}>
-                <select 
+                <select
                   value={meal}
                   onChange={(e) => {
                     setMeal(e.target.value);
@@ -262,8 +267,8 @@ const AddRestaurant = (props) => {
               selected={startDate}
               showTimeInput
               onChange={(date) => {
-                setStartDate(date)
-                setEndDate(new Date(Date.parse(date) + 60000*120))
+                setStartDate(date);
+                setEndDate(new Date(Date.parse(date) + 60000 * 120));
               }}
               withPortal
             />
@@ -271,10 +276,10 @@ const AddRestaurant = (props) => {
             <button
               className="btn btn-outline-secondary"
               onClick={() => {
-                if (meal === 'DEFAULT') {
-                  alert("Please select a meal")
-                } else if (description === '') {
-                  alert("Please add a description")
+                if (meal === "DEFAULT") {
+                  alert("Please select a meal");
+                } else if (description === "") {
+                  alert("Please add a description");
                 } else if (startDate) {
                   dispatch(
                     addTripEvent({

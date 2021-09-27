@@ -76,13 +76,15 @@ useEffect(()=>{
       list = hotelList.sort(function(a,b) {
        return b.rating-a.rating;
       })
-
+      console.log(list)
       setHotelList(list);
     }else if(sortValue==="price") {
-      list = hotelList.sort(function(a,b) {
-        return a.price?a.price.length:0-b.price.length;
-       })
-       setHotelList(list);
+      list = hotelList.filter((obj) => obj.price).sort(function (a, b) {
+        return a.price.length - b.price.length;
+    });
+       setHotelList(
+      list.concat(hotelList.filter((obj) => !obj.price))
+    );
     }
 
   },[sortValue])

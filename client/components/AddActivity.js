@@ -84,10 +84,12 @@ useEffect(()=>{
           console.log(list,activityList)
           setActivityList(list);
         }else if(sortValue==="price") {
-          list = activityList.sort(function(a,b) {
-            return a.price?a.price.length:0-b.price.length;
-           })
-           setActivityList(list);
+          list = activityList.filter((obj) => obj.price).sort(function (a, b) {
+            return a.price.length - b.price.length;
+        });
+        setActivityList(
+          list.concat(activityList.filter((obj) => !obj.price))
+        );
         }
     
       },[sortValue])
@@ -140,6 +142,19 @@ dispatch(removeTripEvent(tripId,event.id))
           <button type="submit" className="btn btn-primary input-group-text">search</button>
           <button type="button" className="btn btn-primary input-group-text" onClick={()=>{setSearchValue("");setCategory("")}}>clear</button>
         
+          <select
+            className="btn btn-primary input-group-text"
+            aria-label=".form-select-lg example"
+            value={sortValue}
+            onChange={(e) => {
+              setSortValue(e.target.value);
+            }}
+          >
+            <option>Sort by</option>
+            <option value={"rating"}>rating - High to low</option>
+            <option value={"price"}>price - Low to high</option>
+          </select>
+
         </div>
         </form>
         <br />
@@ -165,6 +180,7 @@ dispatch(removeTripEvent(tripId,event.id))
           starSpacing = '3px'
           />
         </li>
+        <li>{activity.price}</li>
         <li >{activity.categories[0].title}</li>
         <li><input placeholder="Add event description" value={description} onChange={(e)=>{setDescription(e.target.value)}}></input></li>
 
@@ -177,7 +193,7 @@ dispatch(removeTripEvent(tripId,event.id))
         showTimeInput
         onChange={(date) => {
           setStartDate(date)
-          setEndDate(new Date(Date.parse(date) + 60000*120))
+          setEndDate(new Date(Date.parse(date) + 60000*180))
         }}
         withPortal
       />
