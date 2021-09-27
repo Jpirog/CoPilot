@@ -201,10 +201,11 @@ const AddRestaurant = (props) => {
           Once restaurant is selected, go to activities
         </Link>
       </div>
+      <br />
       <div className="d-lg-flex flex-row align-content-around flex-wrap mr-md-6">
         {restaurantList.map((restaurant) => (
           <ul
-            className="shadow-lg p-3 mb-5 mr-md-3 d-flex flex-column align-content-center flex-wrap bg-white rounded"
+          className="shadow-lg mx-auto p-3 d-flex flex-column align-content-center flex-wrap bg-white rounded"
             key={restaurant.id}
             style={{
               padding: "10%",
