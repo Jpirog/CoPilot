@@ -159,8 +159,8 @@ useEffect(()=>{
             setSearchValue(e.target.value);
           }} autoFocus type="text" aria-label="hotel" className="form-control" />
 
-      <button type="submit" className="btn btn-primary input-group-text">Search</button>
-  <button type="button" className="btn btn-primary input-group-text mr-md-3"
+      <button type="submit" className="btn btn-outline-primary input-group-text">Search</button>
+  <button type="button" className="btn btn-outline-primary input-group-text mr-md-3"
   onClick={() => {
     setSearchValue("");
   }}
@@ -168,7 +168,7 @@ useEffect(()=>{
   Clear
 </button>
 
-<select className="btn btn-primary input-group-text" aria-label=".form-select-lg example" value ={sortValue} onChange={(e)=>{
+<select className="btn btn-outline-primary input-group-text" aria-label=".form-select-lg example" value ={sortValue} onChange={(e)=>{
         setSortValue(e.target.value)
         }}>
       <option>Sort By</option>
@@ -180,7 +180,7 @@ useEffect(()=>{
 
 <br />
     <div>
-      <Link to={`/restaurant`} className="btn btn-primary">
+      <Link to={`/restaurant`} className="btn btn-outline-primary">
         Once hotel is added, go to restaurant
       </Link>
     </div>

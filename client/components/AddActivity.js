@@ -132,15 +132,15 @@ dispatch(removeTripEvent(tripId,event.id))
         <form className ="flexBox" onSubmit={handleSubmit}>
         <div className="input-group">
         <span className="input-group-text mr-md-3">You can change a destination or search for an activity</span>
-        <select className="btn btn-primary input-group-text mr-md-3" aria-label=".form-select-lg example" value ={category} onChange={(e)=>{setCategory(e.target.value)}}>
+        <select className="btn btn-outline-primary input-group-text mr-md-3" aria-label=".form-select-lg example" value ={category} onChange={(e)=>{setCategory(e.target.value)}}>
             <option >{`<---Select a Category--->`}</option>
             {categoryList.map((cate,ind)=><option key ={ind} value={cate.key} >{cate.value}</option>)}
           </select>
         <AutoComInput value={location} onChange={(e)=>{setLocation(e.target.value)}} aria-label="location" className="form-control" />
         <input autoFocus placeholder="search for activity" value={searchValue} onChange={(e)=>{setSearchValue(e.target.value)}} type="text" aria-label="activity" className="form-control" />
           
-          <button type="submit" className="btn btn-primary input-group-text">search</button>
-          <button type="button" className="btn btn-primary input-group-text" onClick={()=>{setSearchValue("");setCategory("")}}>clear</button>
+          <button type="submit" className="btn-outline-primary input-group-text">search</button>
+          <button type="button" className="btn-outline-primary input-group-text" onClick={()=>{setSearchValue("");setCategory("")}}>clear</button>
         
           <select
             className="btn btn-primary input-group-text"
@@ -159,8 +159,8 @@ dispatch(removeTripEvent(tripId,event.id))
         </form>
         <br />
 <div>
-<Link className="btn btn-primary mr-md-3"to={`/restaurant`}>Go Back to Restaurant Page:</Link>
-<Link className="btn btn-primary mr-md-3"to="/calendar">Once Activity is added, click here to go the calendar</Link>
+<Link className="btn btn-outline-primary mr-md-3"to={`/restaurant`}>Go Back to Restaurant Page:</Link>
+<Link className="btn btn-outline-primary mr-md-3"to="/calendar">Once Activity is added, click here to go the calendar</Link>
 </div>     
        
 </div>  
