@@ -23,6 +23,10 @@ class Itinerary extends React.Component {
         return null;
     }
 
+    // if(!this.props.currentTrip) {
+    //     return null;
+    // }
+
     const currentTrip = this.props.currentTrip;
     console.log('CURRENT TRIP', currentTrip);
     // const trips = this.props.trips;
@@ -167,6 +171,18 @@ class Itinerary extends React.Component {
 
     // console.log('NEW AP Map', activityMap);
 
+    let attendees = currentTrip.tripattendees.reduce((acc, attendee) => {
+        if(attendee.accepted === true) {
+            acc.push(attendee.user.name + ' (confirmed!)');
+        }
+        else {
+            acc.push(attendee.user.name + ' (unconfirmed...)');
+        }
+        return acc;
+    }, [])
+
+    console.log('ATTENDEES', attendees)
+
     const map = {
         "SLEEP": {},
         "ACTIVITY": {},
@@ -261,8 +277,8 @@ class Itinerary extends React.Component {
                     </div>  */}
                     <div id="sideBySide">
                         <div id='tripAttendees'>
-                            <h4>Attendees:</h4> {currentTrip ? (currentTrip.tripattendees).map(attendee => (
-                                <p key={attendee.id}> {attendee.user.name}</p>
+                            <h4>Attendees:</h4> {attendees ? attendees.map(attendee => (
+                                <p> ~ {attendee}</p>
                             ))
                             : ''}
                         </div>
@@ -299,4 +315,3 @@ const mapStateToProps = (state) => {
 // }
 
 export default connect(mapStateToProps)(Itinerary);
-
