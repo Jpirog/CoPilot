@@ -22,6 +22,12 @@ const TripAttendee = db.define('tripattendee',{
     allowNull: true,
     unique: false, 
   },
+  voted: {
+    type: BOOLEAN,
+    required: true,
+    allowNull: false,
+    defaultValue: false, 
+  },
 }, {indexes: [{ unique: true, fields: ['tripId', 'email']}]})
 
 module.exports = TripAttendee;
