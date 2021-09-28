@@ -33,6 +33,7 @@ const AddActivity= (props)=> {
    const [endDate, setEndDate] = useState(null);
    const [location,setLocation] =useState("");
    const [sortValue,setSortValue] =useState("");
+   const [timeRange,setTimeRange] = useState("")
 
 
 
@@ -81,8 +82,7 @@ useEffect(()=>{
           list = activityList.sort(function(a,b) {
            return b.rating-a.rating;
           })
-          console.log(list,activityList)
-          setActivityList(list);
+          setActivityList([...list]);
         }else if(sortValue==="price") {
           list = activityList.filter((obj) => obj.price).sort(function (a, b) {
             return a.price.length - b.price.length;
@@ -139,11 +139,11 @@ dispatch(removeTripEvent(tripId,event.id))
         <AutoComInput value={location} onChange={(e)=>{setLocation(e.target.value)}} aria-label="location" className="form-control" />
         <input autoFocus placeholder="search for activity" value={searchValue} onChange={(e)=>{setSearchValue(e.target.value)}} type="text" aria-label="activity" className="form-control" />
           
-          <button type="submit" className="btn-outline-primary input-group-text">search</button>
-          <button type="button" className="btn-outline-primary input-group-text" onClick={()=>{setSearchValue("");setCategory("")}}>clear</button>
+          <button type="submit" className="btn btn-outline-primary mr-md-3">search</button>
+          <button type="button" className="btn btn-outline-primary mr-md-3" onClick={()=>{setSearchValue("");setCategory("")}}>clear</button>
         
           <select
-            className="btn btn-primary input-group-text"
+            className="btn btn-outline-primary mr-md-3"
             aria-label=".form-select-lg example"
             value={sortValue}
             onChange={(e) => {
@@ -184,16 +184,37 @@ dispatch(removeTripEvent(tripId,event.id))
         <li >{activity.categories[0].title}</li>
         <li><input placeholder="Add event description" value={description} onChange={(e)=>{setDescription(e.target.value)}}></input></li>
 
+          
+              <li> <select
+                  value={timeRange}
+                  onChange={(e) => {
+                    setTimeRange(e.target.value);
+                  }}
+                >
+                  <option value="DEFAULT">Pick a time range for your activity</option>
+                  <option value="9am">9:00 am - 11:00 am</option>
+                  <option value="1pm">1:00 pm - 4:00 pm</option>
+                  <option value="7pm">7:00 pm - 11:00 pm</option>
+                </select>
+                </li>
+
+
       <DatePicker
         placeholderText='Select a date'
         timeInputLabel="Pick a time:"
         dateFormat="MM/dd/yyyy h:mm aa"
         includeDates={availableDates()}
         selected={startDate}
-        showTimeInput
+        // showTimeInput
         onChange={(date) => {
-          setStartDate(date)
-          setEndDate(new Date(Date.parse(date) + 60000*180))
+          setStartDate(date);
+          if(timeRange==="9am"){
+            setEndDate(new Date(Date.parse(date) + 60000*180))
+            console.log(new Date(Date.parse(date) + 60000*180))
+          } else if (timeRange==="9am") {
+
+          }
+          
         }}
         withPortal
       />

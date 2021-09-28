@@ -76,8 +76,8 @@ useEffect(()=>{
       list = hotelList.sort(function(a,b) {
        return b.rating-a.rating;
       })
-      console.log(list)
-      setHotelList(list);
+
+      setHotelList([...list]);
     }else if(sortValue==="price") {
       list = hotelList.filter((obj) => obj.price).sort(function (a, b) {
         return a.price.length - b.price.length;
