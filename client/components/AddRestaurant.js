@@ -49,11 +49,12 @@ const AddRestaurant = (props) => {
         return b.rating - a.rating;
       });
       console.log(list)
-      setRestaurantList(list);
+      setRestaurantList([...list]);
     } else if (sortValue === "price") {
       list = restaurantList.filter((obj) => obj.price).sort(function (a, b) {
           return a.price.length - b.price.length;
       });
+      console.log(list)
       setRestaurantList(
         list.concat(restaurantList.filter((obj) => !obj.price))
       );
