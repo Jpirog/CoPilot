@@ -36,7 +36,7 @@ export const MenuItems = [
     },
     {
       title: 'Logout',
-      path: '/logout',
+      path: '/aboutus',
       cName: 'dropdown-link',
     }
   ];
