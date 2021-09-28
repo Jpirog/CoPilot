@@ -20,7 +20,8 @@ import Calendar from "./components/Calendar";
 import Itinerary from './components/Itinerary';
 import AllTrips from './components/AllTrips';
 import Financials from './components/Financials'
-import Map from "./components/GoogleMap"
+import Map from "./components/GoogleMap";
+import ChatApp from "./components/Chat";
 
 
 
@@ -39,6 +40,7 @@ class Routes extends Component {
             <Route exact path="/hotel" component={AddHotel} />
             <Route path="/activity" component={AddActivity} />
             <Route path="/map" component={Map} />
+            <Route path="/chat" component={ChatApp} />
             <Route path="/restaurant" component={AddRestaurant} />
             <Route path="/calendar" component={Calendar} />
             <Route path="/home" component={Home} />
