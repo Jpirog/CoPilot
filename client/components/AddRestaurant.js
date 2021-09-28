@@ -292,6 +292,9 @@ const AddRestaurant = (props) => {
                       placeName: restaurant.name,
                       url: restaurant.url,
                       location: restaurant.location.display_address.join(""),
+                      yelpId: restaurant.id,
+                      rating: restaurant.rating,
+                      priceLevel: restaurant.price,
                     })
                   );
                 } else {
