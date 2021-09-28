@@ -1,6 +1,6 @@
 //const Sequelize = require('sequelize');
 const {
-  STRING, BOOLEAN, DATE, ENUM,TEXT, FLOAT,
+  STRING, BOOLEAN, DATE, ENUM,TEXT, FLOAT, INTEGER,
 } = require('sequelize');
 const db = require('../db');
 
@@ -68,6 +68,11 @@ const TripEvent = db.define('tripevent',{
     type: ENUM('PROPOSED', 'ACCEPTED'),
     defaultValue: 'PROPOSED',
     allowNull: false,
+  },
+  votes: {
+    type: INTEGER,
+    defaultValue: 0,
+    allowNull: true,
   },
 })
 
