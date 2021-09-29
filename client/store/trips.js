@@ -194,6 +194,19 @@ export const updateInvitedTripsWithId = async (username, userId) => {
   }
 }
 
+// addUpdateTrip adds a new trip or updates an existing one and returns the row
+export const tripVote = async (tripId, action) => {
+    try{
+      const { data: newTrip } = await axios.post('/api/trips/vote', { tripId, action });
+//      dispatch(getTripDetails(tripId)); 
+//      dispatch(getUserCreatedTrips(newTrip.ownerId)); // reload this since there is a new/changed trip
+    }
+    catch(ex){
+      console.log('ERROR adding/updating trip', ex);
+    }
+  }
+
+
 
 // * REDUCER
 
