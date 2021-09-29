@@ -18,9 +18,8 @@ const init = async () => {
     const io = socket(server);
     io.on('connection', (socket) => {
       console.log(blue('a user connected'));
-      socket.on('chat message', (msg) => {
-        console.log('message: ' + msg);
-        io.emit('chat message', msg);
+      socket.on('chat message', (obj) => {
+        io.emit('chat message', obj);
       });
       socket.on('disconnect', () => {
         console.log(green('user disconnected'));
