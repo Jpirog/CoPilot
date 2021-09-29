@@ -12,6 +12,7 @@ import AddActivity from './components/AddActivity';
 import CreateTrip from './components/CreateTrip';
 import InviteResponse from './components/InviteResponse';
 import TripAttendees from './components/TripAttendees';
+import FinalizeTrip from './components/FinalizeTrip';
 import { AboutUs } from './components/AboutUs';
 import PageNotFound from './components/PageNotFound';
 import { me } from './store'
@@ -49,6 +50,7 @@ class Routes extends Component {
             <Route exact path="/itinerary" component={Itinerary} />
             <Route exact path="/allTrips" component={AllTrips}/>
             <Route exact path="/financials" component={Financials} />
+            <Route exact path="/finalizetrip" component={FinalizeTrip} />
             <Route exact path="/" component={Home} />
             <Route component={ PageNotFound } />
           </Switch>
