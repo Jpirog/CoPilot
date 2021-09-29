@@ -7,6 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dateFormat from "dateformat";
 import StarRatings from "react-star-ratings";
+import AutoComInput from "./GoogleAutoComplete"
 
 const AddRestaurant = (props) => {
   const { tripId, tripevents, trip } = useSelector((state) => ({
@@ -159,7 +160,7 @@ const AddRestaurant = (props) => {
           <span className="input-group-text mr-md-3">
             You can change a destination or search for a restaurant
           </span>
-          <input
+          <AutoComInput
             type="text"
             aria-label="location"
             className="form-control"
@@ -243,8 +244,8 @@ const AddRestaurant = (props) => {
                 starSpacing="3px"
               />
             </li>
-            <li>{restaurant.price}</li>
-            <li>
+            <li>{restaurant.price?restaurant.price:`No Price Info`}</li>
+            <li style={{marginBottom:"3.5px"}}>
               <form onSubmit={() => {}}>
                 <select
                   value={meal}
@@ -259,7 +260,7 @@ const AddRestaurant = (props) => {
                 </select>
               </form>
             </li>
-            <li>
+            <li style={{marginBottom:"3.5px"}}>
               <form>
                 <input
                   placeholder="add event description"
@@ -270,7 +271,7 @@ const AddRestaurant = (props) => {
                 ></input>
               </form>
             </li>
-
+<li style={{marginBottom:"3.5px"}}>
             <DatePicker
               placeholderText="Select a date"
               timeInputLabel="Pick a time:"
@@ -287,6 +288,7 @@ const AddRestaurant = (props) => {
               withPortal
             />
 
+</li>
             <button
               className="btn btn-outline-secondary"
               onClick={() => {

@@ -6,7 +6,7 @@ const db = require('../db');
 
 const TripEvent = db.define('tripevent',{
   purpose: {
-    type: ENUM('BREAKFAST', 'LUNCH', 'DINNER', 'SIGHTSEE','FREETIME','SLEEP','OTHER','ACTIVITY'),
+    type: ENUM('BREAKFAST', 'LUNCH', 'DINNER', 'SIGHTSEE','FREETIME','SLEEP','OTHER','MORNINGACTIVITY','AFTERNOONACTIVITY','NIGHTACTIVITY'),
     defaultValue: 'OTHER',
     allowNull: false,
   },
