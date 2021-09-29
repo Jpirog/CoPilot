@@ -83,13 +83,20 @@ useEffect(()=>{
            return b.rating-a.rating;
           })
           setActivityList([...list]);
-        }else if(sortValue==="price") {
+        }else if(sortValue==="priceLowToHigh") {
           list = activityList.filter((obj) => obj.price).sort(function (a, b) {
             return a.price.length - b.price.length;
         });
         setActivityList(
           list.concat(activityList.filter((obj) => !obj.price))
         );
+        } else if (sortValue === "priceHighToLow") {
+          list = activityList.filter((obj) => obj.price).sort(function (a, b) {
+              return b.price.length - a.price.length;
+          });
+          setActivityList(
+            list.concat(activityList.filter((obj) => !obj.price))
+          )
         }
     
       },[sortValue])
@@ -151,8 +158,9 @@ dispatch(removeTripEvent(tripId,event.id))
             }}
           >
             <option>Sort by</option>
-            <option value={"rating"}>rating - High to low</option>
-            <option value={"price"}>price - Low to high</option>
+            <option value={"rating"}>Rating: High to low</option>
+            <option value={"priceLowToHigh"}>Price: Low to High</option>
+            <option value={"priceHighToLow"}>Price: High to Low</option>
           </select>
 
         </div>
