@@ -7,6 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dateFormat from "dateformat";
 import StarRatings from "react-star-ratings";
+import AutoComInput from "./GoogleAutoComplete"
 
 const AddRestaurant = (props) => {
   const { tripId, tripevents, trip } = useSelector((state) => ({
@@ -25,6 +26,10 @@ const AddRestaurant = (props) => {
   const [sortValue, setSortValue] = useState("");
 
   const dispatch = useDispatch();
+
+  function setTimeForMeal() {
+    if (meal === 'BREAKFAST') return setStartDate(new Date(trip.startDate))
+  }
 
   function availableDates() {
     let activeDays = [];
@@ -48,16 +53,21 @@ const AddRestaurant = (props) => {
       list = restaurantList.sort(function (a, b) {
         return b.rating - a.rating;
       });
-      console.log(list)
       setRestaurantList([...list]);
-    } else if (sortValue === "price") {
+    } else if (sortValue === "priceLowToHigh") {
       list = restaurantList.filter((obj) => obj.price).sort(function (a, b) {
           return a.price.length - b.price.length;
       });
-      console.log(list)
       setRestaurantList(
         list.concat(restaurantList.filter((obj) => !obj.price))
-      );
+      )
+    } else if (sortValue === "priceHighToLow") {
+      list = restaurantList.filter((obj) => obj.price).sort(function (a, b) {
+          return b.price.length - a.price.length;
+      });
+      setRestaurantList(
+        list.concat(restaurantList.filter((obj) => !obj.price))
+      )
     }
   }, [sortValue]);
 
@@ -150,7 +160,7 @@ const AddRestaurant = (props) => {
           <span className="input-group-text mr-md-3">
             You can change a destination or search for a restaurant
           </span>
-          <input
+          <AutoComInput
             type="text"
             aria-label="location"
             className="form-control"
@@ -191,15 +201,16 @@ const AddRestaurant = (props) => {
             }}
           >
             <option>Sort by</option>
-            <option value={"rating"}>rating - High to low</option>
-            <option value={"price"}>price - Low to high</option>
+            <option value={"rating"}>Rating: High to low</option>
+            <option value={"priceLowToHigh"}>Price: Low to High</option>
+            <option value={"priceHighToLow"}>Price: High to Low</option>
           </select>
         </div>
       </form>
       <br />
       <div>
         <Link to={`/activity`} className="btn btn-outline-primary">
-          Once restaurant is selected, go to activities
+        Click here to go to activities
         </Link>
       </div>
       <br />
@@ -233,8 +244,8 @@ const AddRestaurant = (props) => {
                 starSpacing="3px"
               />
             </li>
-            <li>{restaurant.price}</li>
-            <li>
+            <li>{restaurant.price?restaurant.price:`No Price Info`}</li>
+            <li style={{marginBottom:"3.5px"}}>
               <form onSubmit={() => {}}>
                 <select
                   value={meal}
@@ -249,7 +260,7 @@ const AddRestaurant = (props) => {
                 </select>
               </form>
             </li>
-            <li>
+            <li style={{marginBottom:"3.5px"}}>
               <form>
                 <input
                   placeholder="add event description"
@@ -260,13 +271,15 @@ const AddRestaurant = (props) => {
                 ></input>
               </form>
             </li>
-
+<li style={{marginBottom:"3.5px"}}>
             <DatePicker
               placeholderText="Select a date"
               timeInputLabel="Pick a time:"
               dateFormat="MM/dd/yyyy h:mm aa"
               includeDates={availableDates()}
-              selected={startDate}
+              selected={meal === 'BREAKFAST' ? (new Date(trip.startDate)).setHours(8, 0, 0) :
+                        meal === 'LUNCH' ? (new Date(trip.startDate)).setHours(12, 0, 0) :
+                        meal === 'DINNER' ? (new Date(trip.startDate)).setHours(18, 0, 0) : null}
               showTimeInput
               onChange={(date) => {
                 setStartDate(date);
@@ -275,6 +288,7 @@ const AddRestaurant = (props) => {
               withPortal
             />
 
+</li>
             <button
               className="btn btn-outline-secondary"
               onClick={() => {
