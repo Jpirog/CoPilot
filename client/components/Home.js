@@ -24,9 +24,9 @@ import { logout } from '../store';
         <Button style={{backgroundColor: 'pink'}} className="btns" buttonStyle="btn--outline"
         buttonSize="btn--large"><Link to="/create/trip" color="red">CREATE A TRIP</Link></Button>
       </div>
-      <p>&nbsp;</p>
+      <span>If you have existing trips, use the links above to add items to them.</span>
       <Button style={{backgroundColor: 'pink'}} className="btns" buttonStyle="btn--outline"
-      buttonSize="btn--medium" onClick={handleLogout}>Logout</Button>
+      buttonSize="btn--large" onClick={handleLogout}>Logout</Button>
   </div>
   )
 }
