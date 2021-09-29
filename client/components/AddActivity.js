@@ -192,9 +192,9 @@ dispatch(removeTripEvent(tripId,event.id))
  <li style={{marginBottom:"3.5px"}}>
           <select  style ={{width:"200px",height:"28px"}} placeholder="Add event description" value={description} onChange={(e)=>{setDescription(e.target.value)}}>
             <option value="DEFAULT">Pick an time range</option>
-            <option value="morningActivity">Morning - 2 hrs</option>
-            <option value="afternoonActivity">Afternoon - 3 hrs</option>
-            <option value="eveningActivity">Night - 3 hrs</option>
+            <option value="MORNINGACTIVITY">Morning - 2 hrs</option>
+            <option value="AFTERNOONACTIVITY">Afternoon - 3 hrs</option>
+            <option value="NIGHTACTIVITY">Night - 3 hrs</option>
           </select>  
       
 </li>
