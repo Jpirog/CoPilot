@@ -54,3 +54,19 @@ router.post('/', async (req, res, next) => {
       next(ex);
     }
   })
+
+// set vote open or closed
+router.post('/vote', async (req, res, next) => {
+  const tripId = req.body.tripId * 1;
+  const action = req.body.action;
+  try {
+    const data = await Trip.update(
+      { voteOpened: action },
+      { where: {id: tripId} }, 
+      { returning: true } );
+    res.sendStatus(200);
+  } catch (ex) {
+    console.log('ERROR updating trip vote', ex);
+    next(ex);
+  }
+})
