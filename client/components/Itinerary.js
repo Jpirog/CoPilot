@@ -23,6 +23,10 @@ class Itinerary extends React.Component {
         return null;
     }
 
+    // if(!this.props.currentTrip) {
+    //     return null;
+    // }
+
     const currentTrip = this.props.currentTrip;
     console.log('CURRENT TRIP', currentTrip);
     // const trips = this.props.trips;
@@ -40,15 +44,20 @@ class Itinerary extends React.Component {
     // console.log('MPTI', typeof this.props.match.params.tripId);
     // console.log('tt', trips[0] ? typeof trips[0].id : '');
 
-    const tripFromDate = dateFormat(currentTrip.startDate, "mmm d");
-    const tripToDate = dateFormat(currentTrip.endDate, "mmm d");
+    const tripFromDate = dateFormat(currentTrip.startDate, "mmm d, yyyy");
+    const tripToDate = dateFormat(currentTrip.endDate, "mmm d, yyyy");
 
     let endDate = currentTrip.endDate;
     let startDate = currentTrip.startDate;
 
     let duration = (new Date(endDate).getTime() - new Date(startDate).getTime())/ (1000 * 3600 * 24);
    
-    let tripEvents = this.props.tripevents;
+    let tripEvents = this.props.tripevents.reduce((acc, singleEvent) => {
+        if(singleEvent.status === 'ACCEPTED') {
+            acc.push(singleEvent)
+        }
+        return acc;
+    }, []);
     console.log('TRIP EVENTS', tripEvents);
 
     // let proposedEvents = tripEvents.filter(singleEvent => singleEvent.status === 'PROPOSED')
@@ -167,6 +176,18 @@ class Itinerary extends React.Component {
 
     // console.log('NEW AP Map', activityMap);
 
+    let attendees = currentTrip.tripattendees.reduce((acc, attendee) => {
+        if(attendee.accepted === true) {
+            acc.push(attendee.user.name + ' (confirmed!)');
+        }
+        else {
+            acc.push(attendee.user.name + ' (unconfirmed...)');
+        }
+        return acc;
+    }, [])
+
+    console.log('ATTENDEES', attendees)
+
     const map = {
         "SLEEP": {},
         "ACTIVITY": {},
@@ -175,33 +196,58 @@ class Itinerary extends React.Component {
 
     const mainMap = tripEvents.reduce((acc, event) => {
         if (event.purpose === 'SLEEP') {
-            if(acc[event.purpose][event.startDate]) {
-                acc[event.purpose][event.startDate].push(event.description);
+            if(acc[event.purpose][new Date(event.startDate).getDate()]) {
+                acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
             }
             else {
-                acc[event.purpose][event.startDate] = [event.description]
+                acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
             }
         }
         else if (event.purpose === 'BREAKFAST' || event.purpose === 'LUNCH' || event.purpose === 'DINNER') {
-            if(acc['EAT'][event.startDate]) {
-                acc['EAT'][event.startDate].push(event.description);
+            if(acc['EAT'][new Date(event.startDate).getDate()]) {
+                acc['EAT'][new Date(event.startDate).getDate()].push(event.description);
             }
             else {
-                acc['EAT'][event.startDate] = [event.description]
+                acc['EAT'][new Date(event.startDate).getDate()] = [event.description]
             }
         }
         else if (event.purpose === 'SIGHTSEE' || event.purpose === 'FREETIME' || event.purpose === 'OTHER') {
-            if(acc['ACTIVITY'][event.startDate]) {
-                acc['ACTIVITY'][event.startDate].push(event.description);
+            if(acc['ACTIVITY'][new Date(event.startDate).getDate()]) {
+                acc['ACTIVITY'][new Date(event.startDate).getDate()].push(event.description);
             }
             else {
-                acc['ACTIVITY'][event.startDate] = [event.description]
+                acc['ACTIVITY'][new Date(event.startDate).getDate()] = [event.description]
             }
         }
         return acc;
     }, map)
 
     console.log('MAIN MAP', mainMap);
+
+    // console.log('EAT keys', Object.keys(mainMap["EAT"]));
+    // console.log('EAT values for specific date', Object.values(mainMap["EAT"]["2021-10-24T00:00:00.000Z"]));
+
+
+
+    function range(start, end) {
+
+        let arr = []
+        let current = new Date(start);
+      
+        while (current <= new Date(end)) {
+          arr.push(new Date(current));
+          current.setDate(current.getDate() + 1);
+        }
+        return arr;
+    }
+
+    let datesArray = range(tripFromDate, tripToDate);
+    console.log('dates array', datesArray)
+    console.log('NEWWWW', datesArray[0].getDate())
+    console.log('DIFFERENT', Object.keys(mainMap["EAT"]))
+
+
+    
 
     let num = 1;
         return (
@@ -253,37 +299,68 @@ class Itinerary extends React.Component {
                         }
                     </div> */}
 
-                    {/* DOESN'T WORK:
-                     <div id='tripAttendees'>
-                        <h4>Attendees:</h4> {tripAttendees.map(attendee => (
-                            {attendee.accepted ? <p key={attendee.id}> <b>{attendee.user.name}</b> has confirmed that they are coming on your trip!</p> : ''}
-                        ))}
-                    </div>  */}
                     <div id="sideBySide">
                         <div id='tripAttendees'>
-                            <h4>Attendees:</h4> {currentTrip ? (currentTrip.tripattendees).map(attendee => (
-                                <p key={attendee.id}> {attendee.user.name}</p>
+                            <h4>Attendees:</h4> {attendees ? attendees.map(attendee => (
+                                <p> ~ {attendee}</p>
                             ))
                             : ''}
                         </div>
-                        <div className="container-f">
+                        {/* <div className="container-f">
                             {Array(duration).fill('*').map(item => (
                                 <div className="singleCard">
                                     <div className="dayNum">DAY <br/>{num++}</div>
-                                    {/* {Object.keys(sortedMap)[num - 2]} */}
                                     <div className="card-body">
+                                        <b>Date :</b>
                                         <b>Eat : </b>
                                         <b>Activities : </b>
                                         <b>Hotel : </b>
                                     </div>
                                 </div>
                             ))}
-                        </div>
+                        </div> */}
+                        {
+                            <div className="container-f">
+                            {/* { Array(duration).fill('*').map((item) => (
+                                <p> */}
+
+                                {/* {
+                                        Object.keys(mainMap).map((item) => (
+                                            <p>
+                                                {mainMap[`${item}`].map((event) => (
+                                                        <div> </div>
+                                                ))}
+                                            </p>
+                                        ))
+                                    } */}
+
+
+                                    {
+                                        datesArray.map(date => (
+                                            <div className="singleCard">
+                                            <div className="dayNum">DAY <br/>{num++}</div>
+                                            <div key={date} className="card-body">
+                                                <b>Date : {date.toDateString()}</b>
+                                                <span><b>Eat : </b> { (mainMap["EAT"][date.getDate()]) } </span>
+                                                <span><b>Activities : </b> { (mainMap["ACTIVITY"][date.getDate()]) } </span>
+                                                <span><b>Hotel : </b> { (Object.values(mainMap["SLEEP"])) } </span>
+                                            </div>
+                                        </div>
+                                        ))
+                                    }
+                                {/* </p>
+                            ))
+                            } */}
+                            </div>
+                        }
                     </div>
             </div>
         )
     }
 }
+
+
+
 
 const mapStateToProps = (state) => {
     return {
@@ -299,4 +376,3 @@ const mapStateToProps = (state) => {
 // }
 
 export default connect(mapStateToProps)(Itinerary);
-

@@ -22,7 +22,7 @@ async function seed() {
   const trips = await Promise.all([
     Trip.create({ name: 'Disney trip',
                   destination: 'Orlando, FL', 
-                  startDate: '2021-10-06', endDate: '2021-10-31', 
+                  startDate: '2021-11-15', endDate: '2021-11-25', 
                   purpose: 'RELAX', status: 'IN PROGRESS', ownerId: users[0].id,
                 }),
     Trip.create({ 
@@ -52,12 +52,13 @@ async function seed() {
   // create events
   const events = await Promise.all([
     TripEvent.create({ purpose: 'DINNER', description: 'Final evening get-together!', 
-                  startDate: '2021-10-30', endDate: '2021-10-30', 
-                  status: 'PROPOSED', tripId: trips[0].id }),
+                  startDate: '2021-10-24', endDate: '2021-10-24', 
+                  status: 'PROPOSED', tripId: trips[2].id }),
     TripEvent.create({ purpose: 'LUNCH', description: 'Olive Garden', 
-                  startDate: '2021-10-30', endDate: '2021-10-30', 
-                  status: 'PROPOSED', tripId: trips[0].id }),
+                  startDate: '2021-10-24', endDate: '2021-10-24', 
+                  status: 'PROPOSED', tripId: trips[2].id }),
     TripEvent.create({ purpose: 'BREAKFAST', description: 'McDonalds for the kids', 
+<<<<<<< HEAD
                   startDate: '2021-10-30', endDate: '2021-10-30', 
                   status: 'PROPOSED', tripId: trips[0].id }),
     TripEvent.create({ purpose: 'SIGHTSEE', description: 'Museum', 
@@ -87,6 +88,40 @@ async function seed() {
     TripEvent.create({ purpose: 'LUNCH', description: 'Hatch', 
                   startDate: '2021-12-25', endDate: '2021-12-25', 
                   status: 'PROPOSED', tripId: trips[0].id }),
+=======
+                  startDate: '2021-10-24', endDate: '2021-10-24', 
+                  status: 'PROPOSED', tripId: trips[2].id }),
+    TripEvent.create({ purpose: 'SIGHTSEE', description: 'Museum', 
+                  startDate: '2021-12-20', endDate: '2021-10-20', 
+                  status: 'PROPOSED', tripId: trips[2].id }),
+    TripEvent.create({ purpose: 'OTHER', description: 'Club', 
+                  startDate: '2021-12-21', endDate: '2021-12-21', 
+                  status: 'PROPOSED', tripId: trips[2].id }),
+    TripEvent.create({ purpose: 'OTHER', description: 'Park', 
+                  startDate: '2021-12-22', endDate: '2021-12-22', 
+                  status: 'PROPOSED', tripId: trips[2].id }),
+    TripEvent.create({ purpose: 'SLEEP', description: 'Hotel Quito', 
+                  startDate: '2021-12-20', endDate: '2021-12-25', 
+                  status: 'PROPOSED', tripId: trips[2].id }),
+    TripEvent.create({ purpose: 'DINNER', description: "Wendy's", 
+                  startDate: '2021-12-22', endDate: '2021-12-22', 
+                  status: 'PROPOSED', tripId: trips[2].id }),
+    TripEvent.create({ purpose: 'OTHER', description: 'Canal', 
+                  startDate: '2021-12-23', endDate: '2021-12-23', 
+                  status: 'PROPOSED', tripId: trips[2].id }),
+    TripEvent.create({ purpose: 'OTHER', description: 'Sky Diving', 
+                  startDate: '2021-12-23', endDate: '2021-12-23', 
+                  status: 'PROPOSED', tripId: trips[2].id }),
+    TripEvent.create({ purpose: 'DINNER', description: 'Long Horn', 
+                  startDate: '2021-12-24', endDate: '2021-12-24', 
+                  status: 'PROPOSED', tripId: trips[2].id }),
+    TripEvent.create({ purpose: 'ACTIVITY', description: 'Garden', 
+                  startDate: '2021-12-24', endDate: '2021-12-24', 
+                  status: 'PROPOSED', tripId: trips[2].id }),
+    TripEvent.create({ purpose: 'LUNCH', description: 'Hatch', 
+                  startDate: '2021-12-19', endDate: '2021-12-19', 
+                  status: 'PROPOSED', tripId: trips[2].id }),
+>>>>>>> e0988ad0c9cc6a424ec26c6e0a083c9de999a0ba
   ])
 
   console.log(`seeded ${events.length} trip events`)

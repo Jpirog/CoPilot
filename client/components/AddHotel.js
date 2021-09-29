@@ -77,12 +77,14 @@ useEffect(()=>{
        return b.rating-a.rating;
       })
 
-      setHotelList(list);
+      setHotelList([...list]);
     }else if(sortValue==="price") {
-      list = hotelList.sort(function(a,b) {
-        return a.price?a.price.length:0-b.price.length;
-       })
-       setHotelList(list);
+      list = hotelList.filter((obj) => obj.price).sort(function (a, b) {
+        return a.price.length - b.price.length;
+    });
+       setHotelList(
+      list.concat(hotelList.filter((obj) => !obj.price))
+    );
     }
 
   },[sortValue])
@@ -125,7 +127,8 @@ useEffect(()=>{
                   <td>{dateFormat(event.endDate,"mm/dd/yyyy h:MM:ss TT")}</td>
                   <td>{event.placeName}</td>
                   <td>
-                    <a href={event.url} target="_blank">Website Link</a>
+                    {/*rel="noreferrer" added for security reason to prevent referrer info leaks */}
+                    <a href={event.url} target="_blank" rel="noreferrer">Website Link</a>
                   </td>
                   <td>{event.location}</td>
                   <td>
@@ -156,8 +159,8 @@ useEffect(()=>{
             setSearchValue(e.target.value);
           }} autoFocus type="text" aria-label="hotel" className="form-control" />
 
-      <button type="submit" className="btn btn-primary input-group-text">Search</button>
-  <button type="button" className="btn btn-primary input-group-text mr-md-3"
+      <button type="submit" className="btn btn-outline-primary input-group-text">Search</button>
+  <button type="button" className="btn btn-outline-primary input-group-text mr-md-3"
   onClick={() => {
     setSearchValue("");
   }}
@@ -165,7 +168,7 @@ useEffect(()=>{
   Clear
 </button>
 
-<select className="btn btn-primary input-group-text" aria-label=".form-select-lg example" value ={sortValue} onChange={(e)=>{
+<select className="btn btn-outline-primary input-group-text" aria-label=".form-select-lg example" value ={sortValue} onChange={(e)=>{
         setSortValue(e.target.value)
         }}>
       <option>Sort By</option>
@@ -177,7 +180,7 @@ useEffect(()=>{
 
 <br />
     <div>
-      <Link to={`/restaurant`} className="btn btn-primary">
+      <Link to={`/restaurant`} className="btn btn-outline-primary">
         Once hotel is added, go to restaurant
       </Link>
     </div>
@@ -191,7 +194,7 @@ useEffect(()=>{
             key={hotel.id}
             style={{ padding: "10%", width:"30%",listStyleType: "none" ,textAlign:"center"}}
           >
-            <a href={hotel.url} target="_blank">
+            <a href={hotel.url} target="_blank" rel="noreferrer">
               <img
                 className="img-thumbnail"
                 style={{ width: "300px", height: "300px" }}
