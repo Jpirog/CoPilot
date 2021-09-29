@@ -1,0 +1,168 @@
+import React, { useState, useEffect, isValidElement } from "react";
+import dateFormat from "dateformat";
+import StarRatings from "react-star-ratings";
+import { useSelector, useDispatch } from "react-redux";
+import { tripVote, removeTripEvent } from '../store/trips';
+// import { getUser, updateUser } from "../store/user";
+import { useHistory } from 'react-router-dom';
+import toast from 'react-hot-toast';
+// import { me } from '../store';
+
+const notify = (msg) => toast.success(msg, { duration: 4000, position: 'top-center' })
+
+const FinalizeTrip = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const [myEvents, setMyEvents] = useState([]);
+  const tripEvents = useSelector((state) => state.trips.trip.tripevents);
+  const thisTrip = useSelector((state) => state.trips.trip);
+  const tripId = useSelector((state) => state.trips.trip.id);
+
+  const getDups = (arr) => {
+    // 1) copy and sort the array
+    // 2) reduce the sorted array to an object with counts of events per unique date/time/purpose
+    // 3) filter the sorted array to include those with counts > 1
+    // 4) return the filtered, sorted array
+    const sortedArr = [...arr].sort((a,b) => {
+      const aKey = dateFormat(a.startDate,'yyyymmdd').concat(a.purpose);
+      const bKey = dateFormat(b.startDate,'yyyymmdd').concat(b.purpose);
+      if (aKey < bKey) return -1;
+      if (aKey === bKey) return 0;
+      return 1;
+    })
+    //console.log('sorted', sortedArr);
+    const keyCounts = sortedArr.reduce((accum, c) => {
+      const thisKey = dateFormat(c.startDate,'yyyymmdd').concat(c.purpose);
+      accum[thisKey] = accum[thisKey] ? accum[thisKey] + 1 : 1;
+      return accum;
+    }, {})
+    //console.log('--- counts', keyCounts);
+    return sortedArr.filter(c => {
+      const thisKey = dateFormat(c.startDate,'yyyymmdd').concat(c.purpose);
+      return keyCounts[thisKey] > 1 ? true : false;
+    })
+  }  
+
+  useEffect(() => {
+    if (tripEvents){
+      setMyEvents(getDups(tripEvents));
+    }
+  },[tripEvents])
+  
+  const handleVoteClick = async (ev) => {
+    console.log('in vote click', tripId)
+    await tripVote(tripId, true);
+    notify(`Voting is now open for your trip to ${thisTrip.destination} - check back later for the results`);
+    history.push('/home')
+  }
+  // const handleSubmit = (ev) => {
+  //   ev.preventDefault();
+  //   const newUser = user;
+  //   newUser.name = name;
+  //   updateUser(newUser);
+  //   dispatch(me());
+  //   notify();
+  //   history.push('/home');
+  // }
+
+  // if (name === ''){
+  //   return null;
+  // }
+
+  if (typeof tripEvents === 'undefined') return null;
+  console.log('===',myEvents);
+  //
+  return (
+    <div id="content-wrapper">
+      <div style={{textAlign:'center'}}>
+        <h2>Finalize your trip</h2>
+        <h2>There are three steps to finalizing a trip:</h2>
+      </div>
+      <div className="final-boxes">
+        <div className="final-nbr">1</div>
+        <div className="final-text">If there are multiple suggestions for the same event on the same day, open the vote and let people vote for their favorite choice. Come back later for step 2.</div>
+      </div>
+      <div className="container">
+        <div className="row">
+          <div className="col text-center">
+            <button className={"btn btn-primary finbtn " + (myEvents && myEvents.length === 0 && 'disabled') } onClick={handleVoteClick}>Open voting</button>
+            {myEvents && myEvents.length === 0 && "No conflicting events"}
+            {thisTrip.voteOpened && "Voting is in progress"}
+          </div>
+        </div>
+      </div>
+      <div className="final-boxes">
+        <div className="final-nbr">2</div>
+        <div className="final-text">Review voting results below and possibly delete conflicting proposed events</div>
+      </div>
+      <div className="d-lg-flex flex-column align-content-center flex-wrap mr-md-6">
+        {myEvents && myEvents.length === 0 && 
+        <h2 style={{marginTop:'20px'}}>Congratulations! There are no duplicate events on your trip.</h2>}
+          {myEvents && myEvents.length > 0 &&
+        <table style={{marginTop:'20px'}} className="table table-hover shadow p-3 mb-5 bg-white rounded">
+          <thead>
+            <tr key={'A'} style={{backgroundColor:"blue", color: 'white'}}>
+              <th scope="col">Date</th>
+              <th scope="col">Purpose</th>
+              <th scope="col">Description</th> 
+              <th scope="col">Venue</th>
+              <th scope="col">Rating</th>
+              <th scope="col">Cost</th>
+              <th scope="col">Votes</th> 
+              <th scope="col">Delete?</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr key={'B'}>
+              <td style={{textAlign:"center"}} colSpan={8}><strong>There are multiple suggestions for the same purpose on some days of the trip</strong></td>
+            </tr>
+            <tr key={'C'}>
+              <td style={{textAlign:"center"}} colSpan={8}><strong>Please review the events and voting and delete some (if desired)</strong></td>
+            </tr>
+            {
+              myEvents.map(event => {
+                return (
+                  <tr key={event.id}>
+                    <td scope="row">{dateFormat(event.startDate,"ddd, mmm d, yyyy")}</td>
+                    <td scope="row">{event.purpose}</td>
+                    <td>{event.description}</td> 
+                    <td><a href={event.url} target="_blank" rel="noreferrer">{event.placeName}</a></td> 
+                    <td>
+                      <StarRatings
+                        rating={event.rating ? event.rating : 0}
+                        starRatedColor="gold"
+                        numberOfStars={5}
+                        name="rating"
+                        starDimension="15px"
+                        starSpacing="0px"
+                      />
+                      </td> 
+                      <td>{event.priceLevel}</td> 
+                      <td>{event.votes}</td> 
+                      <td><button type="button" className="btn btn-outline-danger" 
+                            onClick={()=>{ dispatch(removeTripEvent(tripId,event.id) )
+                        }}><i className="far fa-trash-alt"></i></button></td>
+                  </tr>
+                )
+              })
+            }
+          </tbody>
+        </table>}
+      </div>
+      <div className="final-boxes">
+        <div className="final-nbr">3</div>
+        <div className="final-text">Finalize the trip - this will change events from 'Proposed' to 'Finalized'</div>
+      </div>
+      <div className="container">
+        <div className="row">
+          <div className="col text-center">
+            <button className="btn btn-primary finbtn" onClick={()=>{console.log('finalize it')}}>Finalize trip!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    );
+  };
+
+export default FinalizeTrip;

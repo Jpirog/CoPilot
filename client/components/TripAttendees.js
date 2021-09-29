@@ -31,6 +31,8 @@ const TripAttendees = () => {
       ev.target.newattendee.focus();
       return;
     }
+    ev.target.newattendee.focus();
+    ev.target.newattendee.value='';
     
     setErrMsg('');
     
@@ -82,7 +84,7 @@ const TripAttendees = () => {
         <div>
           <form id="newattendeeform" onSubmit={ handleAddClick }>
             <label htmlFor="newattendee">Enter email of invitee:&nbsp;</label>
-            <input name="newattendee" autoFocus type="email" />&nbsp;
+            <input id="newattendee" name="newattendee" autoFocus type="email" />&nbsp;
             <button type="submit">Invite to trip</button>
           </form>
           <h4>{ errMsg }</h4>

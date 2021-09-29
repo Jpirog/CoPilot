@@ -78,13 +78,20 @@ useEffect(()=>{
       })
 
       setHotelList([...list]);
-    }else if(sortValue==="price") {
+    }else if(sortValue==="priceLowToHigh") {
       list = hotelList.filter((obj) => obj.price).sort(function (a, b) {
         return a.price.length - b.price.length;
     });
        setHotelList(
       list.concat(hotelList.filter((obj) => !obj.price))
     );
+    }else if (sortValue === "priceHighToLow") {
+      list = hotelList.filter((obj) => obj.price).sort(function (a, b) {
+          return b.price.length - a.price.length;
+      });
+      setHotelList(
+        list.concat(hotelList.filter((obj) => !obj.price))
+      )
     }
 
   },[sortValue])
@@ -173,7 +180,8 @@ useEffect(()=>{
         }}>
       <option>Sort By</option>
         <option value ="rating">rating-High to Low</option>
-        <option value ="price">price-Low to High</option>
+        <option value={"priceLowToHigh"}>Price: Low to High</option>
+        <option value={"priceHighToLow"}>Price: High to Low</option>
       </select>
 </div>
 </form>
@@ -208,8 +216,8 @@ useEffect(()=>{
                   starDimension = '20px'
                   starSpacing = '3px'
                   /></li>
-            <li>{hotel.price}</li>
-            <li>
+            <li>{hotel.price?hotel.price:`No Price Info`}</li>
+            <li style={{marginBottom:"3.5px"}}>
               <input
                 placeholder="Event description"
                 value={description}
@@ -218,7 +226,7 @@ useEffect(()=>{
                 }}
               ></input>
             </li>
-            <>
+            <li style={{marginBottom:"3.5px"}}>
               <DatePicker
                 placeholderText="CheckIn DateTime"
                 timeInputLabel="Pick a Time:"
@@ -261,7 +269,7 @@ useEffect(()=>{
                 // }}
               />
               {/* <div className="className">CheckOut Date is missing</div> */}
-            </>
+            </li>
 
             <button type="button" className="btn btn-outline-secondary "
               onClick={() => {

@@ -14,7 +14,12 @@ export const MenuItems = [
       path: '/itinerary',
       cName: 'dropdown-link'
     },
-  {
+    {
+      title: 'Finalize Trip',
+      path: '/finalizetrip',
+      cName: 'dropdown-link'
+    },
+    {
       title: 'Create a Trip',
       path: '/create/trip',
       cName: 'dropdown-link'

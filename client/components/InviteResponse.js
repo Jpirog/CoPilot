@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getTripsNeedingResponse  } from "../store/trips";
+import { getTripsNeedingResponse, getTripDetails  } from "../store/trips";
 import { updateTripResponse  } from "../store/trips";
 import { useHistory, Redirect } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
@@ -10,6 +10,7 @@ const notify = (msg) => toast.success(msg, { duration: 3000, position: 'top-cent
 
 const InviteResponse = props => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const userId = useSelector((state) => state.auth.id);
   const dispName = useSelector((state) => state.auth.name);
@@ -33,8 +34,10 @@ const InviteResponse = props => {
     notify();
     const newTrips = trips.filter( trip => trip.id === tripId ? false : true);
     if (newTrips.length === 0){
+      dispatch(getTripDetails(tripId))
       history.push('/home');
     } else {
+      dispatch(getTripDetails(tripId))
       setTrips(newTrips);
     }
   }
