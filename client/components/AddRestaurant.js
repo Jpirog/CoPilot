@@ -7,6 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dateFormat from "dateformat";
 import StarRatings from "react-star-ratings";
+import AutoComInput from "./GoogleAutoComplete"
 
 const AddRestaurant = (props) => {
   const { tripId, tripevents, trip } = useSelector((state) => ({
@@ -150,7 +151,7 @@ const AddRestaurant = (props) => {
           <span className="input-group-text mr-md-3">
             You can change a destination or search for a restaurant
           </span>
-          <input
+          <AutoComInput
             type="text"
             aria-label="location"
             className="form-control"
