@@ -208,8 +208,8 @@ useEffect(()=>{
                   starDimension = '20px'
                   starSpacing = '3px'
                   /></li>
-            <li>{hotel.price}</li>
-            <li>
+            <li>{hotel.price?hotel.price:`No Price Info`}</li>
+            <li style={{marginBottom:"3.5px"}}>
               <input
                 placeholder="Event description"
                 value={description}
@@ -218,7 +218,7 @@ useEffect(()=>{
                 }}
               ></input>
             </li>
-            <>
+            <li style={{marginBottom:"3.5px"}}>
               <DatePicker
                 placeholderText="CheckIn DateTime"
                 timeInputLabel="Pick a Time:"
@@ -261,7 +261,7 @@ useEffect(()=>{
                 // }}
               />
               {/* <div className="className">CheckOut Date is missing</div> */}
-            </>
+            </li>
 
             <button type="button" className="btn btn-outline-secondary "
               onClick={() => {
