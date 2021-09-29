@@ -25,8 +25,8 @@ class CreateTrip extends Component{
     this.state = {
         initialState,
         address: '',
-        startDate: new Date(),
-        endDate: new Date()
+        startDate: '',
+        endDate: ''
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
