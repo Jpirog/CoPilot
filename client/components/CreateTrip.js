@@ -7,7 +7,7 @@ import PlacesAutocomplete, {
     geocodeByAddress,
     getLatLng,
   } from 'react-places-autocomplete';
-  import DatePicker from 'react-datepicker';
+//   import DatePicker from 'react-datepicker';
   import "react-datepicker/dist/react-datepicker.css";
   import moment from 'moment'
 
@@ -25,8 +25,9 @@ class CreateTrip extends Component{
     this.state = {
         initialState,
         address: '',
-        startDate: '',
-        endDate: ''
+
+        startDate: "",
+        endDate: ""
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -37,7 +38,7 @@ class CreateTrip extends Component{
 
 
   }
-
+ 
 
   handleSubmit = async (ev) => {
     ev.preventDefault();
@@ -100,7 +101,15 @@ onFormSubmit(e) {
       .catch(error => console.error('Error', error));
   };
 
+  updateDate = () => {
+    const today = new Date(); 
+    console.log(`
+    Default time zone: ${format(today, 'yyyy-MM-dd HH:mm:ss')}
+}`);
+  }
 
+  //updatedwork
+ 
 render() {
     const { handleSubmit, handleChange, handleChanges, handleSelect } = this;
     const { destination, startDate, endDate, purpose, name} = this.state
@@ -116,7 +125,7 @@ render() {
             <div className='formfield'>
                 
                 <input type="text" name='name' value= {name} onChange={ handleChange }
-                required={true} />
+                required={true} autoFocus />
                 <label>Name:</label>
             </div>
             <div className='formfield'>
@@ -177,6 +186,7 @@ render() {
               onChange={ this.handleDate }
               name="startDate"
               dateFormat="MM/dd/yyyy"
+              minDate={moment().toDate()}
           /> */}
                     <label>Start Date:</label>
                 </div>
@@ -189,6 +199,7 @@ render() {
               onChange={ this.handleEndDate }
               name="endDate"
               dateFormat="MM/dd/yyyy"
+              minDate={moment().toDate()}
           /> */}
                 </div>
                 <div className='formfield'>
@@ -202,7 +213,7 @@ render() {
                     <label>Purpose:</label>
                 </div>
                 <div className="buttons">
-                <button type="submit" className="" onChange={ handleSubmit }>Submit Trip</button>
+                <button type="submit" className="" onChange={ handleSubmit }>Create Trip</button>
                 <br/>
                 {/* <Link to="/tripattendees"><button>Add Trip Attendeese</button></Link> */}
                 </div>
