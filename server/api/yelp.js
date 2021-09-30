@@ -54,7 +54,7 @@ router.get("/activity",async (req, res, next) =>{
                 'location':req.query.location?req.query.location:"NYC",
                 "sort_by":"rating",
                 "limit":20,
-                "categories":req.query.category?req.query.category:"All"
+                "categories":req.query.category?req.query.category:"active"
             }
     
         })
