@@ -9,6 +9,7 @@ const ChatApp =()=> {
 const [value,setValue] =useState("");
 const [messageList,setMessageList] =useState([])
 const {userName} =useSelector((state)=>({userName:state.auth.username}))
+const [senderName,setSenderName] =useState("")
  
    const handleSubmit = (e)=>{
       e.preventDefault();
@@ -19,24 +20,27 @@ const {userName} =useSelector((state)=>({userName:state.auth.username}))
    }
 
    socket.on('chat message', function(obj) {
-      const newMessageList =[...messageList,`${obj.name}: ${obj.value}`]
+      const newMessageList =[...messageList,obj]
       setMessageList(newMessageList);
+      setSenderName(obj.name)
 
  
     });
-   return <div id="content-wrapper" style={{padding:"320px",border:"2px",borderColor:"black"}}> 
-   <h1>Chat</h1> 
-      <ul style={{listStyleType:"none"}} id="messages">
+   return <div style={{paddingTop:"100px"}}> 
+   
+   <h1>Chat</h1>
+      <ul style={{listStyleType:"none",border:"2px solid black",height:"55vh"}} id="messages">
          {messageList.map((message,ind)=>
-         <li key ={`mess${ind}`}>{message}</li>
+         <li className ={message.name===userName?"text-end":"text-start"} key ={`mess${ind}`}>{`${message.name}: ${message.value}`}</li>
          )}
       </ul>
     <form id ="form" style ={{background: "rgba(0, 0, 0, 0.15)",position:"fixed",padding: "0.25rem", bottom: "150px", left: "0", right: "0", display: "flex", height: "3rem" }}id="form" action="">
-      <input id="input" autoComplete="off" value ={value} onChange={(e)=>{
+      <input autoFocus={true} id="input" autoComplete="off" value ={value} onChange={(e)=>{
          setValue(e.target.value)
       }} />
       <button onClick={handleSubmit}className="btn btn-outline-secondary ">Send</button>
     </form>
+
    </div>
 }
 

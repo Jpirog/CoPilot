@@ -102,7 +102,7 @@ useEffect(()=>{
 
       useEffect(() => {
         let list =
-          tripevents && tripevents.filter((event) => event.purpose === "ACTIVITY");
+          tripevents && tripevents.filter((event) => event.purpose === "MORNINGACTIVITY"||"AFTERNOONACTIVITY"||"NIGHTACTIVITY");
           setActivityEvents(list);
       }, [tripevents]);
 
@@ -208,17 +208,17 @@ dispatch(removeTripEvent(tripId,event.id))
         // showTimeInput
         onChange={(date) => {
          
-          if(description==="morningActivity"){
+          if(description==="MORNINGACTIVITY"){
             setStartDate(new Date(Date.parse(date) + 60000*540));
             setEndDate(new Date(Date.parse(date) + 60000*660))
           
-          } else if (description==="afternoonActivity") {
+          } else if (description==="AFTERNOONACTIVITY") {
             setStartDate(new Date(Date.parse(date) + 60000*780));
             setEndDate(new Date(Date.parse(date) + 60000*960))
           
 
 
-          } else if(description==="eveningActivity"){
+          } else if(description==="NIGHTACTIVITY"){
             setStartDate(new Date(Date.parse(date) + 60000*1140));
             setEndDate(new Date(Date.parse(date) + 60000*1320))
            }
@@ -232,7 +232,7 @@ dispatch(removeTripEvent(tripId,event.id))
             } else if(startDate) {
 
             dispatch(addTripEvent({
-                purpose:"ACTIVITY",
+                purpose:description,
                 startDate,
                 endDate,
                 tripId,
