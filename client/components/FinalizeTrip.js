@@ -3,10 +3,8 @@ import dateFormat from "dateformat";
 import StarRatings from "react-star-ratings";
 import { useSelector, useDispatch } from "react-redux";
 import { tripVote, removeTripEvent } from '../store/trips';
-// import { getUser, updateUser } from "../store/user";
 import { useHistory } from 'react-router-dom';
 import toast from 'react-hot-toast';
-// import { me } from '../store';
 
 const notify = (msg) => toast.success(msg, { duration: 4000, position: 'top-center' })
 
@@ -55,19 +53,6 @@ const FinalizeTrip = () => {
     notify(`Voting is now open for your trip to ${thisTrip.destination} - check back later for the results`);
     history.push('/home')
   }
-  // const handleSubmit = (ev) => {
-  //   ev.preventDefault();
-  //   const newUser = user;
-  //   newUser.name = name;
-  //   updateUser(newUser);
-  //   dispatch(me());
-  //   notify();
-  //   history.push('/home');
-  // }
-
-  // if (name === ''){
-  //   return null;
-  // }
 
   if (typeof tripEvents === 'undefined') return null;
   console.log('===',myEvents);
@@ -86,8 +71,7 @@ const FinalizeTrip = () => {
         <div className="row">
           <div className="col text-center">
             <button className={"btn btn-primary finbtn " + (myEvents && myEvents.length === 0 && 'disabled') } onClick={handleVoteClick}>Open voting</button>
-            {myEvents && myEvents.length === 0 && "No conflicting events"}
-            {thisTrip.voteOpened && "Voting is in progress"}
+            {thisTrip.voteOpened ? <h3>Voting is in progress</h3> : myEvents && myEvents.length === 0 ? "No conflicting events" : "" }
           </div>
         </div>
       </div>
@@ -166,3 +150,6 @@ const FinalizeTrip = () => {
   };
 
 export default FinalizeTrip;
+
+// {myEvents && myEvents.length === 0 && "No conflicting events"}
+// {thisTrip.voteOpened && "Voting is in progress"}

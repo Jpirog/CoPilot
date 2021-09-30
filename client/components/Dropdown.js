@@ -19,7 +19,7 @@ function Dropdown(props) {
   }
   
   return (
-    <>
+    <div>
       <ul
         onClick={handleClick}
         className={click ? 'dropdown--menu clicked' : 'dropdown--menu'}
@@ -51,7 +51,7 @@ function Dropdown(props) {
           );
         })}
       </ul>
-    </>
+    </div>
   );
 }
 

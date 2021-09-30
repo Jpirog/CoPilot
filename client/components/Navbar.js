@@ -56,7 +56,7 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips, cu
 
   const onMouseLeave = () => {
     if (window.innerWidth < 960) {
-      setDropdown(false);
+      setDropdown(true);
     } else {
       setDropdown(false);
     }
@@ -130,7 +130,7 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips, cu
               onMouseLeave={onMouseLeave}>
               <Link to="#" className="nav-links" onClick={closeMobileMenu}>
               More&nbsp;<i className='fas fa-caret-down' />
-              </Link> {dropdown &&<Dropdown setDropdown={()=>setDropdown(false)}/>}
+              </Link>{dropdown &&<Dropdown setDropdown={()=>setDropdown(false)}/>}
             </li>
           </ul>
         </div>
