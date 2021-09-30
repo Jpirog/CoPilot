@@ -52,6 +52,7 @@ class Itinerary extends React.Component {
 
     let duration = (new Date(endDate).getTime() - new Date(startDate).getTime())/ (1000 * 3600 * 24);
    
+    // below only needed if you want to display accepted events only
     let tripEvents = this.props.tripevents.reduce((acc, singleEvent) => {
         if(singleEvent.status === 'ACCEPTED') {
             acc.push(singleEvent)
@@ -59,6 +60,9 @@ class Itinerary extends React.Component {
         return acc;
     }, []);
     console.log('TRIP EVENTS', tripEvents);
+
+    // used to great mainMap
+    let allEvents = this.props.tripevents;
 
     // let proposedEvents = tripEvents.filter(singleEvent => singleEvent.status === 'PROPOSED')
     // //console.log('PROPOSED EVENTS', proposedEvents);
@@ -190,11 +194,45 @@ class Itinerary extends React.Component {
 
     const map = {
         "SLEEP": {},
-        "ACTIVITY": {},
-        "EAT": {}
+        "BREAKFAST": {},
+        "LUNCH": {},
+        "DINNER": {},
+        "OTHER": {},
+        "MORNINGACTIVITY": {},
+        "AFTERNOONACTIVITY": {},
+        "NIGHTACTIVITY": {},
     }
 
-    const mainMap = tripEvents.reduce((acc, event) => {
+    //was tripEvents.reduce() before
+    // const mainMap = allEvents.reduce((acc, event) => {
+    //     if (event.purpose === 'SLEEP') {
+    //         if(acc[event.purpose][new Date(event.startDate).getDate()]) {
+    //             acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
+    //         }
+    //         else {
+    //             acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
+    //         }
+    //     }
+    //     else if (event.purpose === 'BREAKFAST' || event.purpose === 'LUNCH' || event.purpose === 'DINNER') {
+    //         if(acc['EAT'][new Date(event.startDate).getDate()]) {
+    //             acc['EAT'][new Date(event.startDate).getDate()].push(event.description);
+    //         }
+    //         else {
+    //             acc['EAT'][new Date(event.startDate).getDate()] = [event.description]
+    //         }
+    //     }
+    //     else if (event.purpose === 'SIGHTSEE' || event.purpose === 'FREETIME' || event.purpose === 'OTHER' || event.purpose === 'ACTIVITY') {
+    //         if(acc['ACTIVITY'][new Date(event.startDate).getDate()]) {
+    //             acc['ACTIVITY'][new Date(event.startDate).getDate()].push(event.description);
+    //         }
+    //         else {
+    //             acc['ACTIVITY'][new Date(event.startDate).getDate()] = [event.description]
+    //         }
+    //     }
+    //     return acc;
+    // }, map)
+
+    const mainMap = allEvents.reduce((acc, event) => {
         if (event.purpose === 'SLEEP') {
             if(acc[event.purpose][new Date(event.startDate).getDate()]) {
                 acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
@@ -203,20 +241,60 @@ class Itinerary extends React.Component {
                 acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
             }
         }
-        else if (event.purpose === 'BREAKFAST' || event.purpose === 'LUNCH' || event.purpose === 'DINNER') {
-            if(acc['EAT'][new Date(event.startDate).getDate()]) {
-                acc['EAT'][new Date(event.startDate).getDate()].push(event.description);
+        else if (event.purpose === 'BREAKFAST') {
+            if(acc[event.purpose][new Date(event.startDate).getDate()]) {
+                acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
             }
             else {
-                acc['EAT'][new Date(event.startDate).getDate()] = [event.description]
+                acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
             }
         }
-        else if (event.purpose === 'SIGHTSEE' || event.purpose === 'FREETIME' || event.purpose === 'OTHER') {
-            if(acc['ACTIVITY'][new Date(event.startDate).getDate()]) {
-                acc['ACTIVITY'][new Date(event.startDate).getDate()].push(event.description);
+        else if (event.purpose === 'LUNCH') {
+            if(acc[event.purpose][new Date(event.startDate).getDate()]) {
+                acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
             }
             else {
-                acc['ACTIVITY'][new Date(event.startDate).getDate()] = [event.description]
+                acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
+            }
+        }
+        else if (event.purpose === 'DINNER') {
+            if(acc[event.purpose][new Date(event.startDate).getDate()]) {
+                acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
+            }
+            else {
+                acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
+            }
+        }
+        else if (event.purpose === 'MORNINGACTIVITY') {
+            if(acc[event.purpose][new Date(event.startDate).getDate()]) {
+                acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
+            }
+            else {
+                acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
+            }
+        }
+        else if (event.purpose === 'AFTERNOONACTIVITY') {
+            if(acc[event.purpose][new Date(event.startDate).getDate()]) {
+                acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
+            }
+            else {
+                acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
+            }
+        }
+        else if (event.purpose === 'NIGHTACTIVITY') {
+            if(acc[event.purpose][new Date(event.startDate).getDate()]) {
+                acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
+            }
+            else {
+                acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
+            }
+        }
+        else if (event.purpose === 'OTHER') {
+            if(acc[event.purpose][new Date(event.startDate).getDate()]) {
+                acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
+            }
+            else {
+                    acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
             }
         }
         return acc;
@@ -244,7 +322,7 @@ class Itinerary extends React.Component {
     let datesArray = range(tripFromDate, tripToDate);
     console.log('dates array', datesArray)
     console.log('NEWWWW', datesArray[0].getDate())
-    console.log('DIFFERENT', Object.keys(mainMap["EAT"]))
+    console.log('DIFFERENT', Object.keys(mainMap["LUNCH"]))
 
 
     
@@ -306,51 +384,31 @@ class Itinerary extends React.Component {
                             ))
                             : ''}
                         </div>
-                        {/* <div className="container-f">
-                            {Array(duration).fill('*').map(item => (
-                                <div className="singleCard">
-                                    <div className="dayNum">DAY <br/>{num++}</div>
-                                    <div className="card-body">
-                                        <b>Date :</b>
-                                        <b>Eat : </b>
-                                        <b>Activities : </b>
-                                        <b>Hotel : </b>
-                                    </div>
-                                </div>
-                            ))}
-                        </div> */}
                         {
                             <div className="container-f">
-                            {/* { Array(duration).fill('*').map((item) => (
-                                <p> */}
-
-                                {/* {
-                                        Object.keys(mainMap).map((item) => (
-                                            <p>
-                                                {mainMap[`${item}`].map((event) => (
-                                                        <div> </div>
-                                                ))}
-                                            </p>
-                                        ))
-                                    } */}
-
 
                                     {
                                         datesArray.map(date => (
                                             <div className="singleCard">
                                             <div className="dayNum">DAY <br/>{num++}</div>
                                             <div key={date} className="card-body">
-                                                <b>Date : {date.toDateString()}</b>
-                                                <span><b>Eat : </b> { (mainMap["EAT"][date.getDate()]) } </span>
-                                                <span><b>Activities : </b> { (mainMap["ACTIVITY"][date.getDate()]) } </span>
-                                                <span><b>Hotel : </b> { (Object.values(mainMap["SLEEP"])) } </span>
+                                                <b className='singleInfoSection'>Date : {date.toDateString()}</b>
+                                                <div className='purposeSection'>
+                                                    <span><b>Breakfast : </b> { (mainMap["BREAKFAST"][date.getDate()]) } </span>
+                                                    <span><b>Lunch : </b> { (mainMap["LUNCH"][date.getDate()]) } </span>
+                                                    <span><b>Dinner : </b> { (mainMap["DINNER"][date.getDate()]) } </span>
+                                                </div>
+                                                <div className='purposeSection'>
+                                                    <span><b>Morning Activities : </b> { (mainMap["MORNINGACTIVITY"][date.getDate()]) } </span>
+                                                    <span><b>Afternoon Activities : </b> { (mainMap["AFTERNOONACTIVITY"][date.getDate()]) } </span>
+                                                    <span><b>Night Activities : </b> { (mainMap["NIGHTACTIVITY"][date.getDate()]) } </span>
+                                                    <span><b>Other : </b> { (mainMap["NIGHTACTIVITY"][date.getDate()]) } </span>
+                                                </div>
+                                                <span className='singleInfoSection'><b>Hotel : </b> { (Object.values(mainMap["SLEEP"])) } </span>
                                             </div>
                                         </div>
                                         ))
                                     }
-                                {/* </p>
-                            ))
-                            } */}
                             </div>
                         }
                     </div>
