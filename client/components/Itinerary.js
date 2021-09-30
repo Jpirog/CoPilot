@@ -197,10 +197,10 @@ class Itinerary extends React.Component {
         "BREAKFAST": {},
         "LUNCH": {},
         "DINNER": {},
-        "SIGHTSEE": {},
-        "FREETIME": {},
-        "ACTIVITY": {},
-        "OTHER": {}
+        "OTHER": {},
+        "MORNINGACTIVITY": {},
+        "AFTERNOONACTIVITY": {},
+        "NIGHTACTIVITY": {},
     }
 
     //was tripEvents.reduce() before
@@ -265,7 +265,7 @@ class Itinerary extends React.Component {
                 acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
             }
         }
-        else if (event.purpose === 'SIGHTSEE') {
+        else if (event.purpose === 'MORNINGACTIVITY') {
             if(acc[event.purpose][new Date(event.startDate).getDate()]) {
                 acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
             }
@@ -273,7 +273,7 @@ class Itinerary extends React.Component {
                 acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
             }
         }
-        else if (event.purpose === 'FREETIME') {
+        else if (event.purpose === 'AFTERNOONACTIVITY') {
             if(acc[event.purpose][new Date(event.startDate).getDate()]) {
                 acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
             }
@@ -281,7 +281,7 @@ class Itinerary extends React.Component {
                 acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
             }
         }
-        else if (event.purpose === 'ACTIVITY') {
+        else if (event.purpose === 'NIGHTACTIVITY') {
             if(acc[event.purpose][new Date(event.startDate).getDate()]) {
                 acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
             }
@@ -399,10 +399,10 @@ class Itinerary extends React.Component {
                                                     <span><b>Dinner : </b> { (mainMap["DINNER"][date.getDate()]) } </span>
                                                 </div>
                                                 <div className='purposeSection'>
-                                                    <span><b>Activities : </b> { (mainMap["ACTIVITY"][date.getDate()]) } </span>
-                                                    <span><b>Sightsee : </b> { (mainMap["SIGHTSEE"][date.getDate()]) } </span>
-                                                    <span><b>Free Time : </b> { (mainMap["FREETIME"][date.getDate()]) } </span>
-                                                    <span><b>Other : </b> { (mainMap["OTHER"][date.getDate()]) } </span>
+                                                    <span><b>Morning Activities : </b> { (mainMap["MORNINGACTIVITY"][date.getDate()]) } </span>
+                                                    <span><b>Afternoon Activities : </b> { (mainMap["AFTERNOONACTIVITY"][date.getDate()]) } </span>
+                                                    <span><b>Night Activities : </b> { (mainMap["NIGHTACTIVITY"][date.getDate()]) } </span>
+                                                    <span><b>Other : </b> { (mainMap["NIGHTACTIVITY"][date.getDate()]) } </span>
                                                 </div>
                                                 <span className='singleInfoSection'><b>Hotel : </b> { (Object.values(mainMap["SLEEP"])) } </span>
                                             </div>
