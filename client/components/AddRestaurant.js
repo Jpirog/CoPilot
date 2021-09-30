@@ -27,10 +27,6 @@ const AddRestaurant = (props) => {
 
   const dispatch = useDispatch();
 
-  function setTimeForMeal() {
-    if (meal === 'BREAKFAST') return setStartDate(new Date(trip.startDate))
-  }
-
   function availableDates() {
     let activeDays = [];
     let amountActDays =
@@ -251,6 +247,9 @@ const AddRestaurant = (props) => {
                   value={meal}
                   onChange={(e) => {
                     setMeal(e.target.value);
+                    e.target.value === 'BREAKFAST' ? setStartDate((new Date(trip.startDate)).setHours(8, 0, 0)) :
+                    e.target.value === 'LUNCH' ? setStartDate((new Date(trip.startDate)).setHours(12, 0, 0)) :
+                    e.target.value === 'DINNER' ? setStartDate((new Date(trip.startDate)).setHours(18, 0, 0)) : null
                   }}
                 >
                   <option value={"DEFAULT"}>{"Select a Meal"}</option>
@@ -277,9 +276,7 @@ const AddRestaurant = (props) => {
               timeInputLabel="Pick a time:"
               dateFormat="MM/dd/yyyy h:mm aa"
               includeDates={availableDates()}
-              selected={meal === 'BREAKFAST' ? (new Date(trip.startDate)).setHours(8, 0, 0) :
-                        meal === 'LUNCH' ? (new Date(trip.startDate)).setHours(12, 0, 0) :
-                        meal === 'DINNER' ? (new Date(trip.startDate)).setHours(18, 0, 0) : null}
+              selected={startDate}
               showTimeInput
               onChange={(date) => {
                 setStartDate(date);
