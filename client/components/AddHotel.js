@@ -189,7 +189,7 @@ useEffect(()=>{
 <br />
     <div>
       <Link to={`/restaurant`} className="btn btn-outline-primary">
-        Once hotel is added, go to restaurant
+        Once hotel is added, click here to go to add restaurant
       </Link>
     </div>
 </div> 
