@@ -2,7 +2,7 @@ import React, { useState,useEffect } from "react";
 import axios from "axios";
 import { Loader } from "@googlemaps/js-api-loader";
 
-const AutoComInput = ({value})=> {
+const AutoComInput = ({value,onChange})=> {
   const [loader,setLoader] =useState (null)
 useEffect(()=>{
   const func=async()=>{
