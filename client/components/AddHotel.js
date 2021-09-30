@@ -71,21 +71,21 @@ useEffect(()=>{
 //sort function
   useEffect (()=>{ 
     let list;
-    if(sortValue==="rating") {
+    if(sortValue==="Rating") {
 
       list = hotelList.sort(function(a,b) {
        return b.rating-a.rating;
       })
 
       setHotelList([...list]);
-    }else if(sortValue==="priceLowToHigh") {
+    }else if(sortValue==="PriceLowToHigh") {
       list = hotelList.filter((obj) => obj.price).sort(function (a, b) {
         return a.price.length - b.price.length;
     });
        setHotelList(
       list.concat(hotelList.filter((obj) => !obj.price))
     );
-    }else if (sortValue === "priceHighToLow") {
+    }else if (sortValue === "PriceHighToLow") {
       list = hotelList.filter((obj) => obj.price).sort(function (a, b) {
           return b.price.length - a.price.length;
       });
@@ -179,9 +179,9 @@ useEffect(()=>{
         setSortValue(e.target.value)
         }}>
       <option>Sort By</option>
-        <option value ="rating">rating-High to Low</option>
-        <option value={"priceLowToHigh"}>Price: Low to High</option>
-        <option value={"priceHighToLow"}>Price: High to Low</option>
+        <option value ="Rating">rating-High to Low</option>
+        <option value={"PriceLowToHigh"}>Price: Low to High</option>
+        <option value={"PriceHighToLow"}>Price: High to Low</option>
       </select>
 </div>
 </form>
