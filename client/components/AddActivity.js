@@ -166,7 +166,6 @@ dispatch(removeTripEvent(tripId,event.id))
         </form>
         <br />
 <div>
-<Link className="btn btn-outline-primary mr-md-3"to={`/restaurant`}>Go Back to Restaurant Page:</Link>
 <Link className="btn btn-outline-primary mr-md-3"to="/calendar">Once Activity is added, click here to go the calendar</Link>
 </div>     
        
