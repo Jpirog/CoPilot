@@ -140,7 +140,6 @@ componentDidUpdate(prevProps){
         handleDragStart={this.handleDragStart}
         style={{height:1000,paddingTop:"10%"}}
         components={{
-      title:event.title,
           agenda: {
             title:event.title,
             event: AddToCal,
