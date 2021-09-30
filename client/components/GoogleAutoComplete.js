@@ -27,7 +27,7 @@ const autocomplete = new google.maps.places.Autocomplete(input, options);
 const place = autocomplete.getPlace();
 })
 
-return <input id="in" className="form-control" />
+return <input id="in" onChange ={onChange} className="form-control" />
      
 
 }
