@@ -210,7 +210,7 @@ const AddRestaurant = (props) => {
       <br />
       <div>
         <Link to={`/activity`} className="btn btn-outline-primary">
-        Click here to go to activities
+        Once hotel is added, click here to go to add activities
         </Link>
       </div>
       <br />
