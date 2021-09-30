@@ -26,6 +26,7 @@ const AddHotel = (props) => {
   const [hotelEvents, setHotelEvents] = useState([]);
   const [location, setLocation] = useState("");
   const [sortValue,setSortValue] =useState("");
+  const [changeId,setChangeId] =useState("")
 
   //dispatch thunk
   const dispatch = useDispatch();
@@ -220,8 +221,9 @@ useEffect(()=>{
             <li style={{marginBottom:"3.5px"}}>
               <input
                 placeholder="Event description"
-                value={description}
+                value={changeId===hotel.id?description:null}
                 onChange={(e) => {
+                  setChangeId(hotel.id)
                   setDescription(e.target.value);
                 }}
               ></input>
@@ -233,7 +235,7 @@ useEffect(()=>{
                 dateFormat="MM/dd/yyyy h:mm aa"
                 includeDates={availableDates()}
                 showTimeInput
-                selected={startDate}
+                selected={changeId===hotel.id?startDate:null}
                 onChange={(date) => setStartDate(date)}
                 selectsStart
                 startDate={startDate}
@@ -268,7 +270,6 @@ useEffect(()=>{
                 //     : undefined;
                 // }}
               />
-              {/* <div className="className">CheckOut Date is missing</div> */}
             </li>
 
             <button type="button" className="btn btn-outline-secondary "
