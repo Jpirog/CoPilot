@@ -33,6 +33,7 @@ const AddActivity= (props)=> {
    const [endDate, setEndDate] = useState(null);
    const [location,setLocation] =useState("");
    const [sortValue,setSortValue] =useState("");
+   const [changeId,setChangeId] =useState("")
 
 
 
@@ -58,6 +59,27 @@ const AddActivity= (props)=> {
     }
     return activeDays;
   }
+
+useEffect(()=>{
+
+  if(startDate && description==="MORNINGACTIVITY"){
+
+    setStartDate(new Date(new Date(startDate).setHours(9,0,0)));
+    setEndDate(new Date(new Date(startDate).setHours(11,0,0)))
+  
+  } else if (startDate && description==="AFTERNOONACTIVITY") {
+   
+    setStartDate(new Date(new Date(startDate).setHours(13,0,0)));
+    setEndDate(new Date(new Date(startDate).setHours(16,0,0)))
+  
+
+
+  } else if(startDate &&description==="NIGHTACTIVITY"){
+
+    setStartDate(new Date(new Date(startDate).setHours(19,0,0)));
+    setEndDate(new Date(new Date(startDate).setHours(21,0,0)))
+   }
+},[description])
 
 useEffect(()=>{
   const func = async()=> {
@@ -189,7 +211,11 @@ dispatch(removeTripEvent(tripId,event.id))
         <li>{activity.price?activity.price:`No Price Info`}</li>
         <li >{activity.categories[0].title}</li>
  <li style={{marginBottom:"3.5px"}}>
-          <select  style ={{width:"200px",height:"28px"}} placeholder="Add event description" value={description} onChange={(e)=>{setDescription(e.target.value)}}>
+          <select  id= {activity.id} style ={{width:"200px",height:"28px"}} placeholder="Add event description" value={changeId===activity.id?description:""} onChange={(e)=>{
+
+            setChangeId(event.target.id)
+            setDescription(e.target.value)
+            }}>
             <option value="DEFAULT">Pick an time range</option>
             <option value="MORNINGACTIVITY">Morning - 2 hrs</option>
             <option value="AFTERNOONACTIVITY">Afternoon - 3 hrs</option>
@@ -203,23 +229,26 @@ dispatch(removeTripEvent(tripId,event.id))
         timeInputLabel="Pick a time:"
         dateFormat="MM/dd/yyyy h:mm aa"
         includeDates={availableDates()}
-        selected={startDate}
+        selected={changeId===activity.id?startDate:null}
         // showTimeInput
         onChange={(date) => {
          
           if(description==="MORNINGACTIVITY"){
-            setStartDate(new Date(Date.parse(date) + 60000*540));
-            setEndDate(new Date(Date.parse(date) + 60000*660))
+
+            setStartDate(new Date(new Date(date).setHours(9,0,0)));
+            setEndDate(new Date(new Date(date).setHours(11,0,0)))
           
           } else if (description==="AFTERNOONACTIVITY") {
-            setStartDate(new Date(Date.parse(date) + 60000*780));
-            setEndDate(new Date(Date.parse(date) + 60000*960))
+           
+            setStartDate(new Date(new Date(date).setHours(13,0,0)));
+            setEndDate(new Date(new Date(date).setHours(16,0,0)))
           
 
 
           } else if(description==="NIGHTACTIVITY"){
-            setStartDate(new Date(Date.parse(date) + 60000*1140));
-            setEndDate(new Date(Date.parse(date) + 60000*1320))
+
+            setStartDate(new Date(new Date(date).setHours(19,0,0)));
+            setEndDate(new Date(new Date(date).setHours(21,0,0)))
            }
         }}
         withPortal
