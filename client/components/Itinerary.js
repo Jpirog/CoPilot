@@ -75,18 +75,18 @@ class Itinerary extends React.Component {
     console.log('ATTENDEES', attendees)
 
     const map = {
-        "SLEEP": {},
-        "BREAKFAST": {},
-        "LUNCH": {},
-        "DINNER": {},
-        "OTHER": {},
-        "MORNINGACTIVITY": {},
-        "AFTERNOONACTIVITY": {},
-        "NIGHTACTIVITY": {},
+        "Sleep": {},
+        "Breakfast": {},
+        "Lunch": {},
+        "Dinner": {},
+        "Other": {},
+        "Morning activity": {},
+        "Afternoon activity": {},
+        "Night activity": {},
     }
 
     const mainMap = allEvents.reduce((acc, event) => {
-        if (event.purpose === 'SLEEP') {
+        if (event.purpose === 'Sleep') {
             if(acc[event.purpose][new Date(event.startDate).getDate()]) {
                 acc[event.purpose][new Date(event.startDate).getDate()].push(event.placeName);
             }
@@ -94,7 +94,7 @@ class Itinerary extends React.Component {
                 acc[event.purpose][new Date(event.startDate).getDate()] = [event.placeName]
             }
         }
-        else if (event.purpose === 'BREAKFAST') {
+        else if (event.purpose === 'Breakfast') {
             if(acc[event.purpose][new Date(event.startDate).getDate()]) {
                 acc[event.purpose][new Date(event.startDate).getDate()].push(event.placeName);
             }
@@ -102,7 +102,7 @@ class Itinerary extends React.Component {
                 acc[event.purpose][new Date(event.startDate).getDate()] = [event.placeName]
             }
         }
-        else if (event.purpose === 'LUNCH') {
+        else if (event.purpose === 'Lunch') {
             if(acc[event.purpose][new Date(event.startDate).getDate()]) {
                 acc[event.purpose][new Date(event.startDate).getDate()].push(event.placeName);
             }
@@ -110,7 +110,7 @@ class Itinerary extends React.Component {
                 acc[event.purpose][new Date(event.startDate).getDate()] = [event.placeName]
             }
         }
-        else if (event.purpose === 'DINNER') {
+        else if (event.purpose === 'Dinner') {
             if(acc[event.purpose][new Date(event.startDate).getDate()]) {
                 acc[event.purpose][new Date(event.startDate).getDate()].push(event.placeName);
             }
@@ -118,7 +118,7 @@ class Itinerary extends React.Component {
                 acc[event.purpose][new Date(event.startDate).getDate()] = [event.placeName]
             }
         }
-        else if (event.purpose === 'MORNINGACTIVITY') {
+        else if (event.purpose === 'Morning activity') {
             if(acc[event.purpose][new Date(event.startDate).getDate()]) {
                 acc[event.purpose][new Date(event.startDate).getDate()].push(event.placeName);
             }
@@ -126,7 +126,7 @@ class Itinerary extends React.Component {
                 acc[event.purpose][new Date(event.startDate).getDate()] = [event.placeName]
             }
         }
-        else if (event.purpose === 'AFTERNOONACTIVITY') {
+        else if (event.purpose === 'Afternoon activity') {
             if(acc[event.purpose][new Date(event.startDate).getDate()]) {
                 acc[event.purpose][new Date(event.startDate).getDate()].push(event.placeName);
             }
@@ -134,7 +134,7 @@ class Itinerary extends React.Component {
                 acc[event.purpose][new Date(event.startDate).getDate()] = [event.placeName]
             }
         }
-        else if (event.purpose === 'NIGHTACTIVITY') {
+        else if (event.purpose === 'Night activity') {
             if(acc[event.purpose][new Date(event.startDate).getDate()]) {
                 acc[event.purpose][new Date(event.startDate).getDate()].push(event.placeName);
             }
@@ -142,7 +142,7 @@ class Itinerary extends React.Component {
                 acc[event.purpose][new Date(event.startDate).getDate()] = [event.placeName]
             }
         }
-        else if (event.purpose === 'OTHER') {
+        else if (event.purpose === 'Other') {
             if(acc[event.purpose][new Date(event.startDate).getDate()]) {
                 acc[event.purpose][new Date(event.startDate).getDate()].push(event.placeName);
             }
@@ -175,9 +175,9 @@ class Itinerary extends React.Component {
     let datesArray = range(tripFromDate, tripToDate);
     console.log('dates array', datesArray)
     console.log('NEWWWW', datesArray[0].getDate())
-    console.log('DIFFERENT', Object.keys(mainMap["LUNCH"]))
+    console.log('DIFFERENT', Object.keys(mainMap["Lunch"]))
 
-    console.log('afternnon activities array', (mainMap["AFTERNOONACTIVITY"][22]))
+    console.log('afternnon activities array', (mainMap["Afternoon activity"][22]))
 
 
     function formatter(array) {
@@ -214,13 +214,13 @@ class Itinerary extends React.Component {
 
                                     {
                                         datesArray.map(date => { 
-                                            const formatterBreakfast = formatter(mainMap["BREAKFAST"][date.getDate()])
-                                            const formatterLunch = formatter(mainMap["LUNCH"][date.getDate()])
-                                            const formatterDinner = formatter(mainMap["DINNER"][date.getDate()])
-                                            const formatterMorning = formatter(mainMap["MORNINGACTIVITY"][date.getDate()])
-                                            const formatterAfternoon = formatter(mainMap["AFTERNOONACTIVITY"][date.getDate()])
-                                            const formatterNight = formatter(mainMap["NIGHTACTIVITY"][date.getDate()])
-                                            const formatterOther = formatter(mainMap["OTHER"][date.getDate()])
+                                            const formatterBreakfast = formatter(mainMap["Breakfast"][date.getDate()])
+                                            const formatterLunch = formatter(mainMap["Lunch"][date.getDate()])
+                                            const formatterDinner = formatter(mainMap["Dinner"][date.getDate()])
+                                            const formatterMorning = formatter(mainMap["Morning activity"][date.getDate()])
+                                            const formatterAfternoon = formatter(mainMap["Afternoon activity"][date.getDate()])
+                                            const formatterNight = formatter(mainMap["Night activity"][date.getDate()])
+                                            const formatterOther = formatter(mainMap["Other"][date.getDate()])
                                             return (
                                                 <div className="singleCard">
                                                 <div className="dayNum">
@@ -240,7 +240,7 @@ class Itinerary extends React.Component {
                                                         { mainMap && <span className='activitiesList'><b>Night Activities : </b> { formatterNight ? formatterNight : 'No Events Yet!'} </span>}
                                                         { mainMap && <span className='activitiesList'><b>Other : </b> { formatterOther? formatterOther : 'No Events Yet!'} </span>}
                                                     </div>
-                                                    <span className='singleInfoSection'><b>Hotel : </b> { (Object.values(mainMap["SLEEP"])) } </span>
+                                                    <span className='singleInfoSection'><b>Hotel : </b> { (Object.values(mainMap["Sleep"])) } </span>
                                                 </div>
                                             </div>
                                             )

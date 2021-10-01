@@ -62,19 +62,19 @@ const AddActivity= (props)=> {
 
 useEffect(()=>{
 
-  if(startDate && description==="MORNINGACTIVITY"){
+  if(startDate && description==="Morning activity"){
 
     setStartDate(new Date(new Date(startDate).setHours(9,0,0)));
     setEndDate(new Date(new Date(startDate).setHours(11,0,0)))
   
-  } else if (startDate && description==="AFTERNOONACTIVITY") {
+  } else if (startDate && description==="Afternoon activity") {
    
     setStartDate(new Date(new Date(startDate).setHours(13,0,0)));
     setEndDate(new Date(new Date(startDate).setHours(16,0,0)))
   
 
 
-  } else if(startDate &&description==="NIGHTACTIVITY"){
+  } else if(startDate &&description==="Night activity"){
 
     setStartDate(new Date(new Date(startDate).setHours(19,0,0)));
     setEndDate(new Date(new Date(startDate).setHours(21,0,0)))
@@ -124,7 +124,7 @@ useEffect(()=>{
 
       useEffect(() => {
         let list =
-          tripevents && tripevents.filter((event) => event.purpose === "MORNINGACTIVITY"||"AFTERNOONACTIVITY"||"NIGHTACTIVITY");
+          tripevents && tripevents.filter((event) => event.purpose === "Morning activity"||"Afternoon activity"||"Night activity");
           setActivityEvents(list);
       }, [tripevents]);
 
@@ -188,7 +188,7 @@ dispatch(removeTripEvent(tripId,event.id))
         </form>
         <br />
 <div>
-<Link className="btn btn-outline-primary mr-md-3"to="/calendar">Once Activity is added, click here to go the calendar</Link>
+<Link className="btn btn-outline-primary mr-md-3"to="/calendar">Once activities are added, click here to go the calendar</Link>
 </div>     
        
 </div>  
@@ -217,9 +217,9 @@ dispatch(removeTripEvent(tripId,event.id))
             setDescription(e.target.value)
             }}>
             <option value="DEFAULT">Pick an time range</option>
-            <option value="MORNINGACTIVITY">Morning - 2 hrs</option>
-            <option value="AFTERNOONACTIVITY">Afternoon - 3 hrs</option>
-            <option value="NIGHTACTIVITY">Night - 3 hrs</option>
+            <option value="Morning activity">Morning - 2 hrs</option>
+            <option value="Afternoon activity">Afternoon - 3 hrs</option>
+            <option value="Night activity">Night - 3 hrs</option>
           </select>  
       
 </li>
@@ -233,19 +233,19 @@ dispatch(removeTripEvent(tripId,event.id))
         // showTimeInput
         onChange={(date) => {
          
-          if(description==="MORNINGACTIVITY"){
+          if(description==="Morning activity"){
 
             setStartDate(new Date(new Date(date).setHours(9,0,0)));
             setEndDate(new Date(new Date(date).setHours(11,0,0)))
           
-          } else if (description==="AFTERNOONACTIVITY") {
+          } else if (description==="Afternoon activity") {
            
             setStartDate(new Date(new Date(date).setHours(13,0,0)));
             setEndDate(new Date(new Date(date).setHours(16,0,0)))
           
 
 
-          } else if(description==="NIGHTACTIVITY"){
+          } else if(description==="Night activity"){
 
             setStartDate(new Date(new Date(date).setHours(19,0,0)));
             setEndDate(new Date(new Date(date).setHours(21,0,0)))
