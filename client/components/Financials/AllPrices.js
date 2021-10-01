@@ -9,7 +9,7 @@ class AllPrices extends React.Component {
     render () {
         return (
             <div id='content-wrapper'>
-                <div></div>
+                <div>Financials</div>
             </div>
             
         )

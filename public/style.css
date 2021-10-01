@@ -390,7 +390,7 @@ video {
   display: flex;
   flex-basis: calc(40% - 4em);
   align-items: center;
-  background-color: #b7926a;
+  background-color: rgb(221, 154, 10);
   color: #fff;
   min-height: calc(100vh - 9em);
 }
@@ -788,6 +788,7 @@ label {
   justify-content: space-between;
   padding-top: 7px;
   padding-bottom: 7px;
+  color: white;
 }
 
 .itineraryName {

@@ -15,6 +15,11 @@ export const MenuItems = [
       cName: 'dropdown-link'
     },
     {
+      title: 'Trip Map',
+      path: '/map',
+      cName: 'dropdown-link',
+    },
+    {
       title: 'Finalize Trip',
       path: '/finalizetrip',
       cName: 'dropdown-link'
@@ -43,5 +48,5 @@ export const MenuItems = [
       title: 'Logout',
       path: '/aboutus',
       cName: 'dropdown-link',
-    }
+    },
   ];

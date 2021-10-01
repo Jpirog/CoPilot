@@ -46,7 +46,7 @@ class Itinerary extends React.Component {
     let endDate = currentTrip.endDate;
     let startDate = currentTrip.startDate;
 
-    let duration = (new Date(endDate).getTime() - new Date(startDate).getTime())/ (1000 * 3600 * 24);
+    // let duration = (new Date(endDate).getTime() - new Date(startDate).getTime())/ (1000 * 3600 * 24);
    
     // below only needed if you want to display accepted events only
     // let tripEvents = this.props.tripevents.reduce((acc, singleEvent) => {
@@ -199,7 +199,7 @@ class Itinerary extends React.Component {
                 <div className='itineraryInfo'>
                     <span className='iiinfo'>DESTINATION: <h3>{currentTrip ? currentTrip.destination : ''}</h3></span>
                     <span className='iiinfo'>PURPOSE: <h3>{currentTrip ? currentTrip.purpose : ''}</h3></span>
-                    <span className='iiinfo'>TRIP DURATION: <h3>{duration}</h3> DAYS</span>
+                    <span className='iiinfo'>TRIP DURATION: <h3>{datesArray.length}</h3> DAYS</span>
                 </div>
 
                     <div id="sideBySide">
