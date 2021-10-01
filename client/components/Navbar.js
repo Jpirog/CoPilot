@@ -10,6 +10,7 @@ import dateFormat from 'dateformat';
 const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips, currTrip }) => {
   const dispatch = useDispatch();
   const [userTrips, setUserTrips] = useState([]);
+  const [oldTrip, setOldTrip] = useState(null);
 
   useEffect( () => {
     const fetchData = async () => {
@@ -26,8 +27,9 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips, cu
     const fetchData = async (tripId) => {
         await dispatch(getTripDetails(tripId));
     };
-    if (currTrip){
+    if (currTrip && currTrip.id != oldTrip){
       fetchData(currTrip.id)
+      setOldTrip(currTrip.id)
     }
 }, [currTrip]);
 
@@ -92,7 +94,7 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips, cu
             CoPilot
           </Link>
           <div id="navtrip">Trip:&nbsp;
-            <select name="trips" id="navtrips" onChange={handleTripChange}>
+            <select name="trips" id="navtrips" onChange={handleTripChange} value={currTrip.id}>
             {
               invitedTrips.concat(createdTrips).map((trip, i) => {
 //                if (i === 0){
@@ -161,15 +163,20 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips, cu
   )
 };
 
-const mapState = state => {
+const mapState = (state) => {
   const myTrips = state.trips.userCreatedTrips.concat(state.trips.userInvitedTrips);
-  const thisTrip = myTrips.length > 0 ? myTrips[0] : null;
+//  const thisTrip = myTrips.length > 0 ? myTrips[0] : null;
+  const thisTrip = Object.entries(state.trips.trip).length > 0 ? state.trips.trip : myTrips.length > 0 ? myTrips[0] : null;
+  // console.log('---', state.trips.trip)
+  // console.log('===', Object.entries(state.trips.trip).length)
   return {
     isLoggedIn: !!state.auth.id,
     userId: state.auth.id,
     createdTrips: state.trips.userCreatedTrips,
     invitedTrips: state.trips.userInvitedTrips,
     currTrip: thisTrip,
+//    currTrip: state.trips.trip,
+//    currTrip: Object.entries(state.trips.trip).length !== 0 ? state.trips.trip : null,
   }
 }
 
@@ -182,3 +189,5 @@ const mapDispatch = dispatch => {
 }
 
 export default connect(mapState, mapDispatch)(Navbar)
+
+//<option selected={currTrip.id === trip.id} value={trip.id} key={trip.id}>({prefix}) { trip.destination } ({fromDate}-{toDate}) </option>
