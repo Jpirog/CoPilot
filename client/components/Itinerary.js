@@ -12,10 +12,6 @@ class Itinerary extends React.Component {
         super(props);
     }
 
-    // async componentDidMount() {
-    //     await this.props.getTripDetails();
-    // }
-
     render () {
     //every component you write needs a check like this because otherwise you'll run into a lot of undefined variables that haven't been populated yet on the first run
     //check if tripevents is defined, on second run it will run componentDidMount and tripevents will be defined
@@ -53,132 +49,18 @@ class Itinerary extends React.Component {
     let duration = (new Date(endDate).getTime() - new Date(startDate).getTime())/ (1000 * 3600 * 24);
    
     // below only needed if you want to display accepted events only
-    let tripEvents = this.props.tripevents.reduce((acc, singleEvent) => {
-        if(singleEvent.status === 'ACCEPTED') {
-            acc.push(singleEvent)
-        }
-        return acc;
-    }, []);
-    console.log('TRIP EVENTS', tripEvents);
+    // let tripEvents = this.props.tripevents.reduce((acc, singleEvent) => {
+    //     if(singleEvent.status === 'ACCEPTED') {
+    //         acc.push(singleEvent)
+    //     }
+    //     return acc;
+    // }, []);
+    // console.log('TRIP EVENTS', tripEvents);
 
     // used to great mainMap
     let allEvents = this.props.tripevents;
 
-    // let proposedEvents = tripEvents.filter(singleEvent => singleEvent.status === 'PROPOSED')
-    // //console.log('PROPOSED EVENTS', proposedEvents);
 
-    // let acceptedEvents = tripEvents.filter(singleEvent => singleEvent.status === 'ACCEPTED')
-    // // console.log('ACCEPTED EVENTS', acceptedEvents);
-
-    // let restaurantProposedEvents = proposedEvents.filter(restaurantEvent => restaurantEvent.purpose === 'BREAKFAST' || restaurantEvent.purpose === 'LUNCH' || restaurantEvent.purpose === 'DINNER');
-    // //console.log('RESTAURANT PROPOSED EVENTS', restaurantProposedEvents);
-
-    // let restaurantAcceptedEvents = acceptedEvents.filter(restaurantEvent => restaurantEvent.purpose === 'BREAKFAST' || restaurantEvent.purpose === 'LUNCH' || restaurantEvent.purpose === 'DINNER');
-    // // console.log('RESTAURANT ACCEPTED EVENTS', restaurantAcceptedEvents);
-
-    // let sleepProposedEvents = proposedEvents.filter(sleepEvent => sleepEvent.purpose === 'SLEEP');
-    // //console.log('SLEEP PROPOSED EVENTS', sleepProposedEvents);
-
-    // let sleepAcceptedEvents = acceptedEvents.filter(sleepEvent => sleepEvent.purpose === 'SLEEP');
-    // // console.log('SLEEP ACCEPTED EVENTS', sleepAcceptedEvents);
-
-    // let activityProposedEvents = proposedEvents.filter(activityEvent => activityEvent.purpose === 'SIGHTSEE' || activityEvent.purpose === 'FREETIME' || activityEvent.purpose === 'OTHER');
-    // //console.log('ACTIVITY PROPOSED EVENTS', activityProposedEvents);
-
-    // let activityAcceptedEvents = acceptedEvents.filter(activityEvent => activityEvent.purpose === 'SIGHTSEE' || activityEvent.purpose === 'FREETIME' || activityEvent.purpose === 'OTHER');
-    // // console.log('ACTIVITY ACCEPTED EVENTS', activityAcceptedEvents);
-
-    // //////////////
-    // let activityEvents = tripEvents.filter(event => event.purpose === 'SIGHTSEE' || event.purpose === 'FREETIME' || event.purpose === 'OTHER');
-
-
-    //ternary statement notes:
-    //look for chosenTrip, which will be falsey on the first render
-    //on second render it will know that chosenTrip is now defined so it'll be truthy
-
-
-    // const acceptedEventsMap = acceptedEvents.reduce(function (acc, event) {
-    //     if (acc[event.startDate]) {
-    //         acc[event.startDate].push(event.description)
-    //     }
-    //     else {
-    //         acc[event.startDate] = [event.description]
-    //     }
-    //     return acc;
-    // }, {})
-
-    // console.log('Accepted Events Map:', acceptedEventsMap);
-
-    // let sortedMap = Object.keys(acceptedEventsMap).sort().reduce(function (result, key) {
-    //         result[key] = acceptedEventsMap[key];
-    //         return result;
-    //     }, {});
-
-    //     console.log('Sorted Accepted Events Map:', sortedMap);
-
-
-
-
-    // const restaurantProposedMap = restaurantProposedEvents.reduce(function (acc, event) {
-    //     if (acc[event.startDate]) {
-    //         acc[event.startDate].push(event.description)
-    //     }
-    //     else {
-    //         acc[event.startDate] = [event.description]
-    //     }
-    //     return acc;
-    // }, {})
-
-    // //console.log('HASH MAP', hashMap);
-    // console.log('RP Map', restaurantProposedMap);
-
-    // const sleepProposedMap = sleepProposedEvents.reduce(function (acc, event) {
-    //     if (acc[event.startDate]) {
-    //         acc[event.startDate].push(event.description)
-    //     }
-    //     else {
-    //         acc[event.startDate] = [event.description]
-    //     }
-    //     return acc;
-    // }, {})
-
-    // console.log('SP Map', sleepProposedMap);
-
-    // const activityProposedMap = activityProposedEvents.reduce(function (acc, event) {
-    //     if (acc[event.startDate]) {
-    //         acc[event.startDate].push(event.description)
-    //     }
-    //     else {
-    //         acc[event.startDate] = [event.description]
-    //     }
-    //     return acc;
-    // }, {})
-
-    // console.log('AP Map', activityProposedMap);
-
-
-    // const activityAcceptedMap = activityAcceptedEvents.reduce(function (acc, event) {
-    //     if (acc[event.startDate]) {
-    //         acc[event.startDate].push(event.description)
-    //     }
-    //     else {
-    //         acc[event.startDate] = [event.description]
-    //     }
-    //     return acc;
-    // }, {})
-
-
-    // const activityMap = activityEvents.reduce(function (acc, event) {
-    //     if (acc[event.startDate]) {
-    //         acc[event.startDate].push(event.description)
-    //     }
-    //     else {
-    //         acc[event.startDate] = [event.description]
-    //     }
-    //     return acc;
-    // }, {})
-
-    // console.log('NEW AP Map', activityMap);
 
     let attendees = currentTrip.tripattendees.reduce((acc, attendee) => {
         if(attendee.accepted === true) {
@@ -203,98 +85,69 @@ class Itinerary extends React.Component {
         "NIGHTACTIVITY": {},
     }
 
-    //was tripEvents.reduce() before
-    // const mainMap = allEvents.reduce((acc, event) => {
-    //     if (event.purpose === 'SLEEP') {
-    //         if(acc[event.purpose][new Date(event.startDate).getDate()]) {
-    //             acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
-    //         }
-    //         else {
-    //             acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
-    //         }
-    //     }
-    //     else if (event.purpose === 'BREAKFAST' || event.purpose === 'LUNCH' || event.purpose === 'DINNER') {
-    //         if(acc['EAT'][new Date(event.startDate).getDate()]) {
-    //             acc['EAT'][new Date(event.startDate).getDate()].push(event.description);
-    //         }
-    //         else {
-    //             acc['EAT'][new Date(event.startDate).getDate()] = [event.description]
-    //         }
-    //     }
-    //     else if (event.purpose === 'SIGHTSEE' || event.purpose === 'FREETIME' || event.purpose === 'OTHER' || event.purpose === 'ACTIVITY') {
-    //         if(acc['ACTIVITY'][new Date(event.startDate).getDate()]) {
-    //             acc['ACTIVITY'][new Date(event.startDate).getDate()].push(event.description);
-    //         }
-    //         else {
-    //             acc['ACTIVITY'][new Date(event.startDate).getDate()] = [event.description]
-    //         }
-    //     }
-    //     return acc;
-    // }, map)
-
     const mainMap = allEvents.reduce((acc, event) => {
         if (event.purpose === 'SLEEP') {
             if(acc[event.purpose][new Date(event.startDate).getDate()]) {
-                acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
+                acc[event.purpose][new Date(event.startDate).getDate()].push(event.placeName);
             }
             else {
-                acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
+                acc[event.purpose][new Date(event.startDate).getDate()] = [event.placeName]
             }
         }
         else if (event.purpose === 'BREAKFAST') {
             if(acc[event.purpose][new Date(event.startDate).getDate()]) {
-                acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
+                acc[event.purpose][new Date(event.startDate).getDate()].push(event.placeName);
             }
             else {
-                acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
+                acc[event.purpose][new Date(event.startDate).getDate()] = [event.placeName]
             }
         }
         else if (event.purpose === 'LUNCH') {
             if(acc[event.purpose][new Date(event.startDate).getDate()]) {
-                acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
+                acc[event.purpose][new Date(event.startDate).getDate()].push(event.placeName);
             }
             else {
-                acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
+                acc[event.purpose][new Date(event.startDate).getDate()] = [event.placeName]
             }
         }
         else if (event.purpose === 'DINNER') {
             if(acc[event.purpose][new Date(event.startDate).getDate()]) {
-                acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
+                acc[event.purpose][new Date(event.startDate).getDate()].push(event.placeName);
             }
             else {
-                acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
+                acc[event.purpose][new Date(event.startDate).getDate()] = [event.placeName]
             }
         }
         else if (event.purpose === 'MORNINGACTIVITY') {
             if(acc[event.purpose][new Date(event.startDate).getDate()]) {
-                acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
+                acc[event.purpose][new Date(event.startDate).getDate()].push(event.placeName);
             }
             else {
-                acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
+                acc[event.purpose][new Date(event.startDate).getDate()] = [event.placeName]
             }
         }
         else if (event.purpose === 'AFTERNOONACTIVITY') {
             if(acc[event.purpose][new Date(event.startDate).getDate()]) {
-                acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
+                acc[event.purpose][new Date(event.startDate).getDate()].push(event.placeName);
             }
             else {
-                acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
+                acc[event.purpose][new Date(event.startDate).getDate()] = [event.placeName]
             }
         }
         else if (event.purpose === 'NIGHTACTIVITY') {
             if(acc[event.purpose][new Date(event.startDate).getDate()]) {
-                acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
+                acc[event.purpose][new Date(event.startDate).getDate()].push(event.placeName);
             }
             else {
-                acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
+                acc[event.purpose][new Date(event.startDate).getDate()] = [event.placeName]
             }
         }
         else if (event.purpose === 'OTHER') {
             if(acc[event.purpose][new Date(event.startDate).getDate()]) {
-                acc[event.purpose][new Date(event.startDate).getDate()].push(event.description);
+                acc[event.purpose][new Date(event.startDate).getDate()].push(event.placeName);
             }
             else {
-                    acc[event.purpose][new Date(event.startDate).getDate()] = [event.description]
+                    acc[event.purpose][new Date(event.startDate).getDate()] = [event.placeName]
             }
         }
         return acc;
@@ -324,7 +177,16 @@ class Itinerary extends React.Component {
     console.log('NEWWWW', datesArray[0].getDate())
     console.log('DIFFERENT', Object.keys(mainMap["LUNCH"]))
 
+    console.log('afternnon activities array', (mainMap["AFTERNOONACTIVITY"][22]))
 
+
+    function formatter(array) {
+        //console.log('diff arr', array);
+        if (!array) {
+            return false;
+        }
+        return array.join(', ')
+    }
     
 
     let num = 1;
@@ -339,43 +201,6 @@ class Itinerary extends React.Component {
                     <span className='iiinfo'>PURPOSE: <h3>{currentTrip ? currentTrip.purpose : ''}</h3></span>
                     <span className='iiinfo'>TRIP DURATION: <h3>{duration}</h3> DAYS</span>
                 </div>
-                {/* <div className='itineraryInfo'>
-                    <p><b>Destination:</b> {currentTrip ? currentTrip.destination : ''} <b>Purpose:</b> {currentTrip ? currentTrip.purpose : ''}</p>
-                </div>
-                <div className='itineraryInfo'>
-                    <p><b>Proposed Dates:</b> {tripFromDate} - {tripToDate}</p>
-                </div>
-                <div className='itineraryInfo'>
-                    <p><b>TRIP DURATION:</b> {duration} DAYS</p>
-                </div>
-
-                <div id='tripAttendees'>
-                    <h4>Attendees:</h4> {currentTrip ? (currentTrip.tripattendees).map(attendee => (
-                        <p key={attendee.id}> <b>{attendee.user.name}</b> has confirmed that they are coming on your trip!</p>
-                    ))
-                    : ''}
-                </div> */}
-                {/* <b>{dateFormat(item, "mmm d")}</b> */}
-
-{/*  */}
-                    {/* <div className="row">
-                        <div className="col" >Days</div>
-                        {Array(duration).fill('*').map(item => (
-                            <div className="col">{num++}</div>
-                        ))}
-                    </div>
-                    <div className="row">
-                    {
-                        Object.keys(sortedMap).map((item) => (
-                            <p key={item} className="individualItem">
-                                
-                                {sortedMap[`${item}`].map((event) => (
-                                        <div className="col">{event}</div>
-                                ))}
-                            </p>
-                        ))
-                        }
-                    </div> */}
 
                     <div id="sideBySide">
                         <div id='tripAttendees'>
@@ -388,26 +213,38 @@ class Itinerary extends React.Component {
                             <div className="container-f">
 
                                     {
-                                        datesArray.map(date => (
-                                            <div className="singleCard">
-                                            <div className="dayNum">DAY <br/>{num++}</div>
-                                            <div key={date} className="card-body">
-                                                <b className='singleInfoSection'>Date : {date.toDateString()}</b>
-                                                <div className='purposeSection'>
-                                                    <span><b>Breakfast : </b> { (mainMap["BREAKFAST"][date.getDate()]) } </span>
-                                                    <span><b>Lunch : </b> { (mainMap["LUNCH"][date.getDate()]) } </span>
-                                                    <span><b>Dinner : </b> { (mainMap["DINNER"][date.getDate()]) } </span>
+                                        datesArray.map(date => { 
+                                            const formatterBreakfast = formatter(mainMap["BREAKFAST"][date.getDate()])
+                                            const formatterLunch = formatter(mainMap["LUNCH"][date.getDate()])
+                                            const formatterDinner = formatter(mainMap["DINNER"][date.getDate()])
+                                            const formatterMorning = formatter(mainMap["MORNINGACTIVITY"][date.getDate()])
+                                            const formatterAfternoon = formatter(mainMap["AFTERNOONACTIVITY"][date.getDate()])
+                                            const formatterNight = formatter(mainMap["NIGHTACTIVITY"][date.getDate()])
+                                            const formatterOther = formatter(mainMap["OTHER"][date.getDate()])
+                                            return (
+                                                <div className="singleCard">
+                                                <div className="dayNum">
+                                                    <p id='numDay'>DAY <br/>{num++}</p>
+                                                    <p id='dayDate'>{date.toDateString()}</p>
                                                 </div>
-                                                <div className='purposeSection'>
-                                                    <span><b>Morning Activities : </b> { (mainMap["MORNINGACTIVITY"][date.getDate()]) } </span>
-                                                    <span><b>Afternoon Activities : </b> { (mainMap["AFTERNOONACTIVITY"][date.getDate()]) } </span>
-                                                    <span><b>Night Activities : </b> { (mainMap["NIGHTACTIVITY"][date.getDate()]) } </span>
-                                                    <span><b>Other : </b> { (mainMap["NIGHTACTIVITY"][date.getDate()]) } </span>
+                                                <div key={date} className="card-body">
+                                                    {/* <b className='singleInfoSection'>Date : {date.toDateString()}</b> */}
+                                                    <div className='purposeSection'>
+                                                        { mainMap && <span className='activitiesList'><b>Breakfast : </b> { formatterBreakfast ? formatterBreakfast : 'No Events Yet!'} </span>}
+                                                        { mainMap && <span className='activitiesList'><b>Lunch : </b> { formatterLunch ? formatterLunch : 'No Events Yet!'} </span>}
+                                                        { mainMap && <span className='activitiesList'><b>Dinner : </b> { formatterDinner ? formatterDinner : 'No Events Yet!'} </span>}
+                                                    </div>
+                                                    <div className='purposeSection'>
+                                                        { mainMap && <span className='activitiesList'><b>Morning Activities : </b> { formatterMorning ? formatterMorning : 'No Events Yet!'} </span>}
+                                                        { mainMap && <span className='activitiesList'><b>Afternoon Activities : </b> { formatterAfternoon ? formatterAfternoon : 'No Events Yet!'} </span>}
+                                                        { mainMap && <span className='activitiesList'><b>Night Activities : </b> { formatterNight ? formatterNight : 'No Events Yet!'} </span>}
+                                                        { mainMap && <span className='activitiesList'><b>Other : </b> { formatterOther? formatterOther : 'No Events Yet!'} </span>}
+                                                    </div>
+                                                    <span className='singleInfoSection'><b>Hotel : </b> { (Object.values(mainMap["SLEEP"])) } </span>
                                                 </div>
-                                                <span className='singleInfoSection'><b>Hotel : </b> { (Object.values(mainMap["SLEEP"])) } </span>
                                             </div>
-                                        </div>
-                                        ))
+                                            )
+                                        })
                                     }
                             </div>
                         }
@@ -428,9 +265,5 @@ const mapStateToProps = (state) => {
         tripAttendees: state.trips.trip.tripattendees
     }
 }
-
-// const mapDispatchToProps = {
-//     getTripDetails
-// }
 
 export default connect(mapStateToProps)(Itinerary);

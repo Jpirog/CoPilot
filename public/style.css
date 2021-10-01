@@ -878,10 +878,10 @@ label {
   width: 18%;
   background-color: white;
   text-align: center;
-  padding: 20px 10px;
+  padding: 140px 10px;
   margin-left: 30px;
   margin-right: 30px;
-  font-size: xxx-large;
+  /* font-size: xxx-large; */
 }
   
 #content-wrapper-double {
@@ -920,6 +920,18 @@ label {
 .singleInfoSection {
   margin: 5px;
   padding: 15px 50px;
+}
+
+.activitiesList {
+  margin: 5px;
+}
+
+#numDay {
+  font-size: xx-large;
+} 
+
+#dayDate {
+  color:rgb(221, 154, 10);
 }
 
 
