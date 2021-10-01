@@ -19,8 +19,8 @@ import { me } from './store'
 
 import Calendar from "./components/Calendar";
 import Itinerary from './components/Itinerary';
-import AllTrips from './components/AllTrips';
-import Financials from './components/Financials'
+// import AllTrips from './components/AllTrips';
+import AllPrices from './components/Financials/AllPrices'
 import Map from "./components/GoogleMap";
 import ChatApp from "./components/Chat";
 
@@ -50,8 +50,8 @@ class Routes extends Component {
             <Route path="/tripattendees" component={ TripAttendees } />
             <Route exact path="/create/trip" component={ CreateTrip } />
             <Route exact path="/itinerary" component={Itinerary} />
-            <Route exact path="/allTrips" component={AllTrips}/>
-            <Route exact path="/financials" component={Financials} />
+            {/* <Route exact path="/allTrips" component={AllTrips}/> */}
+            <Route exact path="/financials" component={AllPrices} />
             <Route exact path="/finalizetrip" component={FinalizeTrip} />
             <Route exact path="/" component={Home} />
             <Route component={ PageNotFound } />

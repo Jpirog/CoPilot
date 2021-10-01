@@ -24,6 +24,7 @@ const AddRestaurant = (props) => {
   const [description, setDescription] = useState("");
   const [meal, setMeal] = useState("DEFAULT");
   const [sortValue, setSortValue] = useState("");
+  const [changeId, setChangeId] =useState("")
 
   const dispatch = useDispatch();
 
@@ -247,9 +248,16 @@ const AddRestaurant = (props) => {
                   value={meal}
                   onChange={(e) => {
                     setMeal(e.target.value);
-                    e.target.value === 'BREAKFAST' ? setStartDate((new Date(trip.startDate)).setHours(8, 0, 0)) :
-                    e.target.value === 'LUNCH' ? setStartDate((new Date(trip.startDate)).setHours(12, 0, 0)) :
-                    e.target.value === 'DINNER' ? setStartDate((new Date(trip.startDate)).setHours(18, 0, 0)) : null
+                    if(e.target.value === 'BREAKFAST'){
+                      setStartDate((new Date(trip.startDate)).setHours(8, 0, 0));
+                      setEndDate((new Date(trip.startDate)).setHours(10, 0, 0))
+                    } else if (e.target.value === 'LUNCH') {
+                      setStartDate((new Date(trip.startDate)).setHours(12, 0, 0));
+                      setEndDate((new Date(trip.startDate)).setHours(14, 0, 0))
+                    } else if(e.target.value === 'DINNER'){
+                      setStartDate((new Date(trip.startDate)).setHours(18, 0, 0));
+                      setEndDate((new Date(trip.startDate)).setHours(20, 0, 0))
+                    }
                   }}
                 >
                   <option value={"DEFAULT"}>{"Select a Meal"}</option>
