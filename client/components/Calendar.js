@@ -119,7 +119,7 @@ componentDidUpdate(prevProps){
       <DragAndDropCalendar
         selectable
         onSelectEvent={(event)=>{
-            alert(`${event.location},${event.start},${event.end}`)
+            alert(`Name: ${event.location}\nStart: ${event.start}\nEnd: ${event.end}`)
         }}
         localizer={localizer}
         events={this.state.events?this.state.events:[]}
@@ -153,7 +153,7 @@ componentDidUpdate(prevProps){
 
 const mapState =(state)=>({
 trip:state.trips.trip,
-eventList:state.trips.trip.tripevents&&state.trips.trip.tripevents.map(event=>({id:event.id,title:event.placeName,start:new Date(event.startDate),end:new Date(event.endDate),desc:event.description,location:event.location,allDay:event.purpose==="SLEEP"?true:false}))
+eventList:state.trips.trip.tripevents&&state.trips.trip.tripevents.map(event=>({id:event.id,title:event.placeName,start:new Date(event.startDate),end:new Date(event.endDate),desc:event.description,location:event.location,allDay:event.purpose==="Sleep"?true:false}))
 })
 const mapDispatch ={
   updateTripEvent

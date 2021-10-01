@@ -57,7 +57,7 @@ useEffect(()=>{
 
   useEffect(() => {
     let list =
-      tripevents && tripevents.filter((event) => event.purpose === "SLEEP");
+      tripevents && tripevents.filter((event) => event.purpose === "Sleep");
     setHotelEvents(list);
   }, [tripevents]);
 
@@ -279,7 +279,7 @@ useEffect(()=>{
                 } else if (startDate && endDate &&(startDate<endDate)) {
                   dispatch(
                     addTripEvent({
-                      purpose: "SLEEP",
+                      purpose: "Sleep",
                       startDate,
                       endDate,
                       tripId,

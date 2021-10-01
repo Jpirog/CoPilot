@@ -47,7 +47,7 @@ export const SampleCode = props => {
 
   useEffect( () => {
     const fetchData = async () => {
-      const data = await dispatch(addTripEvent({purpose: 'OTHER', description: 'dinner the last evening',
+      const data = await dispatch(addTripEvent({purpose: 'Other', description: 'dinner the last evening',
         startDate: '2021-09-07', endDate: '2021-09-08', status: 'PROPOSED', tripId: 1,
         }));
     }

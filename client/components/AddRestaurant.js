@@ -117,9 +117,9 @@ const AddRestaurant = (props) => {
           </tr>
           {tripevents &&
             tripevents.map((event) =>
-              event.purpose === "LUNCH" ||
-              event.purpose === "BREAKFAST" ||
-              event.purpose === "DINNER" ? (
+              event.purpose === "Lunch" ||
+              event.purpose === "Breakfast" ||
+              event.purpose === "Dinner" ? (
                 <tr key={event.id}>
                   <td scope="row">
                     {dateFormat(event.startDate, "mm/dd/yyyy h:MM TT")}
@@ -207,7 +207,7 @@ const AddRestaurant = (props) => {
       <br />
       <div>
         <Link to={`/activity`} className="btn btn-outline-primary">
-        Once hotel is added, click here to go to add activities
+        Once restaurants are added, click here to go to add activities
         </Link>
       </div>
       <br />
@@ -248,22 +248,22 @@ const AddRestaurant = (props) => {
                   value={meal}
                   onChange={(e) => {
                     setMeal(e.target.value);
-                    if(e.target.value === 'BREAKFAST'){
+                    if(e.target.value === 'Breakfast'){
                       setStartDate((new Date(trip.startDate)).setHours(8, 0, 0));
                       setEndDate((new Date(trip.startDate)).setHours(10, 0, 0))
-                    } else if (e.target.value === 'LUNCH') {
+                    } else if (e.target.value === 'Lunch') {
                       setStartDate((new Date(trip.startDate)).setHours(12, 0, 0));
                       setEndDate((new Date(trip.startDate)).setHours(14, 0, 0))
-                    } else if(e.target.value === 'DINNER'){
+                    } else if(e.target.value === 'Dinner'){
                       setStartDate((new Date(trip.startDate)).setHours(18, 0, 0));
                       setEndDate((new Date(trip.startDate)).setHours(20, 0, 0))
                     }
                   }}
                 >
                   <option value={"DEFAULT"}>{"Select a Meal"}</option>
-                  <option value={"BREAKFAST"}>{"Breakfast"}</option>
-                  <option value={"LUNCH"}>{"Lunch"}</option>
-                  <option value={"DINNER"}>{"Dinner"}</option>
+                  <option value={"Breakfast"}>{"Breakfast"}</option>
+                  <option value={"Lunch"}>{"Lunch"}</option>
+                  <option value={"Dinner"}>{"Dinner"}</option>
                 </select>
               </form>
             </li>
