@@ -34,11 +34,11 @@ export const MenuItems = [
       path: '/financials',
       cName: 'dropdown-link',
     },
-    {
-      title: 'All Trips',
-      path: '/allTrips',
-      cName: 'dropdown-link',
-    },
+    // {
+    //   title: 'All Trips',
+    //   path: '/allTrips',
+    //   cName: 'dropdown-link',
+    // },
     {
       title: 'Logout',
       path: '/aboutus',
