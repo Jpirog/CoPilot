@@ -33,6 +33,7 @@ const AddActivity= (props)=> {
    const [endDate, setEndDate] = useState(null);
    const [location,setLocation] =useState("");
    const [sortValue,setSortValue] =useState("");
+   const [changeId,setChangeId] =useState("")
 
 
 
@@ -60,6 +61,27 @@ const AddActivity= (props)=> {
   }
 
 useEffect(()=>{
+
+  if(startDate && description==="MORNINGACTIVITY"){
+
+    setStartDate(new Date(new Date(startDate).setHours(9,0,0)));
+    setEndDate(new Date(new Date(startDate).setHours(11,0,0)))
+  
+  } else if (startDate && description==="AFTERNOONACTIVITY") {
+   
+    setStartDate(new Date(new Date(startDate).setHours(13,0,0)));
+    setEndDate(new Date(new Date(startDate).setHours(16,0,0)))
+  
+
+
+  } else if(startDate &&description==="NIGHTACTIVITY"){
+
+    setStartDate(new Date(new Date(startDate).setHours(19,0,0)));
+    setEndDate(new Date(new Date(startDate).setHours(21,0,0)))
+   }
+},[description])
+
+useEffect(()=>{
   const func = async()=> {
     const { data } = await axios.get("/api/yelp/activity", {
       params: { term: searchValue, location:trip.destination },
@@ -76,20 +98,20 @@ useEffect(()=>{
 
     useEffect (()=>{ 
         let list;
-        if(sortValue==="rating") {
+        if(sortValue==="Rating") {
     
           list = activityList.sort(function(a,b) {
            return b.rating-a.rating;
           })
           setActivityList([...list]);
-        }else if(sortValue==="priceLowToHigh") {
+        }else if(sortValue==="PriceLowToHigh") {
           list = activityList.filter((obj) => obj.price).sort(function (a, b) {
             return a.price.length - b.price.length;
         });
         setActivityList(
           list.concat(activityList.filter((obj) => !obj.price))
         );
-        } else if (sortValue === "priceHighToLow") {
+        } else if (sortValue === "PriceHighToLow") {
           list = activityList.filter((obj) => obj.price).sort(function (a, b) {
               return b.price.length - a.price.length;
           });
@@ -102,7 +124,7 @@ useEffect(()=>{
 
       useEffect(() => {
         let list =
-          tripevents && tripevents.filter((event) => event.purpose === "ACTIVITY");
+          tripevents && tripevents.filter((event) => event.purpose === "MORNINGACTIVITY"||"AFTERNOONACTIVITY"||"NIGHTACTIVITY");
           setActivityEvents(list);
       }, [tripevents]);
 
@@ -157,16 +179,15 @@ dispatch(removeTripEvent(tripId,event.id))
             }}
           >
             <option>Sort by</option>
-            <option value={"rating"}>Rating: High to low</option>
-            <option value={"priceLowToHigh"}>Price: Low to High</option>
-            <option value={"priceHighToLow"}>Price: High to Low</option>
+            <option value={"Rating"}>Rating: High to low</option>
+            <option value={"PriceLowToHigh"}>Price: Low to High</option>
+            <option value={"PriceHighToLow"}>Price: High to Low</option>
           </select>
 
         </div>
         </form>
         <br />
 <div>
-<Link className="btn btn-outline-primary mr-md-3"to={`/restaurant`}>Go Back to Restaurant Page:</Link>
 <Link className="btn btn-outline-primary mr-md-3"to="/calendar">Once Activity is added, click here to go the calendar</Link>
 </div>     
        
@@ -190,7 +211,11 @@ dispatch(removeTripEvent(tripId,event.id))
         <li>{activity.price?activity.price:`No Price Info`}</li>
         <li >{activity.categories[0].title}</li>
  <li style={{marginBottom:"3.5px"}}>
-          <select  style ={{width:"200px",height:"28px"}} placeholder="Add event description" value={description} onChange={(e)=>{setDescription(e.target.value)}}>
+          <select  id= {activity.id} style ={{width:"200px",height:"28px"}} placeholder="Add event description" value={changeId===activity.id?description:""} onChange={(e)=>{
+
+            setChangeId(event.target.id)
+            setDescription(e.target.value)
+            }}>
             <option value="DEFAULT">Pick an time range</option>
             <option value="MORNINGACTIVITY">Morning - 2 hrs</option>
             <option value="AFTERNOONACTIVITY">Afternoon - 3 hrs</option>
@@ -204,23 +229,26 @@ dispatch(removeTripEvent(tripId,event.id))
         timeInputLabel="Pick a time:"
         dateFormat="MM/dd/yyyy h:mm aa"
         includeDates={availableDates()}
-        selected={startDate}
+        selected={changeId===activity.id?startDate:null}
         // showTimeInput
         onChange={(date) => {
          
-          if(description==="morningActivity"){
-            setStartDate(new Date(Date.parse(date) + 60000*540));
-            setEndDate(new Date(Date.parse(date) + 60000*660))
+          if(description==="MORNINGACTIVITY"){
+
+            setStartDate(new Date(new Date(date).setHours(9,0,0)));
+            setEndDate(new Date(new Date(date).setHours(11,0,0)))
           
-          } else if (description==="afternoonActivity") {
-            setStartDate(new Date(Date.parse(date) + 60000*780));
-            setEndDate(new Date(Date.parse(date) + 60000*960))
+          } else if (description==="AFTERNOONACTIVITY") {
+           
+            setStartDate(new Date(new Date(date).setHours(13,0,0)));
+            setEndDate(new Date(new Date(date).setHours(16,0,0)))
           
 
 
-          } else if(description==="eveningActivity"){
-            setStartDate(new Date(Date.parse(date) + 60000*1140));
-            setEndDate(new Date(Date.parse(date) + 60000*1320))
+          } else if(description==="NIGHTACTIVITY"){
+
+            setStartDate(new Date(new Date(date).setHours(19,0,0)));
+            setEndDate(new Date(new Date(date).setHours(21,0,0)))
            }
         }}
         withPortal
@@ -232,7 +260,7 @@ dispatch(removeTripEvent(tripId,event.id))
             } else if(startDate) {
 
             dispatch(addTripEvent({
-                purpose:"ACTIVITY",
+                purpose:description,
                 startDate,
                 endDate,
                 tripId,

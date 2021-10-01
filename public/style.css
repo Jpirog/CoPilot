@@ -604,10 +604,11 @@ video {
 /* dropdown start */
 
 .dropdown--menu {
-  background: red;
   width: 200px;
   position: absolute;
-  top: 80px;
+  top: 78px;
+  padding-top: 0;
+  margin-top:0;
   list-style: none;
   text-align: start;
 }

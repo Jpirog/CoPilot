@@ -2,7 +2,7 @@ import React, { useState,useEffect } from "react";
 import axios from "axios";
 import { Loader } from "@googlemaps/js-api-loader";
 
-const AutoComInput = ({value})=> {
+const AutoComInput = ({value,onChange})=> {
   const [loader,setLoader] =useState (null)
 useEffect(()=>{
   const func=async()=>{
@@ -27,7 +27,7 @@ const autocomplete = new google.maps.places.Autocomplete(input, options);
 const place = autocomplete.getPlace();
 })
 
-return <input id="in" className="form-control" />
+return <input id="in" onChange ={onChange} className="form-control" />
      
 
 }

@@ -1,7 +1,8 @@
-const router = require('express').Router()
-const { models: { Trip, Event }} = require('../db')
-const TripAttendee = require('../db/models/TripAttendee')
-module.exports = router
+const router = require('express').Router();
+const { models: { Trip, Event }} = require('../db');
+const TripAttendee = require('../db/models/TripAttendee');
+const TripEvent = require('../db/models/Event');
+module.exports = router;
 
 // returns all details on a specific trip
 router.get('/:tripId', async (req, res, next) => {
@@ -59,14 +60,32 @@ router.post('/', async (req, res, next) => {
 router.post('/vote', async (req, res, next) => {
   const tripId = req.body.tripId * 1;
   const action = req.body.action;
+  const status = req.body.status;
   try {
     const data = await Trip.update(
-      { voteOpened: action },
+      { voteOpened: action, status: status },
       { where: {id: tripId} }, 
       { returning: true } );
     res.sendStatus(200);
   } catch (ex) {
     console.log('ERROR updating trip vote', ex);
+    next(ex);
+  }
+})
+
+// finalize the trip
+// 
+router.post('/finalizeevents', async (req, res, next) => {
+  console.log('***', req.body.tripId)
+  const tripId = req.body.tripId * 1;
+  try {
+    const data = await TripEvent.update(
+      { status: 'ACCEPTED' },
+      { where: { tripId: tripId} }, 
+      { returning: true } );
+    res.sendStatus(200);
+  } catch (ex) {
+    console.log('ERROR updating trip finalize events', ex);
     next(ex);
   }
 })

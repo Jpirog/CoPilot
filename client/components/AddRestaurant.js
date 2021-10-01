@@ -24,12 +24,9 @@ const AddRestaurant = (props) => {
   const [description, setDescription] = useState("");
   const [meal, setMeal] = useState("DEFAULT");
   const [sortValue, setSortValue] = useState("");
+  const [changeId, setChangeId] =useState("")
 
   const dispatch = useDispatch();
-
-  function setTimeForMeal() {
-    if (meal === 'BREAKFAST') return setStartDate(new Date(trip.startDate))
-  }
 
   function availableDates() {
     let activeDays = [];
@@ -49,19 +46,19 @@ const AddRestaurant = (props) => {
 
   useEffect(() => {
     let list;
-    if (sortValue === "rating") {
+    if (sortValue === "Rating") {
       list = restaurantList.sort(function (a, b) {
         return b.rating - a.rating;
       });
       setRestaurantList([...list]);
-    } else if (sortValue === "priceLowToHigh") {
+    } else if (sortValue === "PriceLowToHigh") {
       list = restaurantList.filter((obj) => obj.price).sort(function (a, b) {
           return a.price.length - b.price.length;
       });
       setRestaurantList(
         list.concat(restaurantList.filter((obj) => !obj.price))
       )
-    } else if (sortValue === "priceHighToLow") {
+    } else if (sortValue === "PriceHighToLow") {
       list = restaurantList.filter((obj) => obj.price).sort(function (a, b) {
           return b.price.length - a.price.length;
       });
@@ -201,16 +198,16 @@ const AddRestaurant = (props) => {
             }}
           >
             <option>Sort by</option>
-            <option value={"rating"}>Rating: High to low</option>
-            <option value={"priceLowToHigh"}>Price: Low to High</option>
-            <option value={"priceHighToLow"}>Price: High to Low</option>
+            <option value={"Rating"}>Rating: High to low</option>
+            <option value={"PriceLowToHigh"}>Price: Low to High</option>
+            <option value={"PriceHighToLow"}>Price: High to Low</option>
           </select>
         </div>
       </form>
       <br />
       <div>
         <Link to={`/activity`} className="btn btn-outline-primary">
-        Click here to go to activities
+        Once hotel is added, click here to go to add activities
         </Link>
       </div>
       <br />
@@ -251,6 +248,16 @@ const AddRestaurant = (props) => {
                   value={meal}
                   onChange={(e) => {
                     setMeal(e.target.value);
+                    if(e.target.value === 'BREAKFAST'){
+                      setStartDate((new Date(trip.startDate)).setHours(8, 0, 0));
+                      setEndDate((new Date(trip.startDate)).setHours(10, 0, 0))
+                    } else if (e.target.value === 'LUNCH') {
+                      setStartDate((new Date(trip.startDate)).setHours(12, 0, 0));
+                      setEndDate((new Date(trip.startDate)).setHours(14, 0, 0))
+                    } else if(e.target.value === 'DINNER'){
+                      setStartDate((new Date(trip.startDate)).setHours(18, 0, 0));
+                      setEndDate((new Date(trip.startDate)).setHours(20, 0, 0))
+                    }
                   }}
                 >
                   <option value={"DEFAULT"}>{"Select a Meal"}</option>
@@ -277,9 +284,7 @@ const AddRestaurant = (props) => {
               timeInputLabel="Pick a time:"
               dateFormat="MM/dd/yyyy h:mm aa"
               includeDates={availableDates()}
-              selected={meal === 'BREAKFAST' ? (new Date(trip.startDate)).setHours(8, 0, 0) :
-                        meal === 'LUNCH' ? (new Date(trip.startDate)).setHours(12, 0, 0) :
-                        meal === 'DINNER' ? (new Date(trip.startDate)).setHours(18, 0, 0) : null}
+              selected={startDate}
               showTimeInput
               onChange={(date) => {
                 setStartDate(date);

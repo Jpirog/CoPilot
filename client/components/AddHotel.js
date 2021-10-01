@@ -26,6 +26,7 @@ const AddHotel = (props) => {
   const [hotelEvents, setHotelEvents] = useState([]);
   const [location, setLocation] = useState("");
   const [sortValue,setSortValue] =useState("");
+  const [changeId,setChangeId] =useState("")
 
   //dispatch thunk
   const dispatch = useDispatch();
@@ -71,21 +72,21 @@ useEffect(()=>{
 //sort function
   useEffect (()=>{ 
     let list;
-    if(sortValue==="rating") {
+    if(sortValue==="Rating") {
 
       list = hotelList.sort(function(a,b) {
        return b.rating-a.rating;
       })
 
       setHotelList([...list]);
-    }else if(sortValue==="priceLowToHigh") {
+    }else if(sortValue==="PriceLowToHigh") {
       list = hotelList.filter((obj) => obj.price).sort(function (a, b) {
         return a.price.length - b.price.length;
     });
        setHotelList(
       list.concat(hotelList.filter((obj) => !obj.price))
     );
-    }else if (sortValue === "priceHighToLow") {
+    }else if (sortValue === "PriceHighToLow") {
       list = hotelList.filter((obj) => obj.price).sort(function (a, b) {
           return b.price.length - a.price.length;
       });
@@ -179,9 +180,9 @@ useEffect(()=>{
         setSortValue(e.target.value)
         }}>
       <option>Sort By</option>
-        <option value ="rating">rating-High to Low</option>
-        <option value={"priceLowToHigh"}>Price: Low to High</option>
-        <option value={"priceHighToLow"}>Price: High to Low</option>
+        <option value ="Rating">rating-High to Low</option>
+        <option value={"PriceLowToHigh"}>Price: Low to High</option>
+        <option value={"PriceHighToLow"}>Price: High to Low</option>
       </select>
 </div>
 </form>
@@ -189,7 +190,7 @@ useEffect(()=>{
 <br />
     <div>
       <Link to={`/restaurant`} className="btn btn-outline-primary">
-        Once hotel is added, go to restaurant
+        Once hotel is added, click here to go to add restaurant
       </Link>
     </div>
 </div> 
@@ -220,8 +221,9 @@ useEffect(()=>{
             <li style={{marginBottom:"3.5px"}}>
               <input
                 placeholder="Event description"
-                value={description}
+                value={changeId===hotel.id?description:null}
                 onChange={(e) => {
+                  setChangeId(hotel.id)
                   setDescription(e.target.value);
                 }}
               ></input>
@@ -233,7 +235,7 @@ useEffect(()=>{
                 dateFormat="MM/dd/yyyy h:mm aa"
                 includeDates={availableDates()}
                 showTimeInput
-                selected={startDate}
+                selected={changeId===hotel.id?startDate:null}
                 onChange={(date) => setStartDate(date)}
                 selectsStart
                 startDate={startDate}
@@ -268,7 +270,6 @@ useEffect(()=>{
                 //     : undefined;
                 // }}
               />
-              {/* <div className="className">CheckOut Date is missing</div> */}
             </li>
 
             <button type="button" className="btn btn-outline-secondary "

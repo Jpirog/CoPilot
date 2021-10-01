@@ -42,13 +42,13 @@ router.post("/:id", async (req, res, next) => {
 
 router.get("/email/:email", async (req, res, next) => {
   const email = req.params.email;
-  console.log('searching for', email)
+  // console.log('searching for', email)
   try {
     const user = await User.findAll(
       { where: {username: email} }, 
       { attributes: {exclude: ['password']} },
     );
-    console.log('found', user)
+    // console.log('found', user)
     res.send(user);
   } catch (err) {
     next(err);
