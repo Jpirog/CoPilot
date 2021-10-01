@@ -20,6 +20,11 @@ export const MenuItems = [
       cName: 'dropdown-link'
     },
     {
+      title: 'Events Map',
+      path: '/map',
+      cName: 'dropdown-link',
+    },
+    {
       title: 'Create a Trip',
       path: '/create/trip',
       cName: 'dropdown-link'
@@ -34,11 +39,7 @@ export const MenuItems = [
       path: '/financials',
       cName: 'dropdown-link',
     },
-    // {
-    //   title: 'All Trips',
-    //   path: '/allTrips',
-    //   cName: 'dropdown-link',
-    // },
+
     {
       title: 'Logout',
       path: '/aboutus',
