@@ -2,7 +2,7 @@ import React, { useState, useEffect, isValidElement } from "react";
 import dateFormat from "dateformat";
 import StarRatings from "react-star-ratings";
 import { useSelector, useDispatch } from "react-redux";
-import { tripVote, removeTripEvent } from '../store/trips';
+import { tripVote, removeTripEvent, updateTripEvents } from '../store/trips';
 import { useHistory } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
@@ -48,15 +48,20 @@ const FinalizeTrip = () => {
   },[tripEvents])
   
   const handleVoteClick = async (ev) => {
-    console.log('in vote click', tripId)
-    await tripVote(tripId, true);
+    await tripVote(tripId, true, 'IN PROGRESS');
     notify(`Voting is now open for your trip to ${thisTrip.destination} - check back later for the results`);
-    history.push('/home')
+    history.push('/itinerary')
+  }
+  
+  const handleFinalizeClick = async (ev) => {
+    await tripVote(tripId, false, 'FINALIZED');
+    await updateTripEvents(tripId);
+    notify(`Your trip to ${thisTrip.destination} is now finalized!`);
+    history.push('/itinerary')
   }
 
   if (typeof tripEvents === 'undefined') return null;
-  console.log('===',myEvents);
-  //
+  
   return (
     <div id="content-wrapper">
       <div style={{textAlign:'center'}}>
@@ -141,7 +146,7 @@ const FinalizeTrip = () => {
       <div className="container">
         <div className="row">
           <div className="col text-center">
-            <button className="btn btn-primary finbtn" onClick={()=>{console.log('finalize it')}}>Finalize trip!</button>
+            <button className="btn btn-primary finbtn" onClick={ handleFinalizeClick }>Finalize trip!</button>
           </div>
         </div>
       </div>
@@ -150,6 +155,3 @@ const FinalizeTrip = () => {
   };
 
 export default FinalizeTrip;
-
-// {myEvents && myEvents.length === 0 && "No conflicting events"}
-// {thisTrip.voteOpened && "Voting is in progress"}

@@ -123,6 +123,19 @@ export const updateTripEvent = (event) => {
   }
 }
 
+// finalizeTripEvents changes status to "ACCEPTED" for all events on a trip
+// export const finalizeTripEvents = (tripId) => {
+//   return async (dispatch) => { 
+//     try{
+//       const { data: updatedEvents } = await axios.post('/api/finalizeevents', tripId);
+//       dispatch(getTripDetails(tripId));
+//     }
+//     catch(ex){
+//       console.log('ERROR updating trip event', ex);
+//     }
+//   }
+// }
+
 // addTripAttendee adds an attendee to a trip
 export const addTripAttendee = (attendee) => {
   return async (dispatch) => { 
@@ -195,18 +208,24 @@ export const updateInvitedTripsWithId = async (username, userId) => {
 }
 
 // addUpdateTrip adds a new trip or updates an existing one and returns the row
-export const tripVote = async (tripId, action) => {
+export const tripVote = async (tripId, action, status) => {
     try{
-      const { data: newTrip } = await axios.post('/api/trips/vote', { tripId, action });
-//      dispatch(getTripDetails(tripId)); 
-//      dispatch(getUserCreatedTrips(newTrip.ownerId)); // reload this since there is a new/changed trip
+      const { data: newTrip } = await axios.post('/api/trips/vote', { tripId, action, status });
     }
     catch(ex){
       console.log('ERROR adding/updating trip', ex);
     }
   }
 
-
+  // updateTripEvents updates the events table with 'ACCEPTED' in the status
+export const updateTripEvents = async (tripId) => {
+  try{
+    const resp = await axios.post('/api/trips/finalizeevents/', { tripId });
+  }
+  catch(ex){
+    console.log('ERROR updating trip events to accepted', ex);
+  }
+}
 
 // * REDUCER
 
