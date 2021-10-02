@@ -245,8 +245,9 @@ const AddRestaurant = (props) => {
             <li style={{marginBottom:"3.5px"}}>
               <form onSubmit={() => {}}>
                 <select
-                  value={meal}
+                  value={changeId===restaurant.id?meal:""}
                   onChange={(e) => {
+                    setChangeId(restaurant.id)
                     setMeal(e.target.value);
                     if(e.target.value === 'Breakfast'){
                       setStartDate((new Date(trip.startDate)).setHours(8, 0, 0));
@@ -271,7 +272,7 @@ const AddRestaurant = (props) => {
               <form>
                 <input
                   placeholder="add event description"
-                  value={description}
+                  value={changeId===restaurant.id?description:""}
                   onChange={(e) => {
                     setDescription(e.target.value);
                   }}
@@ -284,7 +285,7 @@ const AddRestaurant = (props) => {
               timeInputLabel="Pick a time:"
               dateFormat="MM/dd/yyyy h:mm aa"
               includeDates={availableDates()}
-              selected={startDate}
+              selected={changeId===restaurant.id?startDate:null}
               showTimeInput
               onChange={(date) => {
                 setStartDate(date);
