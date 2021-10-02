@@ -285,7 +285,7 @@ const AddRestaurant = (props) => {
               timeInputLabel="Pick a time:"
               dateFormat="MM/dd/yyyy h:mm aa"
               includeDates={availableDates()}
-              selected={changeId===restaurant.id?startDate:null}
+              selected={changeId===restaurant.id?startDate:""}
               showTimeInput
               onChange={(date) => {
                 setStartDate(date);
