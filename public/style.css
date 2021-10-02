@@ -282,6 +282,12 @@ font-size: 1.5rem;
 
 /* BUTTON END */
 
+.rounded {
+  border: solid 1px orange;
+}
+
+
+
 /* HOME STYLES START */
 video {
   object-fit: cover;
@@ -665,6 +671,8 @@ flex-wrap: wrap;
   border: 1px solid black;
   margin-left:auto; 
   margin-right:auto;
+  background-color: rgb(221, 154, 10);
+  border-radius: 7px;
 }
 #attendees > td {
   padding: 1px 0;
@@ -677,6 +685,7 @@ flex-wrap: wrap;
 }
 #attendeesheadings h2 {
   margin-top: 15px;
+  color: white;
 }
 #attendeesheadings h3 {
   margin-top: 15px;
@@ -687,7 +696,9 @@ flex-wrap: wrap;
 #newattendeeform{
   margin-top: 20px;
 }
-
+.attendeeInfo {
+  color: white;
+}
 
 /* ALL TRIPS PAGE*/
 #allTripsPage {
@@ -888,7 +899,7 @@ label {
 #content-wrapper-double {
   padding: 80px;
   /* background-color: rgb(41, 73, 99); */
-  background-image: linear-gradient(rgb(70, 70, 104), grey);
+  background-image: linear-gradient(rgb(71 71 111), grey);
 }
   
 #sideBySide {
@@ -934,6 +945,9 @@ label {
 #dayDate {
   color:rgb(221, 154, 10);
 }
+
+
+
 
 
 
