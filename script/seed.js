@@ -44,7 +44,7 @@ async function seed() {
   // create trip attendees
   const tripAttendees = await Promise.all([
     TripAttendee.create({ tripId: trips[2].id, userId: users[3].id, email: 'email1@something.com' }),
-    TripAttendee.create({ tripId: trips[2].id, userId: users[4].id, email: 'email2@something.com' }),
+    TripAttendee.create({ tripId: trips[2].id, userId: users[1].id, email: 'email2@something.com' }),
   ])
 
   console.log(`seeded ${tripAttendees.length} trip attendees`)
