@@ -70,7 +70,7 @@ const TripAttendees = () => {
   }
 
   return (
-    <div id="content-wrapper">
+    <div id="content-wrapper-double">
       <div  id="tabutton">
         <Link className="btn btn-primary mr-md-3" to="/hotel">Once attendees are added, click here to add a hotel</Link>
       </div>
@@ -93,11 +93,11 @@ const TripAttendees = () => {
           <table id="attendees">
             <thead>
               <tr>
-                <th>Email</th>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Response Date</th>
-                <th>Remove?</th>
+                <th className='attendeeInfo'>Email</th>
+                <th className='attendeeInfo'>Name</th>
+                <th className='attendeeInfo'>Status</th>
+                <th className='attendeeInfo'>Response Date</th>
+                <th className='attendeeInfo'>Remove?</th>
               </tr>
             </thead>
             <tbody>

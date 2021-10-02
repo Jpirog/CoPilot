@@ -44,5 +44,5 @@ export const MenuItems = [
       title: 'Logout',
       path: '/aboutus',
       cName: 'dropdown-link',
-    }
+    },
   ];
