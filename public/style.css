@@ -94,6 +94,7 @@ a {
   width: 45vw;
   justify-content: end;
   margin-right: 1rem;
+  margin-bottom: 0;
 }
 
 .nav-item {
