@@ -167,8 +167,8 @@ dispatch(removeTripEvent(tripId,event.id))
         <AutoComInput value={location} onChange={(e)=>{setLocation(e.target.value)}} aria-label="location" className="form-control" />
         <input autoFocus placeholder="search for activity" value={searchValue} onChange={(e)=>{setSearchValue(e.target.value)}} type="text" aria-label="activity" className="form-control" />
           
-          <button type="submit" className="btn btn-outline-primary mr-md-3">search</button>
-          <button type="button" className="btn btn-outline-primary mr-md-3" onClick={()=>{setSearchValue("");setCategory("")}}>clear</button>
+          <button type="submit" className="btn btn-outline-primary mr-md-3">Search</button>
+          <button type="button" className="btn btn-outline-primary mr-md-3" onClick={()=>{setSearchValue("");setCategory("")}}>Clear</button>
         
           <select
             className="btn btn-outline-primary mr-md-3"
@@ -179,7 +179,7 @@ dispatch(removeTripEvent(tripId,event.id))
             }}
           >
             <option>Sort by</option>
-            <option value={"Rating"}>Rating: High to low</option>
+            <option value={"Rating"}>Rating: High to Low</option>
             <option value={"PriceLowToHigh"}>Price: Low to High</option>
             <option value={"PriceHighToLow"}>Price: High to Low</option>
           </select>
