@@ -205,7 +205,7 @@ class Itinerary extends React.Component {
                     <div id="sideBySide">
                         <div id='tripAttendees'>
                             <h4>Attendees:</h4> {attendees ? attendees.map(attendee => (
-                                <p> ~ {attendee}</p>
+                                <p key={attendee}> ~ {attendee}</p>
                             ))
                             : ''}
                         </div>
@@ -222,7 +222,7 @@ class Itinerary extends React.Component {
                                             const formatterNight = formatter(mainMap["Night activity"][date.getDate()])
                                             const formatterOther = formatter(mainMap["Other"][date.getDate()])
                                             return (
-                                                <div className="singleCard">
+                                                <div className="singleCard" key={date.toDateString()}>
                                                 <div className="dayNum">
                                                     <p id='numDay'>DAY <br/>{num++}</p>
                                                     <p id='dayDate'>{date.toDateString()}</p>
