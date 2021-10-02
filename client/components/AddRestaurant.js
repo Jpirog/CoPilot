@@ -198,7 +198,7 @@ const AddRestaurant = (props) => {
             }}
           >
             <option>Sort by</option>
-            <option value={"Rating"}>Rating: High to low</option>
+            <option value={"Rating"}>Rating: High to Low</option>
             <option value={"PriceLowToHigh"}>Price: Low to High</option>
             <option value={"PriceHighToLow"}>Price: High to Low</option>
           </select>
