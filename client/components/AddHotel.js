@@ -21,8 +21,8 @@ const AddHotel = (props) => {
   const [hotelList, setHotelList] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [description, setDescription] = useState("");
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [hotelEvents, setHotelEvents] = useState([]);
   const [location, setLocation] = useState("");
   const [sortValue,setSortValue] =useState("");
@@ -180,7 +180,7 @@ useEffect(()=>{
         setSortValue(e.target.value)
         }}>
       <option>Sort By</option>
-        <option value ="Rating">rating-High to Low</option>
+        <option value ="Rating">Rating-High to Low</option>
         <option value={"PriceLowToHigh"}>Price: Low to High</option>
         <option value={"PriceHighToLow"}>Price: High to Low</option>
       </select>
@@ -221,7 +221,7 @@ useEffect(()=>{
             <li style={{marginBottom:"3.5px"}}>
               <input
                 placeholder="Event description"
-                value={changeId===hotel.id?description:null}
+                value={changeId===hotel.id?description:""}
                 onChange={(e) => {
                   setChangeId(hotel.id)
                   setDescription(e.target.value);
@@ -235,7 +235,7 @@ useEffect(()=>{
                 dateFormat="MM/dd/yyyy h:mm aa"
                 includeDates={availableDates()}
                 showTimeInput
-                selected={changeId===hotel.id?startDate:null}
+                selected={changeId===hotel.id?startDate:""}
                 onChange={(date) => setStartDate(date)}
                 selectsStart
                 startDate={startDate}
@@ -293,8 +293,8 @@ useEffect(()=>{
                     })
                   );
 
-                  setStartDate(null);
-                  setEndDate(null)
+                  setStartDate("");
+                  setEndDate("")
                   setDescription("")
                 } else {
                   alert("Attention on the date");
