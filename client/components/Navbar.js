@@ -11,19 +11,21 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips, cu
   const dispatch = useDispatch();
   const [userTrips, setUserTrips] = useState([]);
   const [oldTrip, setOldTrip] = useState(null);
+  const [oldUser, setOldUser] = useState(null);
 
   useEffect( () => {
     const fetchData = async () => {
       await dispatch(getUserInvitedTrips(userId));
       await dispatch(getUserCreatedTrips(userId));
       setUserTrips(createdTrips.concat(invitedTrips)); 
-      if (currTrip && currTrip.id){
-        await dispatch(getTripDetails(currTrip.id));
-      }
+      // if (currTrip && currTrip.id){
+      //   await dispatch(getTripDetails(currTrip.id));
+      // }
     }
-    console.log('===', userId, currTrip)
-    if (userId){
+    if (userId && userId != oldUser){
+      dispatch({type: 'INITIALIZE'})
       fetchData();
+      setOldUser(userId);
     }
   },[userId]);
 
@@ -77,8 +79,7 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips, cu
   const handleTripChange = (ev) => {
     dispatch(getTripDetails(ev.target.value));
   }
-console.log('BEF REND', isLoggedIn, currTrip ) 
-  
+    
   return (
     <div>
       <nav className="navbarx">
@@ -172,8 +173,6 @@ const mapState = (state) => {
   const myTrips = state.trips.userCreatedTrips.concat(state.trips.userInvitedTrips);
 //  const thisTrip = myTrips.length > 0 ? myTrips[0] : null;
   const thisTrip = Object.entries(state.trips.trip).length > 0 ? state.trips.trip : myTrips.length > 0 ? myTrips[0] : null;
-  // console.log('---', state.trips.trip)
-  // console.log('===', Object.entries(state.trips.trip).length)
   return {
     isLoggedIn: !!state.auth.id,
     userId: state.auth.id,
