@@ -162,11 +162,11 @@ render() {
                   ? { backgroundColor: '#fafafa', cursor: 'pointer' }
                   : { backgroundColor: '#ffffff', cursor: 'pointer' };
                 return (
-                  <div
+                  <div 
                     {...getSuggestionItemProps(suggestion, {
                       className,
                       style,
-                    })}
+                    })} key={suggestion.placeId}
                   >
                     <span>{suggestion.description}</span>
                   </div>
