@@ -3,7 +3,7 @@ import dateFormat from "dateformat";
 import StarRatings from "react-star-ratings";
 import { useSelector, useDispatch } from "react-redux";
 import { tripVote, removeTripEvent, updateTripEvents } from '../store/trips';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link, Redirect } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 const notify = (msg) => toast.success(msg, { duration: 4000, position: 'top-center' })
@@ -61,12 +61,21 @@ const FinalizeTrip = () => {
   }
 
   if (typeof tripEvents === 'undefined') return null;
+
+  if (thisTrip && thisTrip.status === 'FINALIZED'){ 
+    return (
+      <div id="content-wrapper-double">
+      <h3 style={{marginTop: "50px", textAlign: "center", color: "white"}}>This trip was already finalized</h3>
+      <h4 style={{marginTop: "10px", textAlign: "center", color: "white"}}>Click <Link to="/itinerary">here</Link> to see the final itinerary</h4>
+
+      </div>
+    )};
   
   return (
-    <div id="content-wrapper">
+    <div id="content-wrapper-double">
       <div style={{textAlign:'center'}}>
-        <h2>Finalize your trip</h2>
-        <h2>There are three steps to finalizing a trip:</h2>
+        <h2 style={{color: "white"}}>Finalize your trip</h2>
+        <h2 style={{color: "white"}}>There are three steps to finalizing a trip:</h2>
       </div>
       <div className="final-boxes">
         <div className="final-nbr">1</div>
@@ -75,8 +84,8 @@ const FinalizeTrip = () => {
       <div className="container">
         <div className="row">
           <div className="col text-center">
-            <button className={"btn btn-primary finbtn " + (myEvents && myEvents.length === 0 && 'disabled') } onClick={handleVoteClick}>Open voting</button>
-            {thisTrip.voteOpened ? <h3>Voting is in progress</h3> : myEvents && myEvents.length === 0 ? "No conflicting events" : "" }
+            <button className="btn btn-primary finbtn1" onClick={handleVoteClick}  disabled={(myEvents && myEvents.length) === 0 || thisTrip.voteOpened}>Open voting</button>
+            <span style={{fontSize: '22px', color:"white"}}>{thisTrip.voteOpened ? " -- Voting is in progress" : myEvents && myEvents.length === 0 ? " -- No conflicting events - no need for a vote" : "" }</span>
           </div>
         </div>
       </div>
@@ -146,7 +155,7 @@ const FinalizeTrip = () => {
       <div className="container">
         <div className="row">
           <div className="col text-center">
-            <button className="btn btn-primary finbtn" onClick={ handleFinalizeClick }>Finalize trip!</button>
+            <button className="btn btn-primary finbtn2" onClick={ handleFinalizeClick }>Finalize trip!</button>
           </div>
         </div>
       </div>
