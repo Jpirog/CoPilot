@@ -12,6 +12,8 @@ import AutoComInput from "./GoogleAutoComplete"
 import StarRatings from "react-star-ratings"
 
 
+
+
 const AddHotel = (props) => {
   const { trip, tripId, tripevents } = useSelector((state) => ({
     trip: state.trips.trip,
@@ -116,6 +118,7 @@ useEffect(()=>{
   return (
     <div style={{ padding: "100px" }}>
       <div className="d-lg-flex flex-column align-content-center flex-wrap mr-md-6">
+
       <table className="table table-hover shadow p-3 mb-5 bg-white rounded ">
       <thead>
           <tr>
@@ -152,7 +155,9 @@ useEffect(()=>{
             )}
         </tbody>
       </table>
-
+      <div style={{textAlign:"center"}}>
+      <audio src="./Ukulele.mp3" controls autoPlay={true} loop={true}/>
+      </div>
 <form onSubmit={handleSubmit}>
   <div className="input-group">
   <span className="input-group-text mr-md-3">You can change a destination or search for a hotel</span>
