@@ -2,15 +2,12 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import  { addUpdateTrip }  from '../store/trips'
-// import TripMap from './TripMap'
 import PlacesAutocomplete, {
     geocodeByAddress,
     getLatLng,
   } from 'react-places-autocomplete';
-//   import DatePicker from 'react-datepicker';
-  import "react-datepicker/dist/react-datepicker.css";
-  import moment from 'moment'
-
+import "react-datepicker/dist/react-datepicker.css";
+import moment from 'moment'
 
 const initialState = {
     destination: '',
@@ -25,9 +22,10 @@ class CreateTrip extends Component{
     this.state = {
         initialState,
         address: '',
-
+        name: '',
         startDate: "",
-        endDate: ""
+        endDate: "",
+        errorMessage: ''
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -35,14 +33,15 @@ class CreateTrip extends Component{
     this.handleSelect = this.handleSelect.bind(this)
     this.handleDate = this.handleDate.bind(this);
     this.handleEndDate = this.handleEndDate.bind(this);
-
-
   }
- 
 
   handleSubmit = async (ev) => {
     ev.preventDefault();
     const {state} = this
+    if (state.endDate <= state.startDate){
+      this.setState({errorMessage: 'Error: Start date should be before the end date.'})
+      return;
+    };
     try {
         await this.props.addUpdateTrip({
             destination: state.address,
@@ -60,6 +59,7 @@ class CreateTrip extends Component{
         console.log(error)
     }
 }
+
 handleChange = (ev) => {
     const change = {};
     change[ev.target.name] = ev.target.value;
@@ -68,45 +68,43 @@ handleChange = (ev) => {
 
 handleChanges = address => {
     this.setState({ address });
-  };
+};
 
 handleDate = start => {
     this.setState({
         startDate: start
       })
+}
 
-    }
-
-      handleEndDate = end => {
-        this.setState({
-            startDate: end
-          })
-
-        }    
+handleEndDate = end => {
+  this.setState({
+      startDate: end
+    })
+}    
 
 onFormSubmit(e) {
-    e.preventDefault();
-    console.log(this.state.startDate)
-    console.log(this.state.endDate)
-  }
+  e.preventDefault();
+  console.log(this.state.startDate)
+  console.log(this.state.endDate)
+}
  
-  handleSelect = address => {
-      console.log(address)
-    geocodeByAddress(address)
-      .then(results => getLatLng(results[0]))
-      .then(latLng => {
-        console.log('Success', latLng);
-        this.setState({ address })
-      })
-      .catch(error => console.error('Error', error));
-  };
+handleSelect = address => {
+    console.log(address)
+  geocodeByAddress(address)
+    .then(results => getLatLng(results[0]))
+    .then(latLng => {
+      console.log('Success', latLng);
+      this.setState({ address })
+    })
+    .catch(error => console.error('Error', error));
+};
 
-  updateDate = () => {
-    const today = new Date(); 
-    console.log(`
-    Default time zone: ${format(today, 'yyyy-MM-dd HH:mm:ss')}
-}`);
-  }
+updateDate = () => {
+  const today = new Date(); 
+  console.log(`
+  Default time zone: ${format(today, 'yyyy-MM-dd HH:mm:ss')}
+  }`);
+}
 
   //updatedwork
  
@@ -114,28 +112,26 @@ render() {
     const { handleSubmit, handleChange, handleChanges, handleSelect } = this;
     const { destination, startDate, endDate, purpose, name} = this.state
     return ( 
-    <div id="content-wrapper">
-    <div id="fb-root"></div>
+     <div id="content-wrapper">
+        <div id="fb-root"></div>
         <div id="profilecontainer">
-        <div className="containerx" id="profileleft">
+          <div className="containerx" id="profileleft">
             <h1 className="profilehdr">Create Trip</h1>
-            </div>
-            <div className="containerx" id="profileright">
+          </div>
+          <div className="containerx" id="profileright">
             <form id="profileform" onSubmit={handleSubmit}>
             <div className='formfield'>
-                
                 <input type="text" name='name' value= {name} onChange={ handleChange }
-                required={true} autoFocus />
+                  required={true} autoFocus />
                 <label>Name:</label>
             </div>
             <div className='formfield'>
                     {/* <input type="text" name='destination' value= {destination} onChange={ handleChange }
                     required={true} /> */}
                     <PlacesAutocomplete
-        
-        value={this.state.address}
-        onChange={handleChanges}
-        onSelect={handleSelect}
+                      value={this.state.address}
+                      onChange={handleChanges}
+                      onSelect={handleSelect}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div className='formfield'>
@@ -215,6 +211,7 @@ render() {
                 <div className="buttons">
                 <button type="submit" className="" onChange={ handleSubmit }>Create Trip</button>
                 <br/>
+                { this.state.errorMessage }
                 {/* <Link to="/tripattendees"><button>Add Trip Attendeese</button></Link> */}
                 </div>
             </form>
