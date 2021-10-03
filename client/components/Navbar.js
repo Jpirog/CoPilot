@@ -17,7 +17,11 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips, cu
       await dispatch(getUserInvitedTrips(userId));
       await dispatch(getUserCreatedTrips(userId));
       setUserTrips(createdTrips.concat(invitedTrips)); 
-  }
+      if (currTrip && currTrip.id){
+        await dispatch(getTripDetails(currTrip.id));
+      }
+    }
+    console.log('===', userId, currTrip)
     if (userId){
       fetchData();
     }
@@ -73,7 +77,8 @@ const Navbar = ({handleClick, isLoggedIn, userId, createdTrips, invitedTrips, cu
   const handleTripChange = (ev) => {
     dispatch(getTripDetails(ev.target.value));
   }
-
+console.log('BEF REND', isLoggedIn, currTrip ) 
+  
   return (
     <div>
       <nav className="navbarx">
@@ -189,5 +194,3 @@ const mapDispatch = dispatch => {
 }
 
 export default connect(mapState, mapDispatch)(Navbar)
-
-//<option selected={currTrip.id === trip.id} value={trip.id} key={trip.id}>({prefix}) { trip.destination } ({fromDate}-{toDate}) </option>

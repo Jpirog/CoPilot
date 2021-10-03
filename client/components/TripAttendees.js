@@ -79,17 +79,17 @@ const TripAttendees = () => {
         <div>
           <h2>Trip Attendees - Who should be included in this trip?</h2>
         </div>
-        <h4>{ tripDetails.destination } 
+        <h4 style={{color: 'white'}}>{ tripDetails.destination } 
         &nbsp; &mdash; { dateFormat(tripDetails.startDate, "ddd, mmm d, yyyy") } - { dateFormat(tripDetails.endDate, "ddd, mmm d, yyyy") }</h4>
         <div>
           <form id="newattendeeform" onSubmit={ handleAddClick }>
-            <label htmlFor="newattendee">Enter email of invitee:&nbsp;</label>
+            <label htmlFor="newattendee"  style={{color: 'white'}}>Enter email of invitee:&nbsp;</label>
             <input id="newattendee" name="newattendee" autoFocus type="email" />&nbsp;
             <button type="submit">Invite to trip</button>
           </form>
           <h4>{ errMsg }</h4>
           </div>
-          <h3>&mdash; Existing invitees &mdash;</h3>
+          <h3  style={{color: 'white'}}>&mdash; Existing invitees &mdash;</h3>
           <table id="attendees">
             <thead>
               <tr>
