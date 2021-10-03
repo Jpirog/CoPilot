@@ -70,7 +70,7 @@ const FinalizeTrip = () => {
       </div>
       <div className="final-boxes">
         <div className="final-nbr">1</div>
-        <div className="final-text">If there are multiple suggestions for the same event on the same day, open the vote and let people vote for their favorite choice. Come back later for step 2.</div>
+        <div className="final-text">Open voting so CoPilots can vote on their preferred activities. Come back later for step 2.</div>
       </div>
       <div className="container">
         <div className="row">
@@ -84,7 +84,7 @@ const FinalizeTrip = () => {
         <div className="final-nbr">2</div>
         <div className="final-text">Review voting results below and possibly delete conflicting proposed events</div>
       </div>
-      <div className="d-lg-flex flex-column align-content-center flex-wrap mr-md-6">
+      <div className="d-lg-flex flex-column align-content-center flex-wrap mr-md-6" id="tripattendtbl">
         {myEvents && myEvents.length === 0 && 
         <h2 style={{marginTop:'20px'}}>Congratulations! There are no duplicate events on your trip.</h2>}
           {myEvents && myEvents.length > 0 &&

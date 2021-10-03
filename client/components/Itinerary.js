@@ -6,6 +6,8 @@ import {getTripDetails,addTripEvent,removeTripEvent} from "../store/trips"
 import { connect } from 'react-redux';
 //import TripAttendees from './TripAttendees';
 const dateFormat = require("dateformat");
+import { Toaster } from 'react-hot-toast';
+
 
 class Itinerary extends React.Component {
     constructor(props) {
@@ -60,14 +62,12 @@ class Itinerary extends React.Component {
     // used to great mainMap
     let allEvents = this.props.tripevents;
 
-
-
     let attendees = currentTrip.tripattendees.reduce((acc, attendee) => {
         if(attendee.accepted === true) {
             acc.push(attendee.user.name + ' (confirmed!)');
         }
         else {
-            acc.push(attendee.user.name + ' (unconfirmed...)');
+            acc.push(attendee.user ? attendee.user.name + ' (unconfirmed...)' : attendee.email + ' (unconfirmed...)');
         }
         return acc;
     }, [])
@@ -195,7 +195,7 @@ class Itinerary extends React.Component {
                 <div className='itineraryName'>
                     <h1> {currentTrip ? currentTrip.name : ''} ITINERARY</h1>
                 </div>
-
+                <Toaster />
                 <div className='itineraryInfo'>
                     <span className='iiinfo'>DESTINATION: <h3>{currentTrip ? currentTrip.destination : ''}</h3></span>
                     <span className='iiinfo'>PURPOSE: <h3>{currentTrip ? currentTrip.purpose : ''}</h3></span>
