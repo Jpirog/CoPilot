@@ -27,6 +27,7 @@ export const Signup = props => {
       const name = evt.target.username.value || 'NONAME';
       const password = evt.target.password.value;
       dispatch(authenticate(username, password, formName, name)); 
+      dispatch({type: 'INITIALIZE'})
       notify();
     } else {
 //      alert ('Passwords do not match - please correct and submit again')
