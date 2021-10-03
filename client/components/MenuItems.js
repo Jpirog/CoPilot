@@ -34,12 +34,11 @@ export const MenuItems = [
       path: '/editprofile',
       cName: 'dropdown-link'
     },
-    {
-      title: 'Financials',
-      path: '/financials',
-      cName: 'dropdown-link',
-    },
-
+    // {
+    //   title: 'Financials',
+    //   path: '/financials',
+    //   cName: 'dropdown-link',
+    // },
     {
       title: 'Logout',
       path: '/aboutus',
