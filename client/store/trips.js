@@ -5,8 +5,18 @@ import axios from 'axios';
 const GET_TRIP_DETAILS = 'GET_TRIP_DETAILS';
 const GET_USER_CREATED_TRIPS = 'GET_USER_CREATED_TRIPS';
 const GET_USER_INVITED_TRIPS = 'GET_USER_INVITED_TRIPS';
+const INITIALIZE = 'INITIALIZE';
 
 // * ACTION CREATORS
+
+const _initialize = () => {
+  return {
+    type: INITIALIZE, 
+    invited: [],
+    created: [],
+    trip: {},
+  }
+};
 
 const _getTripDetails = trip => {
   return {
@@ -238,6 +248,8 @@ export default function(state = {trip: {}, userCreatedTrips: [], userInvitedTrip
       return {...state, userCreatedTrips: action.userCreatedTrips}
     case GET_USER_INVITED_TRIPS:
       return {...state, userInvitedTrips: action.userInvitedTrips}
+    case INITIALIZE:
+      return {...state, userInvitedTrips: [], userCreatedTrips: [], trip: []}
     default:
       return state
   }
