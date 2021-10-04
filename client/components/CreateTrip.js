@@ -2,19 +2,17 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import  { addUpdateTrip }  from '../store/trips'
-import PlacesAutocomplete, {
-    geocodeByAddress,
-    getLatLng,
-  } from 'react-places-autocomplete';
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment'
+
+import AutoComInput from "./GoogleAutoComplete"
 
 const initialState = {
     destination: '',
     startDate: new Date(),
     endDate: new Date(),
     name: '',
-    purpose: 'VACATION',
+    purpose: '',
 }
 class CreateTrip extends Component{
   constructor(props){
@@ -25,12 +23,13 @@ class CreateTrip extends Component{
         name: '',
         startDate: "",
         endDate: "",
-        errorMessage: ''
+        errorMessage: '',
+        address:""
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleChanges = this.handleChanges.bind(this)
-    this.handleSelect = this.handleSelect.bind(this)
+    // this.handleSelect = this.handleSelect.bind(this)
     this.handleDate = this.handleDate.bind(this);
     this.handleEndDate = this.handleEndDate.bind(this);
   }
@@ -88,16 +87,16 @@ onFormSubmit(e) {
   console.log(this.state.endDate)
 }
  
-handleSelect = address => {
-    console.log(address)
-  geocodeByAddress(address)
-    .then(results => getLatLng(results[0]))
-    .then(latLng => {
-      console.log('Success', latLng);
-      this.setState({ address })
-    })
-    .catch(error => console.error('Error', error));
-};
+// handleSelect = address => {
+//     console.log(address)
+//   geocodeByAddress(address)
+//     .then(results => getLatLng(results[0]))
+//     .then(latLng => {
+//       console.log('Success', latLng);
+//       this.setState({ address })
+//     })
+//     .catch(error => console.error('Error', error));
+// };
 
 updateDate = () => {
   const today = new Date(); 
@@ -122,13 +121,15 @@ render() {
             <form id="profileform" onSubmit={handleSubmit}>
             <div className='formfield'>
                 <input type="text" name='name' value= {name} onChange={ handleChange }
-                  required={true} autoFocus />
+                  required={true} autoFocus placeholder="Enter a name"/>
                 <label>Name:</label>
             </div>
             <div className='formfield'>
+            <AutoComInput className='location-search-input' value={this.state.address} onChange={(e)=>{this.setState({address:e.target.value})}}  />
+                  <label>Destination:</label>
                     {/* <input type="text" name='destination' value= {destination} onChange={ handleChange }
                     required={true} /> */}
-                    <PlacesAutocomplete
+                    {/* <PlacesAutocomplete
                       value={this.state.address}
                       onChange={handleChanges}
                       onSelect={handleSelect}
@@ -171,7 +172,7 @@ render() {
             </div>
           </div>
         )}
-      </PlacesAutocomplete>
+      </PlacesAutocomplete> */}
                     
                 </div>
                 <div className='formfield'> 
@@ -199,7 +200,8 @@ render() {
           /> */}
                 </div>
                 <div className='formfield'>
-                    <select name='purpose' value= {purpose} onChange={ handleChange }>
+                    <select name='purpose' defaultValue ="Pick a purpose" value= {purpose} onChange={ handleChange }>
+                    <option value="">Pick a purpose</option>
                        <option value="VACATION">Vacation</option>
                      <option value="BUSINESS">Business</option>
                     <option value="REUNION">Reunion</option>
