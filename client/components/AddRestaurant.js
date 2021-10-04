@@ -151,9 +151,6 @@ const AddRestaurant = (props) => {
             )}
         </tbody>
       </table>
-      <div style={{textAlign:"center"}}>
-      <audio src="./Ukulele.mp3" controls autoPlay={true} loop={true}/>
-      </div>
 
       <form onSubmit={restaurantSearchSubmit}>
         <div className="input-group">

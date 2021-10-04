@@ -155,9 +155,6 @@ useEffect(()=>{
             )}
         </tbody>
       </table>
-      <div style={{textAlign:"center"}}>
-      <audio src="./Ukulele.mp3" controls autoPlay={true} loop={true}/>
-      </div>
 <form onSubmit={handleSubmit}>
   <div className="input-group">
   <span className="input-group-text mr-md-3">You can change a destination or search for a hotel</span>
