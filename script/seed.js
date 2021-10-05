@@ -1,4 +1,5 @@
 const { db, models: { User, Trip, TripAttendee, TripEvent, EventAttendee } } = require('../server/db')
+const Price = require('../server/db/models/Price')
 
 //  * seed - this function clears the database and populates it with test data.
 async function seed() {
@@ -195,6 +196,19 @@ async function seed() {
 
   console.log(`seeded ${eventAttendees.length} event attendees`)
 
+
+  // create prices
+  const prices = await Promise.all([
+    Price.create({ tripId: trips[2].id, price: 150, description: 'First Lunch'}),
+    Price.create({ tripId: trips[2].id, price: 50, description: 'First Dinner'}),
+    Price.create({ tripId: trips[2].id, price: 120, description: 'Second Lunch'}),
+    Price.create({ tripId: trips[2].id, price: 50, description: 'Second Dinner'}),
+    Price.create({ tripId: trips[2].id, price: 160, description: 'Museum'}),
+    Price.create({ tripId: trips[2].id, price: 50, description: 'Bike Riding'}),
+    Price.create({ tripId: trips[2].id, price: 15, description: 'Street Snack'}),
+    Price.create({ tripId: trips[2].id, price: 200, description: 'Spa'})
+  ])
+  
   console.log(`seeded successfully`)
   return {
     users: {

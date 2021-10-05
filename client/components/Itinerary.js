@@ -191,7 +191,7 @@ class Itinerary extends React.Component {
 
     let num = 1;
         return (
-            <div id='content-wrapper-double'>
+            <div id='content-wrapper-third'>
                 <div className='itineraryName'>
                     <h1> {currentTrip ? currentTrip.name : ''} ITINERARY</h1>
                 </div>
