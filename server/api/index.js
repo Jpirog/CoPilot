@@ -8,6 +8,7 @@ router.use('/users', require('./users'));
 router.use('/trips', require('./trips'));
 router.use('/tripattendees', require('./tripattendees'));
 router.use('/tripevents', require('./tripevents'));
+router.use('/financials', require('./financials'));
 
 //for yelp api routes
 router.use('/yelp',require("./yelp"));

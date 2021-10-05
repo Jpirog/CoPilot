@@ -783,6 +783,19 @@ label {
   text-align: center;
 }
 
+
+
+
+
+
+/* Events map */
+#content-wrapper-third {
+  padding: 80px;
+  background-image: linear-gradient(rgb(71 71 111), grey);
+
+}
+
+
 /* ITINERARY */
 /* #itineraryBox {
   padding: 50px;
@@ -1012,3 +1025,4 @@ label {
   margin-left: 10%;
   margin-right: 10%;
 }
+

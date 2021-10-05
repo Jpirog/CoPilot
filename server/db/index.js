@@ -7,6 +7,7 @@ const Trip = require('./models/Trip')
 const TripEvent = require('./models/Event');
 const TripAttendee = require('./models/TripAttendee');
 const EventAttendee = require('./models/EventAttendee');
+const Price = require('./models/Price');
 
 //associations 
 Trip.belongsTo(User, {as: 'owner'});
@@ -20,6 +21,9 @@ TripEvent.hasMany(EventAttendee);
 TripAttendee.belongsTo(User);
 EventAttendee.belongsTo(User);
 
+Trip.hasMany(Price);
+Price.belongsTo(Trip);
+
 module.exports = {
   db,
   models: {
@@ -28,5 +32,6 @@ module.exports = {
     TripAttendee,
     TripEvent,
     EventAttendee,
+    Price
   },
 }

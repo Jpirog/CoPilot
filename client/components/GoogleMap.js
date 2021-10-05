@@ -95,7 +95,7 @@ setTimeout(()=>{
 
   //trip detail
   const {destination} = useSelector((state)=>({destination:state.trips.trip.destination}))
-    return <div id='content-wrapper-double'>
+    return <div id='content-wrapper-third'>
       <h1 style={{color: "white"}}>Map for All Events</h1>
       <h2 id="loading" hidden={false}>Events Loading...</h2>
       <div style={{ height: '68vh', width: '100%', border: '2px solid rgb(221, 154, 10)', margin: '5px' }}>
