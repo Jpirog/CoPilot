@@ -95,7 +95,7 @@ router.post('/send', async (req, res, next) => {
   <h1>You're invited!!!<h1>
   <h2>Hello!</h2>
     <h3>${msgData.host} has invited you on a trip to <h1>${msgData.dest}</h1> and wants you to collaborate to build out the itinerary.</h3>
-    <p>Please login or register at <a href="https://copilotfsa.com">https://copilotfsa.com</a></p>
+    <p>Please login or register at <a href="https://copilot-2014.herokuapp.com">https://copilot-travel.com</a></p>
     <p>Sincerely,</p>
     <p>The CoPilot team</p>
     `
