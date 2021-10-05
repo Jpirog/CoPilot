@@ -24,10 +24,16 @@ const options = {
 
 loaderInstance &&loaderInstance.load().then(() => {
 const autocomplete = new google.maps.places.Autocomplete(input, options);
-const place = autocomplete.getPlace();
+autocomplete.addListener("place_changed", ()=>{
+  const place = autocomplete.getPlace();
+  input.value = place.formatted_address
+  console.log(document.getElementById("in").value);
+
+});
+
 })
 
-return <input id="in" onChange ={onChange} className="form-control" />
+return <input id="in" name="address" onChange ={onChange} className="form-control" />
      
 
 }
