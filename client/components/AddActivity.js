@@ -122,11 +122,11 @@ useEffect(()=>{
     
       },[sortValue])
 
-      useEffect(() => {
-        let list =
-          tripevents && tripevents.filter((event) => event.purpose === "Morning activity"||"Afternoon activity"||"Night activity");
-          setActivityEvents(list);
-      }, [tripevents]);
+      // useEffect(() => {
+      //   let list =
+      //     tripevents && tripevents.filter((event) => event.purpose === "Morning activity"||"Afternoon activity"||"Night activity");
+      //     setActivityEvents(list);
+      // }, [tripevents]);
 
 return (
     <div style={{padding:"100px"}}>
@@ -143,8 +143,11 @@ return (
         </tr>
         </thead>
         <tbody>
-{activityEvents&&activityEvents.map(event=>event.purpose==="Morning activity"||"Afternoon activity"||"Night activity"?
-  <tr key = {event.id}>
+{tripevents&&tripevents.map(event=>
+  {
+
+    if(event.purpose==="Morning activity"||event.purpose==="Afternoon activity"||event.purpose==="Night activity"){   
+  return <tr key = {event.id}>
     <td scope="row">{dateFormat(event.startDate,"mm/dd/yyyy h:MM TT")}</td>
     <td scope="row">{dateFormat(event.endDate,"mm/dd/yyyy h:MM TT")}</td>
     <td>{event.placeName}</td> 
@@ -154,7 +157,8 @@ return (
     <td><button type="button" className="btn btn-outline-danger" onClick={()=>{
 dispatch(removeTripEvent(tripId,event.id))
 }}><i className="far fa-trash-alt"></i></button></td>
-  </tr>:null
+  </tr>
+}}
 )}</tbody></table>
 
         <form className ="flexBox" onSubmit={handleSubmit}>

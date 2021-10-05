@@ -13,6 +13,7 @@ const initialState = {
     endDate: new Date(),
     name: '',
     purpose: '',
+    address:''
 }
 class CreateTrip extends Component{
   constructor(props){
@@ -24,11 +25,10 @@ class CreateTrip extends Component{
         startDate: "",
         endDate: "",
         errorMessage: '',
-        address:""
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
-    this.handleChanges = this.handleChanges.bind(this)
+    // this.handleChanges = this.handleChanges.bind(this)
     // this.handleSelect = this.handleSelect.bind(this)
     this.handleDate = this.handleDate.bind(this);
     this.handleEndDate = this.handleEndDate.bind(this);
@@ -43,7 +43,7 @@ class CreateTrip extends Component{
     };
     try {
         await this.props.addUpdateTrip({
-            destination: state.address,
+            destination: document.getElementById("in").value,
             startDate: moment(state.startDate),
             endDate: moment(state.endDate),
             purpose: state.purpose,
@@ -60,14 +60,12 @@ class CreateTrip extends Component{
 }
 
 handleChange = (ev) => {
-    const change = {};
-    change[ev.target.name] = ev.target.value;
-    this.setState(change)
+if(ev.target.name!=="address") {
+  this.setState({[ev.target.name]:ev.target.value})
+  
+}
 }
 
-handleChanges = address => {
-    this.setState({ address });
-};
 
 handleDate = start => {
     this.setState({
@@ -83,8 +81,7 @@ handleEndDate = end => {
 
 onFormSubmit(e) {
   e.preventDefault();
-  console.log(this.state.startDate)
-  console.log(this.state.endDate)
+
 }
  
 // handleSelect = address => {
@@ -108,7 +105,7 @@ updateDate = () => {
   //updatedwork
  
 render() {
-    const { handleSubmit, handleChange, handleChanges, handleSelect } = this;
+    const { handleSubmit, handleChange} = this;
     const { destination, startDate, endDate, purpose, name} = this.state
     return ( 
      <div id="content-wrapper">
@@ -125,7 +122,7 @@ render() {
                 <label>Name:</label>
             </div>
             <div className='formfield'>
-            <AutoComInput className='location-search-input' value={this.state.address} onChange={(e)=>{this.setState({address:e.target.value})}}  />
+            <AutoComInput className='location-search-input' onChange={handleChange}  />
                   <label>Destination:</label>
                     {/* <input type="text" name='destination' value= {destination} onChange={ handleChange }
                     required={true} /> */}
